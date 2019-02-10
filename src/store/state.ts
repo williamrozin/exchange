@@ -1,15 +1,14 @@
 import { DeepPartial } from 'redux'
+import { TCurrency } from '../actions/exchange'
 
 export interface IState {
-    base: string
-    target: string
+    base: TCurrency
+    target: TCurrency
     weight: number
 }
 
-const state: DeepPartial<IState> = {
+export const state: DeepPartial<IState> = {
     base: 'GBP',
     target: 'GBP',
-    weight: 1,
+    weight: 1
 }
-
-export default state

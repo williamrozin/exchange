@@ -5,7 +5,7 @@ module.exports = {
     entry: './src/App.tsx',
     module: {
         rules: [
-            { test: /\.tsx?$/, loader: 'ts-loader' },
+            { test: /\.ts(x)?$/, loader: 'ts-loader' },
             { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
             { test: /\.html$/, loader: 'html-loader' }
         ]

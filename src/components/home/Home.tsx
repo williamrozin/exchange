@@ -8,6 +8,7 @@ interface IProps {
     onSetBaseCurrency(value: string): void
     onSetTargetCurrency(value: string): void
     onSetCurrencyWeight(value: number): void
+    onUpdateCurrency(): void
 }
 
 interface IState {
@@ -43,34 +44,18 @@ class Home extends Component<IProps, IState> {
         this.state = { value: 0 }
     }
 
-    public componentDidMount() {
-        this.getCurrentCurrencies()
-        setInterval(this.getCurrentCurrencies, 10000)
-    }
-
-    public getCurrentCurrencies = async () => {
-        const data = await fetch(`https://api.exchangeratesapi.io/latest?base=${this.props.base}`)
-            .then((res) => res.json())
-
-        const target = this.props.base === this.props.target
-                ? 1
-                : data.rates[this.props.target]
-
-        this.props.onSetCurrencyWeight(target)
-    }
-
     public handleChangeFrom = (event: ChangeEvent<HTMLInputElement>) => {
         this.setState({ value: parseInt(event.target.value, 10) })
     }
 
     public handleChangeBase = (event: ChangeEvent<HTMLSelectElement>) => {
         this.props.onSetBaseCurrency(event.target.value)
-        this.getCurrentCurrencies()
+        this.props.onUpdateCurrency()
     }
 
     public handleChangeTarget = (event: ChangeEvent<HTMLSelectElement>) => {
         this.props.onSetTargetCurrency(event.target.value)
-        this.getCurrentCurrencies()
+        this.props.onUpdateCurrency()
     }
 
     public render() {

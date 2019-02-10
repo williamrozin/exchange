@@ -1,43 +1,59 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
-import Home from '../components/home/Home'
+import { AnyAction } from 'redux'
+import { ThunkDispatch } from 'redux-thunk'
 import {
-    SET_BASE_CURRENCY,
-    SET_CURRENCY_WEIGHT,
-    SET_TARGET_CURRENCY,
-} from '../constants/action-types'
+    setBaseCurrency,
+    setCurrencyWeight,
+    setTargetCurrency,
+    TCurrency,
+    updateCurrency
+} from '../actions/exchange'
+import Home from '../components/home/Home'
+import { IState } from '../store/state'
 
 interface IProps {
-    base: string
-    target: string
+    base: TCurrency
+    target: TCurrency
     weight: number
     onSetBaseCurrency(value: string): void
     onSetTargetCurrency(value: string): void
     onSetCurrencyWeight(value: number): void
+    onUpdateCurrency(): void
 }
 
 class HomeContainer extends Component<IProps> {
+    public componentDidMount() {
+        this.updateCurrency()
+    }
+
+    public updateCurrency() {
+        this.props.onUpdateCurrency()
+        setInterval(this.props.onUpdateCurrency, 1000)
+    }
     public render() {
         return <Home { ...this.props } />
     }
 }
 
-const mapStateToProps = (state: { base: string, target: string, weight: number }) => ({
+const mapStateToProps = (state: IState) => ({
     base: state.base,
     target: state.target,
     weight: state.weight,
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<IState, {}, AnyAction>) => ({
     onSetBaseCurrency: (value: string) => {
-        dispatch({ type: SET_BASE_CURRENCY, value })
+        dispatch(setBaseCurrency(value))
     },
     onSetCurrencyWeight: (value: number) => {
-        dispatch({ type: SET_CURRENCY_WEIGHT, value })
+        dispatch(setCurrencyWeight(value))
     },
     onSetTargetCurrency: (value: string) => {
-        dispatch({ type: SET_TARGET_CURRENCY, value })
+        dispatch(setTargetCurrency(value))
+    },
+    onUpdateCurrency: () => {
+        dispatch(updateCurrency())
     }
 })
 
