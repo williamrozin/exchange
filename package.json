@@ -1,0 +1,37 @@
+{
+  "name": "exchange",
+  "version": "1.0.0",
+  "description": "Wallet management with exchange information",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --mode development",
+    "build": "webpack --mode production",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "lint:fix": "tslint -c tslint.json -p tsconfig.json --fix"
+  },
+  "author": "William Rozin Gaspar <williamrozingaspar@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "react": "16.8.0",
+    "react-dom": "16.8.0",
+    "react-redux": "6.0.0",
+    "styled-components": "4.1.3",
+    "typescript": "3.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "16.8.1",
+    "@types/react-dom": "16.8.0",
+    "@types/react-redux": "7.0.1",
+    "@types/styled-components": "4.1.8",
+    "html-loader": "0.5.5",
+    "html-webpack-plugin": "3.2.0",
+    "redux": "4.0.1",
+    "source-map-loader": "0.2.4",
+    "ts-loader": "5.3.3",
+    "tslint": "5.11.0",
+    "webpack": "4.20.2",
+    "webpack-cli": "3.1.1",
+    "webpack-dev-server": "3.1.11"
+  }
+}
