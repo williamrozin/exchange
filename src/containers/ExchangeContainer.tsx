@@ -3,23 +3,27 @@ import { connect } from 'react-redux'
 import { AnyAction } from 'redux'
 import { ThunkDispatch } from 'redux-thunk'
 import {
+    exchange,
     setBaseCurrency,
-    setCurrencyWeight,
+    setCurrencyQuotation,
     setTargetCurrency,
     TCurrency,
     updateCurrency
 } from '../actions/exchange'
 import Exchange from '../components/exchange/Exchange'
 import Main from '../components/layout/Main'
-import { IState } from '../store/state'
+import { IHistory, IState } from '../store/state'
 
-interface IProps {
+export interface IProps {
     base: TCurrency
+    history: IHistory[]
     target: TCurrency
-    weight: number
+    wallet: IState['wallet']
+    quotation: number
+    onExchange(history: IHistory): void
     onSetBaseCurrency(value: string): void
     onSetTargetCurrency(value: string): void
-    onSetCurrencyWeight(value: number): void
+    onSetCurrencyQuotation(value: number): void
     onUpdateCurrency(): void
 }
 
@@ -34,6 +38,7 @@ class ExchangeContainer extends Component<IProps> {
         this.props.onUpdateCurrency()
         setInterval(this.props.onUpdateCurrency, REFRESH_RATE)
     }
+
     public render() {
         return (
             <Main>
@@ -45,16 +50,21 @@ class ExchangeContainer extends Component<IProps> {
 
 const mapStateToProps = (state: IState) => ({
     base: state.base,
+    history: state.history,
+    quotation: state.quotation,
     target: state.target,
-    weight: state.weight,
+    wallet: state.wallet
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<IState, {}, AnyAction>) => ({
+    onExchange: (history: IHistory) => {
+        dispatch(exchange(history))
+    },
     onSetBaseCurrency: (value: string) => {
         dispatch(setBaseCurrency(value))
     },
-    onSetCurrencyWeight: (value: number) => {
-        dispatch(setCurrencyWeight(value))
+    onSetCurrencyQuotation: (value: number) => {
+        dispatch(setCurrencyQuotation(value))
     },
     onSetTargetCurrency: (value: string) => {
         dispatch(setTargetCurrency(value))

@@ -8,19 +8,15 @@ import {
 import React, { ChangeEvent, Component } from 'react'
 import SwipeableViews from 'react-swipeable-views'
 import styled from 'styled-components'
-
-interface IProps {
-    base: string
-    target: string
-    weight: number
-    onSetBaseCurrency(value: string): void
-    onSetTargetCurrency(value: string): void
-    onSetCurrencyWeight(value: number): void
-    onUpdateCurrency(): void
-}
+import { TCurrency } from '../../actions/exchange'
+import { IProps } from '../../containers/ExchangeContainer'
 
 interface IState {
     value: string
+}
+
+interface IInput {
+    option: 'base' | 'target'
 }
 
 const Content = styled.div`
@@ -31,7 +27,7 @@ const Content = styled.div`
     height: 100vh;
 `
 
-const Input = styled.input`
+const Input = styled.input<IInput>`
     flex: 1;
     padding: 12px;
     margin: 6px 0;
@@ -42,6 +38,11 @@ const Input = styled.input`
     text-align: right;
     background: transparent;
     outline: none;
+    color: ${(props) =>
+        props.option === 'base'
+            ? '#F44336'
+            : '#4CAF50'
+    };
     ::disabled {
         background: transparent;
     }
@@ -67,7 +68,7 @@ const Details = styled.div`
     padding: 24px;
 `
 
-const CURRENCIES = ['GBP', 'EUR', 'USD', 'BRL']
+const CURRENCIES: TCurrency[] = ['GBP', 'EUR', 'USD', 'BRL']
 const CURRENCY_OPTIONS = {
    maximumFractionDigits: 2,
    minimumFractionDigits: 2,
@@ -125,17 +126,37 @@ class Exchange extends Component<IProps, IState> {
         this.props.onUpdateCurrency()
     }
 
+    public handleExchange = () => {
+        const value =
+            this.props.quotation * parseFloat(this.state.value || '0')
+
+        this.props.onExchange({
+            from: {
+                amount: parseFloat(this.state.value),
+                currency: this.props.base,
+                wallet: this.props.wallet[this.props.base],
+            },
+            quotation: this.props.quotation,
+            timestamp: new Date().getTime(),
+            to: {
+                amount: value,
+                currency: this.props.target,
+                wallet: this.props.wallet[this.props.target],
+            }
+        })
+    }
+
     public renderField(option: 'base' | 'target') {
         const active = this.getIndexFor(option)
         const value = option === 'base'
             ? this.state.value
-            : (this.props.weight * parseFloat(this.state.value || '0')).toFixed(2)
+            : (this.props.quotation * parseFloat(this.state.value || '0')).toFixed(2)
 
         return (
             <Field>
                 <SwipeableViews index={ active }>
                     {
-                        CURRENCIES.map((currency: string) =>
+                        CURRENCIES.map((currency: TCurrency) =>
                             <FieldContent key={ currency }>
                                 <Details>
                                     <Typography variant='h3'>
@@ -145,7 +166,7 @@ class Exchange extends Component<IProps, IState> {
                                         You have
                                         { ' ' }
                                         {
-                                            (Math.random() * 1000).toLocaleString('gb', {
+                                            this.props.wallet[currency].toLocaleString('gb', {
                                                 currency,
                                                 ...CURRENCY_OPTIONS
                                             })
@@ -153,6 +174,7 @@ class Exchange extends Component<IProps, IState> {
                                     </Typography>
                                 </Details>
                                 <Input
+                                    option={ option }
                                     placeholder='Enter some value'
                                     disabled={ option === 'target' }
                                     value={ value }
@@ -188,6 +210,8 @@ class Exchange extends Component<IProps, IState> {
     }
 
     public render() {
+        console.log(this.props.history)
+
         return (
             <Content>
                 <Paper>
@@ -201,7 +225,8 @@ class Exchange extends Component<IProps, IState> {
                             style={ {
                                 borderTopLeftRadius: 0,
                                 borderTopRightRadius: 0
-                            } }>
+                            } }
+                            onClick={ this.handleExchange }>
                             Exchange
                         </Button>
                     </Form>
