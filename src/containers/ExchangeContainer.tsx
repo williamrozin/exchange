@@ -10,6 +10,7 @@ import {
     updateCurrency
 } from '../actions/exchange'
 import Exchange from '../components/exchange/Exchange'
+import Main from '../components/layout/Main'
 import { IState } from '../store/state'
 
 interface IProps {
@@ -34,7 +35,11 @@ class ExchangeContainer extends Component<IProps> {
         setInterval(this.props.onUpdateCurrency, REFRESH_RATE)
     }
     public render() {
-        return <Exchange { ...this.props } />
+        return (
+            <Main>
+                <Exchange { ...this.props } />
+            </Main>
+        )
     }
 }
 

@@ -1,6 +1,10 @@
 import { Button, Typography } from '@material-ui/core'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import Paper from '@material-ui/core/Paper'
+import {
+    KeyboardArrowLeft as IconLeft,
+    KeyboardArrowRight as IconRight
+} from '@material-ui/icons'
 import React, { ChangeEvent, Component } from 'react'
 import SwipeableViews from 'react-swipeable-views'
 import styled from 'styled-components'
@@ -16,7 +20,7 @@ interface IProps {
 }
 
 interface IState {
-    value: number
+    value: string
 }
 
 const Content = styled.div`
@@ -73,54 +77,59 @@ const CURRENCY_OPTIONS = {
 class Exchange extends Component<IProps, IState> {
     constructor(props: IProps) {
         super(props)
-        this.state = { value: 0 }
+        this.state = { value: '' }
     }
 
-    public getIndexFor = (type: 'base' | 'target') => {
-        return CURRENCIES.findIndex((currency: string) => this.props[type] === currency)
+    public getIndexFor = (option: 'base' | 'target') => {
+        return CURRENCIES.findIndex((currency: string) => this.props[option] === currency)
     }
 
-    public handleChangeFrom = (type: 'base' | 'target') => (event: ChangeEvent<HTMLInputElement>) => {
-        if (type === 'base') {
-            this.setState({ value: parseFloat(event.target.value) })
-        }
-    }
+    public getPreviousIndex = (option: 'base' | 'target') => {
+        const currentIndex = this.getIndexFor(option)
 
-    public handleNext = (type: 'target' | 'base') => () => {
-        const currentIndex = this.getIndexFor(type)
-        const nextIndex = currentIndex === CURRENCIES.length - 1
-            ? 0
-            : currentIndex + 1
-
-        if (type === 'base') {
-            this.props.onSetBaseCurrency(CURRENCIES[nextIndex])
-        } else {
-            this.props.onSetTargetCurrency(CURRENCIES[nextIndex])
-        }
-
-        this.props.onUpdateCurrency()
-    }
-
-    public handleBack = (type: 'target' | 'base') => () => {
-        const currentIndex = this.getIndexFor(type)
-        const prevIndex = currentIndex === 0
+        return currentIndex === 0
             ? CURRENCIES.length - 1
             : currentIndex - 1
+    }
 
-        if (type === 'base') {
-            this.props.onSetBaseCurrency(CURRENCIES[prevIndex])
+    public getNextIndex = (option: 'base' | 'target') => {
+        const currentIndex = this.getIndexFor(option)
+
+        return currentIndex === CURRENCIES.length - 1
+            ? 0
+            : currentIndex + 1
+    }
+
+    public handleChangeFrom = (option: 'base' | 'target') => (event: ChangeEvent<HTMLInputElement>) => {
+        const word = event.target.value.match(/^\d+(\.\d*)?(,\d{0,2})?$/g)
+        const value = event.target.value === ''
+            ? event.target.value
+            : word.join('')
+
+        if (option === 'base' && word !== null || event.target.value === '') {
+            this.setState({ value })
+        }
+    }
+
+    public handleChangeTab = (option: 'target' | 'base', type: 'previous' | 'next') => () => {
+        const index = type === 'previous'
+            ? this.getPreviousIndex(option)
+            : this.getNextIndex(option)
+
+        if (option === 'base') {
+            this.props.onSetBaseCurrency(CURRENCIES[index])
         } else {
-            this.props.onSetTargetCurrency(CURRENCIES[prevIndex])
+            this.props.onSetTargetCurrency(CURRENCIES[index])
         }
 
         this.props.onUpdateCurrency()
     }
 
-    public renderField(type: 'base' | 'target') {
-        const active = this.getIndexFor(type)
-        const value = type === 'base'
+    public renderField(option: 'base' | 'target') {
+        const active = this.getIndexFor(option)
+        const value = option === 'base'
             ? this.state.value
-            : this.props.weight * this.state.value
+            : (this.props.weight * parseFloat(this.state.value || '0')).toFixed(2)
 
         return (
             <Field>
@@ -144,9 +153,10 @@ class Exchange extends Component<IProps, IState> {
                                     </Typography>
                                 </Details>
                                 <Input
-                                    disabled={ type === 'target' }
+                                    placeholder='Enter some value'
+                                    disabled={ option === 'target' }
                                     value={ value }
-                                    onChange={ this.handleChangeFrom(type) }
+                                    onChange={ this.handleChangeFrom(option) }
                                 />
                             </FieldContent>
                         )
@@ -156,8 +166,22 @@ class Exchange extends Component<IProps, IState> {
                     style={ { position: 'relative' } }
                     steps={ CURRENCIES.length }
                     activeStep={ active }
-                    backButton={ <Button onClick={ this.handleBack(type) }>Back</Button> }
-                    nextButton={ <Button onClick={ this.handleNext(type) }>Next</Button> }
+                    backButton={
+                        <Button
+                            color='primary'
+                            onClick={ this.handleChangeTab(option, 'previous') }>
+                            <IconLeft />
+                            { CURRENCIES[this.getPreviousIndex(option)] }
+                        </Button>
+                    }
+                    nextButton={
+                        <Button
+                            color='primary'
+                            onClick={ this.handleChangeTab(option, 'next') }>
+                            { CURRENCIES[this.getNextIndex(option)] }
+                            <IconRight />
+                        </Button>
+                    }
                 />
             </Field>
         )
