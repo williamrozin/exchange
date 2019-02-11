@@ -29,12 +29,18 @@ const Input = styled.input`
     border-radius: 6px;
     width: calc(100% - 24px);
     border: none;
-
+    font-size: 48px;
+    text-align: right;
+    background: transparent;
+    outline: none;
+    ::disabled {
+        background: transparent;
+    }
 `
 
 const Form = styled.form`
     padding: 24px;
-    background-color: silver;
+    background-color: #FAFAFA;
     border-radius: 6px;
 `
 
@@ -45,7 +51,8 @@ class Home extends Component<IProps, IState> {
     }
 
     public handleChangeFrom = (event: ChangeEvent<HTMLInputElement>) => {
-        this.setState({ value: parseInt(event.target.value, 10) })
+        const value = event.target.value.split(' ')[1] || '0'
+        this.setState({ value: parseFloat(value.replace(',', '.')) })
     }
 
     public handleChangeBase = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -59,6 +66,14 @@ class Home extends Component<IProps, IState> {
     }
 
     public render() {
+        const targetValue = this.props.weight * this.state.value
+        const currencyOptions = {
+            currency: this.props.base,
+            maximumFractionDigits: 2,
+            minimumFractionDigits: 2,
+            style: 'currency'
+        }
+
         return (
             <Content>
                 <Form>
@@ -68,6 +83,7 @@ class Home extends Component<IProps, IState> {
                         <option value='GBP'>Pounds</option>
                         <option value='EUR'>Euros</option>
                         <option value='USD'>Dollars</option>
+                        <option value='BRL'>Reais</option>
                     </select>
                     <select
                         value={ this.props.target }
@@ -75,19 +91,20 @@ class Home extends Component<IProps, IState> {
                         <option value='GBP'>Pounds</option>
                         <option value='EUR'>Euros</option>
                         <option value='USD'>Dollars</option>
+                        <option value='BRL'>Reais</option>
                     </select>
                     <Input
-                        type='number'
                         placeholder='From currency'
-                        value={ this.state.value }
+                        value={
+                            this.state.value.toLocaleString('en', currencyOptions)
+                        }
                         onChange={ this.handleChangeFrom }
                     />
                     <div />
                     <Input
                         disabled
-                        type='number'
                         placeholder='To currency'
-                        value={ this.state.value * this.props.weight }
+                        value={ targetValue.toLocaleString('en', currencyOptions) }
                     />
                 </Form>
             </Content>

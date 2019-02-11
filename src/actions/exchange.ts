@@ -14,6 +14,7 @@ interface IData {
         GBP: number
         EUR: number
         USD: number
+        BRL: number
     }
 }
 

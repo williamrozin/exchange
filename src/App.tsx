@@ -1,12 +1,12 @@
 import React, { SFC } from 'react'
 import ReactDom from 'react-dom'
 import { Provider } from 'react-redux'
-import HomeContainer from './containers/HomeContainer'
+import ExchangeContainer from './containers/ExchangeContainer'
 import { store } from './store'
 
 const App: SFC = () =>
     <Provider store={ store }>
-        <HomeContainer />
+        <ExchangeContainer />
     </Provider>
 
 ReactDom.render(<App />, document.getElementById('root'))

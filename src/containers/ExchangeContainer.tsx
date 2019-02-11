@@ -9,7 +9,7 @@ import {
     TCurrency,
     updateCurrency
 } from '../actions/exchange'
-import Home from '../components/home/Home'
+import Exchange from '../components/exchange/Exchange'
 import { IState } from '../store/state'
 
 interface IProps {
@@ -22,17 +22,19 @@ interface IProps {
     onUpdateCurrency(): void
 }
 
-class HomeContainer extends Component<IProps> {
+const REFRESH_RATE = 100 * 10 * 10 // 100ms * 10 * 10 = 10s
+
+class ExchangeContainer extends Component<IProps> {
     public componentDidMount() {
         this.updateCurrency()
     }
 
     public updateCurrency() {
         this.props.onUpdateCurrency()
-        setInterval(this.props.onUpdateCurrency, 1000)
+        setInterval(this.props.onUpdateCurrency, REFRESH_RATE)
     }
     public render() {
-        return <Home { ...this.props } />
+        return <Exchange { ...this.props } />
     }
 }
 
@@ -57,4 +59,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<IState, {}, AnyAction>) => (
     }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(ExchangeContainer)
