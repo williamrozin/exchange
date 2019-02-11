@@ -1,4 +1,8 @@
+import { Button, Typography } from '@material-ui/core'
+import MobileStepper from '@material-ui/core/MobileStepper'
+import Paper from '@material-ui/core/Paper'
 import React, { ChangeEvent, Component } from 'react'
+import SwipeableViews from 'react-swipeable-views'
 import styled from 'styled-components'
 
 interface IProps {
@@ -24,6 +28,7 @@ const Content = styled.div`
 `
 
 const Input = styled.input`
+    flex: 1;
     padding: 12px;
     margin: 6px 0;
     border-radius: 6px;
@@ -39,77 +44,147 @@ const Input = styled.input`
 `
 
 const Form = styled.form`
-    padding: 24px;
     background-color: #FAFAFA;
     border-radius: 6px;
+    max-width: 900px;
 `
 
-class Home extends Component<IProps, IState> {
+const Field = styled.div`
+    padding: 24px;
+    max-width: 900px;
+`
+
+const FieldContent = styled.div`
+    display: flex;
+    align-items: center;
+`
+
+const Details = styled.div`
+    padding: 24px;
+`
+
+const CURRENCIES = ['GBP', 'EUR', 'USD', 'BRL']
+const CURRENCY_OPTIONS = {
+   maximumFractionDigits: 2,
+   minimumFractionDigits: 2,
+   style: 'currency'
+}
+
+class Exchange extends Component<IProps, IState> {
     constructor(props: IProps) {
         super(props)
         this.state = { value: 0 }
     }
 
-    public handleChangeFrom = (event: ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value.split(' ')[1] || '0'
-        this.setState({ value: parseFloat(value.replace(',', '.')) })
+    public getIndexFor = (type: 'base' | 'target') => {
+        return CURRENCIES.findIndex((currency: string) => this.props[type] === currency)
     }
 
-    public handleChangeBase = (event: ChangeEvent<HTMLSelectElement>) => {
-        this.props.onSetBaseCurrency(event.target.value)
+    public handleChangeFrom = (type: 'base' | 'target') => (event: ChangeEvent<HTMLInputElement>) => {
+        if (type === 'base') {
+            this.setState({ value: parseFloat(event.target.value) })
+        }
+    }
+
+    public handleNext = (type: 'target' | 'base') => () => {
+        const currentIndex = this.getIndexFor(type)
+        const nextIndex = currentIndex === CURRENCIES.length - 1
+            ? 0
+            : currentIndex + 1
+
+        if (type === 'base') {
+            this.props.onSetBaseCurrency(CURRENCIES[nextIndex])
+        } else {
+            this.props.onSetTargetCurrency(CURRENCIES[nextIndex])
+        }
+
         this.props.onUpdateCurrency()
     }
 
-    public handleChangeTarget = (event: ChangeEvent<HTMLSelectElement>) => {
-        this.props.onSetTargetCurrency(event.target.value)
+    public handleBack = (type: 'target' | 'base') => () => {
+        const currentIndex = this.getIndexFor(type)
+        const prevIndex = currentIndex === 0
+            ? CURRENCIES.length - 1
+            : currentIndex - 1
+
+        if (type === 'base') {
+            this.props.onSetBaseCurrency(CURRENCIES[prevIndex])
+        } else {
+            this.props.onSetTargetCurrency(CURRENCIES[prevIndex])
+        }
+
         this.props.onUpdateCurrency()
+    }
+
+    public renderField(type: 'base' | 'target') {
+        const active = this.getIndexFor(type)
+        const value = type === 'base'
+            ? this.state.value
+            : this.props.weight * this.state.value
+
+        return (
+            <Field>
+                <SwipeableViews index={ active }>
+                    {
+                        CURRENCIES.map((currency: string) =>
+                            <FieldContent key={ currency }>
+                                <Details>
+                                    <Typography variant='h3'>
+                                        { currency }
+                                    </Typography>
+                                    <Typography variant='h6'>
+                                        You have
+                                        { ' ' }
+                                        {
+                                            (Math.random() * 1000).toLocaleString('gb', {
+                                                currency,
+                                                ...CURRENCY_OPTIONS
+                                            })
+                                        }
+                                    </Typography>
+                                </Details>
+                                <Input
+                                    disabled={ type === 'target' }
+                                    value={ value }
+                                    onChange={ this.handleChangeFrom(type) }
+                                />
+                            </FieldContent>
+                        )
+                    }
+                </SwipeableViews>
+                <MobileStepper
+                    style={ { position: 'relative' } }
+                    steps={ CURRENCIES.length }
+                    activeStep={ active }
+                    backButton={ <Button onClick={ this.handleBack(type) }>Back</Button> }
+                    nextButton={ <Button onClick={ this.handleNext(type) }>Next</Button> }
+                />
+            </Field>
+        )
     }
 
     public render() {
-        const targetValue = this.props.weight * this.state.value
-        const currencyOptions = {
-            currency: this.props.base,
-            maximumFractionDigits: 2,
-            minimumFractionDigits: 2,
-            style: 'currency'
-        }
-
         return (
             <Content>
-                <Form>
-                    <select
-                        value={ this.props.base }
-                        onChange={ this.handleChangeBase }>
-                        <option value='GBP'>Pounds</option>
-                        <option value='EUR'>Euros</option>
-                        <option value='USD'>Dollars</option>
-                        <option value='BRL'>Reais</option>
-                    </select>
-                    <select
-                        value={ this.props.target }
-                        onChange={ this.handleChangeTarget }>
-                        <option value='GBP'>Pounds</option>
-                        <option value='EUR'>Euros</option>
-                        <option value='USD'>Dollars</option>
-                        <option value='BRL'>Reais</option>
-                    </select>
-                    <Input
-                        placeholder='From currency'
-                        value={
-                            this.state.value.toLocaleString('en', currencyOptions)
-                        }
-                        onChange={ this.handleChangeFrom }
-                    />
-                    <div />
-                    <Input
-                        disabled
-                        placeholder='To currency'
-                        value={ targetValue.toLocaleString('en', currencyOptions) }
-                    />
-                </Form>
+                <Paper>
+                    <Form>
+                        { this.renderField('base') }
+                        { this.renderField('target') }
+                        <Button
+                            fullWidth
+                            color='primary'
+                            variant='contained'
+                            style={ {
+                                borderTopLeftRadius: 0,
+                                borderTopRightRadius: 0
+                            } }>
+                            Exchange
+                        </Button>
+                    </Form>
+                </Paper>
             </Content>
         )
     }
 }
 
-export default Home
+export default Exchange

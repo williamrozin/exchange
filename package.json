@@ -13,9 +13,13 @@
   "author": "William Rozin Gaspar <williamrozingaspar@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "3.9.2",
+    "@material-ui/icons": "3.0.2",
+    "@types/react-swipeable-views": "^0.12.2",
     "react": "16.8.0",
     "react-dom": "16.8.0",
     "react-redux": "6.0.0",
+    "react-swipeable-views": "0.13.1",
     "redux": "4.0.1",
     "redux-thunk": "2.3.0",
     "styled-components": "4.1.3",

@@ -48,7 +48,9 @@ export const updateCurrency = () => {
         fetch(`https://api.exchangeratesapi.io/latest?base=${base}`)
             .then((res) => res.json())
             .then((data: IData) => {
-                const weight = data.rates[target]
+                const weight = base === target
+                    ? 1
+                    : data.rates[target]
                 dispatch(setCurrencyWeight(weight))
             })
     }
