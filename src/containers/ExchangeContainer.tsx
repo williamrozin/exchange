@@ -19,12 +19,13 @@ export interface IProps {
     history: IHistory[]
     target: TCurrency
     wallet: IState['wallet']
+    refreshing: boolean,
     quotation: number
     onExchange(history: IHistory): void
     onSetBaseCurrency(value: string): void
     onSetTargetCurrency(value: string): void
     onSetCurrencyQuotation(value: number): void
-    onUpdateCurrency(): void
+    onUpdateCurrency(refresh?: boolean): void
 }
 
 const REFRESH_RATE = 100 * 10 * 10 // 100ms * 10 * 10 = 10s
@@ -52,6 +53,7 @@ const mapStateToProps = (state: IState) => ({
     base: state.base,
     history: state.history,
     quotation: state.quotation,
+    refreshing: state.refreshing,
     target: state.target,
     wallet: state.wallet
 })
@@ -69,8 +71,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<IState, {}, AnyAction>) => (
     onSetTargetCurrency: (value: string) => {
         dispatch(setTargetCurrency(value))
     },
-    onUpdateCurrency: () => {
-        dispatch(updateCurrency())
+    onUpdateCurrency: (refresh?: boolean) => {
+        dispatch(updateCurrency(refresh))
     }
 })
 

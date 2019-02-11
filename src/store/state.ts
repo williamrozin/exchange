@@ -3,9 +3,10 @@ import { TCurrency } from '../actions/exchange'
 
 export interface IState {
     base: TCurrency
-    target: TCurrency
-    quotation: number
     history: IHistory[]
+    quotation: number
+    refreshing: boolean
+    target: TCurrency
     wallet: { [keys in TCurrency]: number }
 }
 
@@ -43,6 +44,7 @@ export const state: DeepPartial<IState> = {
         }
     ],
     quotation: 1,
+    refreshing: false,
     target: 'GBP',
     wallet: {
         BRL: 1200,

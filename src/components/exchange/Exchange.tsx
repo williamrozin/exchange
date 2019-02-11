@@ -1,4 +1,4 @@
-import { Button, Typography } from '@material-ui/core'
+import { Button, CircularProgress, Typography } from '@material-ui/core'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import Paper from '@material-ui/core/Paper'
 import {
@@ -68,6 +68,14 @@ const Details = styled.div`
     padding: 24px;
 `
 
+const Loading = styled.div`
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 64px;
+`
+
 const CURRENCIES: TCurrency[] = ['GBP', 'EUR', 'USD', 'BRL']
 const CURRENCY_OPTIONS = {
    maximumFractionDigits: 2,
@@ -123,7 +131,7 @@ class Exchange extends Component<IProps, IState> {
             this.props.onSetTargetCurrency(CURRENCIES[index])
         }
 
-        this.props.onUpdateCurrency()
+        this.props.onUpdateCurrency(true)
     }
 
     public handleExchange = () => {
@@ -144,6 +152,14 @@ class Exchange extends Component<IProps, IState> {
                 wallet: this.props.wallet[this.props.target],
             }
         })
+    }
+
+    public renderLoading() {
+        return (
+            <Loading>
+                <CircularProgress />
+            </Loading>
+        )
     }
 
     public renderField(option: 'base' | 'target') {
@@ -173,13 +189,23 @@ class Exchange extends Component<IProps, IState> {
                                         }
                                     </Typography>
                                 </Details>
-                                <Input
-                                    option={ option }
-                                    placeholder='Enter some value'
-                                    disabled={ option === 'target' }
-                                    value={ value }
-                                    onChange={ this.handleChangeFrom(option) }
-                                />
+                                {
+                                    this.props.refreshing && option === 'target' && this.state.value
+                                        ? this.renderLoading()
+                                        : (
+                                            <Input
+                                                option={ option }
+                                                placeholder={
+                                                    option === 'base'
+                                                        ? 'Enter some value'
+                                                        : ''
+                                                }
+                                                disabled={ option === 'target' }
+                                                value={ value }
+                                                onChange={ this.handleChangeFrom(option) }
+                                            />
+                                        )
+                                }
                             </FieldContent>
                         )
                     }

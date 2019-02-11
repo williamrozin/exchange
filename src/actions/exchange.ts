@@ -4,7 +4,9 @@ import {
     EXCHANGE_CURRENCY,
     SET_BASE_CURRENCY,
     SET_CURRENCY_QUOTATION,
-    SET_TARGET_CURRENCY
+    SET_REFRESHING_CURRENCY,
+    SET_TARGET_CURRENCY,
+    UNSET_REFRESHING_CURRENCY
 } from '../constants/action-types'
 import { IHistory, IState } from '../store/state'
 
@@ -26,6 +28,10 @@ export interface IQuotation {
     value: number
 }
 
+export interface IRefresh {
+    type: string
+}
+
 export interface ICurrency {
     type: string
     value: string
@@ -43,9 +49,22 @@ export const setCurrencyQuotation = (value: number) => {
     return { type: SET_CURRENCY_QUOTATION, value }
 }
 
-export const updateCurrency = () => {
-    return (dispatch: Dispatch<IQuotation>, getState: () => IState) => {
+export const setRefreshingCurrency = () => {
+    return { type: SET_REFRESHING_CURRENCY }
+}
+
+export const unsetRefreshingCurrency = () => {
+    return { type: UNSET_REFRESHING_CURRENCY }
+}
+
+export const updateCurrency = (refresh?: boolean) => {
+    return (dispatch: Dispatch<IQuotation | IRefresh>, getState: () => IState) => {
         const { base, target } = getState()
+
+        if (refresh) {
+            dispatch(setRefreshingCurrency())
+        }
+
         fetch(`https://api.exchangeratesapi.io/latest?base=${base}`)
             .then((res) => res.json())
             .then((data: IData) => {
@@ -53,6 +72,9 @@ export const updateCurrency = () => {
                     ? 1
                     : data.rates[target]
                 dispatch(setCurrencyQuotation(quotation))
+            })
+            .then(() => {
+                dispatch(unsetRefreshingCurrency())
             })
     }
 }

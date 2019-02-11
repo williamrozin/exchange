@@ -3,7 +3,9 @@ import {
     EXCHANGE_CURRENCY,
     SET_BASE_CURRENCY,
     SET_CURRENCY_QUOTATION,
+    SET_REFRESHING_CURRENCY,
     SET_TARGET_CURRENCY,
+    UNSET_REFRESHING_CURRENCY
 } from '../constants/action-types'
 import { IHistory, IState } from '../store/state'
 
@@ -31,6 +33,10 @@ export default function walletReducer(state: DeepPartial<IState>, action: IActio
                     [to.currency]: to.wallet + to.amount
                 }
             }
+        case SET_REFRESHING_CURRENCY:
+            return { ...state, refreshing: true }
+        case UNSET_REFRESHING_CURRENCY:
+            return { ...state, refreshing: false }
         case SET_BASE_CURRENCY:
             return { ...state, base: action.value }
         case SET_TARGET_CURRENCY:
