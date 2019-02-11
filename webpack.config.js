@@ -27,7 +27,7 @@ module.exports = {
         compress: true,
         contentBase: path.join(__dirname, 'dist'),
         disableHostCheck: true,
-        historyApiFallback: true,
+        transactionsApiFallback: true,
         port: 3000
     }
 }

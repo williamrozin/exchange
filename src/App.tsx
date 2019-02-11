@@ -5,12 +5,13 @@ import ReactDom from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import ExchangeContainer from './containers/ExchangeContainer'
+import HomeContainer from './containers/HomeContainer'
 import { store } from './store'
 
 const theme = {
     palette: {
         primary: {
-            main: '#0074ea'
+            main: '#0074EA'
         }
     }
 }
@@ -20,8 +21,8 @@ const App: SFC = () =>
         <ThemeProvider theme={ createMuiTheme(theme) }>
             <BrowserRouter>
                 <Switch>
-                    <Route path='/' component={ ExchangeContainer } />
-                    <Route path='/exchange' component={ ExchangeContainer } />
+                    <Route exact path='/' component={ HomeContainer } />
+                    <Route exact  path='/exchange' component={ ExchangeContainer } />
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>

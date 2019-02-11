@@ -7,18 +7,18 @@ import {
     SET_TARGET_CURRENCY,
     UNSET_REFRESHING_CURRENCY
 } from '../constants/action-types'
-import { IHistory, IState } from '../store/state'
+import { IState, ITransaction } from '../store/state'
 
 interface IAction {
     type: string
     value: string | number
-    history: IHistory
+    transactions: ITransaction
 }
 
 export default function walletReducer(state: DeepPartial<IState>, action: IAction) {
     switch (action.type) {
         case EXCHANGE_CURRENCY:
-            const { from, to } = action.history
+            const { from, to } = action.transactions
 
             if (from.currency === to.currency) {
                 return state
@@ -26,7 +26,7 @@ export default function walletReducer(state: DeepPartial<IState>, action: IActio
 
             return {
                 ...state,
-                history: [...state.history, action.history],
+                transactions: [...state.transactions, action.transactions],
                 wallet: {
                     ...state.wallet,
                     [from.currency]: from.wallet - from.amount,

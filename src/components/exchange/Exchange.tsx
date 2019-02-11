@@ -15,7 +15,7 @@ interface IState {
     value: string
 }
 
-interface IInput {
+interface IOption {
     option: 'base' | 'target'
 }
 
@@ -24,10 +24,10 @@ const Content = styled.div`
     align-items: center;
     justify-content: center;
     flex: 1;
-    height: 100vh;
+    padding: 24px;
 `
 
-const Input = styled.input<IInput>`
+const Input = styled.input<IOption>`
     flex: 1;
     padding: 12px;
     margin: 6px 0;
@@ -54,9 +54,13 @@ const Form = styled.form`
     max-width: 900px;
 `
 
-const Field = styled.div`
+const Field = styled.div<IOption>`
     padding: 24px;
     max-width: 900px;
+    background-color: ${(props) => props.option === 'target'
+        ? '#EEEEEE'
+        : '#FAFAFA'
+    };
 `
 
 const FieldContent = styled.div`
@@ -109,6 +113,10 @@ class Exchange extends Component<IProps, IState> {
             : currentIndex + 1
     }
 
+    public handleGoTo = (url: string) => () => {
+        this.props.history.push(url)
+    }
+
     public handleChangeFrom = (option: 'base' | 'target') => (event: ChangeEvent<HTMLInputElement>) => {
         const word = event.target.value.match(/^\d+(\.\d*)?(,\d{0,2})?$/g)
         const value = event.target.value === ''
@@ -152,6 +160,8 @@ class Exchange extends Component<IProps, IState> {
                 wallet: this.props.wallet[this.props.target],
             }
         })
+
+        this.setState({ value: '' })
     }
 
     public renderLoading() {
@@ -169,7 +179,7 @@ class Exchange extends Component<IProps, IState> {
             : (this.props.quotation * parseFloat(this.state.value || '0')).toFixed(2)
 
         return (
-            <Field>
+            <Field option={ option }>
                 <SwipeableViews index={ active }>
                     {
                         CURRENCIES.map((currency: TCurrency) =>
@@ -211,7 +221,10 @@ class Exchange extends Component<IProps, IState> {
                     }
                 </SwipeableViews>
                 <MobileStepper
-                    style={ { position: 'relative' } }
+                    style={ {
+                        backgroundColor: 'transparent',
+                        position: 'relative'
+                    } }
                     steps={ CURRENCIES.length }
                     activeStep={ active }
                     backButton={
@@ -236,8 +249,6 @@ class Exchange extends Component<IProps, IState> {
     }
 
     public render() {
-        console.log(this.props.history)
-
         return (
             <Content>
                 <Paper>
@@ -257,6 +268,9 @@ class Exchange extends Component<IProps, IState> {
                         </Button>
                     </Form>
                 </Paper>
+                <Button onClick={ this.handleGoTo('/') }>
+                    Back
+                </Button>
             </Content>
         )
     }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { RouteComponentProps } from 'react-router'
 import { AnyAction } from 'redux'
 import { ThunkDispatch } from 'redux-thunk'
 import {
@@ -12,16 +13,16 @@ import {
 } from '../actions/exchange'
 import Exchange from '../components/exchange/Exchange'
 import Main from '../components/layout/Main'
-import { IHistory, IState } from '../store/state'
+import { IState, ITransaction } from '../store/state'
 
-export interface IProps {
+export interface IProps extends RouteComponentProps<{}> {
     base: TCurrency
-    history: IHistory[]
+    transactions: ITransaction[]
     target: TCurrency
     wallet: IState['wallet']
-    refreshing: boolean,
+    refreshing: boolean
     quotation: number
-    onExchange(history: IHistory): void
+    onExchange(transactions: ITransaction): void
     onSetBaseCurrency(value: string): void
     onSetTargetCurrency(value: string): void
     onSetCurrencyQuotation(value: number): void
@@ -51,16 +52,16 @@ class ExchangeContainer extends Component<IProps> {
 
 const mapStateToProps = (state: IState) => ({
     base: state.base,
-    history: state.history,
     quotation: state.quotation,
     refreshing: state.refreshing,
     target: state.target,
+    transactions: state.transactions,
     wallet: state.wallet
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<IState, {}, AnyAction>) => ({
-    onExchange: (history: IHistory) => {
-        dispatch(exchange(history))
+    onExchange: (transactions: ITransaction) => {
+        dispatch(exchange(transactions))
     },
     onSetBaseCurrency: (value: string) => {
         dispatch(setBaseCurrency(value))

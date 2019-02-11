@@ -8,7 +8,7 @@ import {
     SET_TARGET_CURRENCY,
     UNSET_REFRESHING_CURRENCY
 } from '../constants/action-types'
-import { IHistory, IState } from '../store/state'
+import { IState, ITransaction } from '../store/state'
 
 interface IData {
     base: string
@@ -79,6 +79,6 @@ export const updateCurrency = (refresh?: boolean) => {
     }
 }
 
-export const exchange = (history: IHistory) => {
-    return { type: EXCHANGE_CURRENCY, history }
+export const exchange = (transactions: ITransaction) => {
+    return { type: EXCHANGE_CURRENCY, transactions }
 }

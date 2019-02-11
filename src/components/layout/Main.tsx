@@ -11,14 +11,14 @@ interface IProps {
 const Header = styled(AppBar)`
     background: #FFFFFF !important;
     box-shadow: none !important;
-    border-bottom: 1px solid #0074ea;
+    border-bottom: 1px solid #0074EA;
 `
 
 const Main: SFC<IProps> = (props) =>
     <div>
-        <Header>
+        <Header position='sticky'>
             <Toolbar>
-                <Typography>Test</Typography>
+                <Typography>Home</Typography>
             </Toolbar>
         </Header>
         { props.children }
