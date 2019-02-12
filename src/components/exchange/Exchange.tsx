@@ -157,7 +157,7 @@ class Exchange extends Component<IProps, IState> {
                 option={ option }
                 placeholder={
                     option === 'base'
-                        ? 'Enter some value'
+                        ? '0.00'
                         : ''
                 }
                 disabled={ option === 'target' }
