@@ -69,6 +69,16 @@ class Main extends Component<IProps> {
                                 onClick={ this.handleGoTo('/exchange') }>
                                 Exchange
                             </Button>
+                            <Button
+                                color='primary'
+                                style={ {
+                                    fontWeight: 600,
+                                    marginLeft: '12px',
+                                    textTransform: 'none'
+                                } }
+                                onClick={ this.handleGoTo('/rates') }>
+                                Rates
+                            </Button>
                         </Menu>
                         <ListItem button style={ { width: 'auto', maxWidth: '320px' } }>
                             <ListItemAvatar>

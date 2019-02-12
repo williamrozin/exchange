@@ -146,12 +146,21 @@ class Home extends Component<IProps, IState> {
 
     public renderPocket() {
         return (
-            <Tabs
-                options={ CURRENCIES }
-                selected={ this.state.selected }
-                renderTab={ this.renderTab }
-                onChangeTab={ this.handleChangeSelected }
-            />
+            <>
+                <Typography
+                    align='center'
+                    variant='h5'
+                    color='textSecondary'
+                    style={ { backgroundColor: '#FAFAFA', paddingTop: '24px' } }>
+                    Your pockets
+                </Typography>
+                <Tabs
+                    options={ CURRENCIES }
+                    selected={ this.state.selected }
+                    renderTab={ this.renderTab }
+                    onChangeTab={ this.handleChangeSelected }
+                />
+            </>
         )
     }
 
@@ -160,7 +169,7 @@ class Home extends Component<IProps, IState> {
             <Action fullWidth>
                 <Button
                     fullWidth
-                    variant='outlined'
+                    variant='contained'
                     color='primary'
                     onClick={ this.handleGoTo('/exchange') }>
                     Exchange

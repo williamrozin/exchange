@@ -220,7 +220,7 @@ class Exchange extends Component<IProps, IState> {
                 <Button
                     fullWidth
                     color='primary'
-                    variant='outlined'
+                    variant='contained'
                     onClick={ this.handleExchange }>
                     Exchange
                 </Button>
@@ -232,6 +232,13 @@ class Exchange extends Component<IProps, IState> {
         return (
             <Content>
                 <Form>
+                    <Typography
+                        align='center'
+                        variant='h5'
+                        color='textSecondary'
+                        style={ { backgroundColor: '#F5F5f5', paddingTop: '24px' } }>
+                        Exchanging from { this.props.base } to { this.props.target }
+                    </Typography>
                     { this.renderPocket('base') }
                     { this.renderPocket('target') }
                     { this.renderConfirm() }
