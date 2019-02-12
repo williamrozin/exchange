@@ -29,7 +29,7 @@ const Input = styled.input<IOption>`
     padding: 12px;
     margin: 6px 0;
     border-radius: 6px;
-    width: calc(100% - 24px);
+    width: calc(100% - 18px);
     border: none;
     font-size: 48px;
     text-align: right;
@@ -57,7 +57,7 @@ const FieldContent = styled.div`
 `
 
 const Details = styled.div`
-    padding: 24px;
+    padding: 18px;
 `
 
 const Loading = styled.div`
@@ -236,7 +236,7 @@ class Exchange extends Component<IProps, IState> {
                         align='center'
                         variant='h5'
                         color='textSecondary'
-                        style={ { backgroundColor: '#F5F5f5', paddingTop: '24px' } }>
+                        style={ { backgroundColor: '#F5F5f5', paddingTop: '18px' } }>
                         Exchanging from { this.props.base } to { this.props.target }
                     </Typography>
                     { this.renderPocket('base') }

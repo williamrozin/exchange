@@ -21,7 +21,7 @@ interface IContainer {
 }
 
 const Container = styled.div<IContainer>`
-    padding: 24px;
+    padding: 18px;
     max-width: 900px;
     background-color: ${(props) => props.secondary
         ? '#F5F5f5'

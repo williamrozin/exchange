@@ -19,7 +19,7 @@ const Content = styled.div`
     margin: 0 auto;
     width: calc(100% - 48px);
     max-width: 900px;
-    padding: 24px;
+    padding: 18px;
 `
 
 const Menu = styled.div`
@@ -53,7 +53,7 @@ class Main extends Component<IProps> {
                                 color='primary'
                                 style={ {
                                     fontWeight: 600,
-                                    marginLeft: '24px',
+                                    marginLeft: '18px',
                                     textTransform: 'none'
                                 } }
                                 onClick={ this.handleGoTo('/') }>

@@ -24,7 +24,7 @@ interface IAction {
 }
 
 const Abstract = styled.div`
-    padding: 24px;
+    padding: 18px;
 `
 
 const Transactions = styled.div`
@@ -36,14 +36,14 @@ const Container = styled.div`
 `
 
 export const Action = styled.div<IAction>`
-    padding: 0 24px 24px;
+    padding: 0 18px 18px;
     background-color: #FAFAFA;
     display: grid;
     grid-template-columns: ${(props) => props.fullWidth
         ? 'auto'
         : '1fr 1fr'
     };
-    grid-gap: 24px;
+    grid-gap: 18px;
 `
 
 const byTimestamp = (first: ITransaction, second: ITransaction) =>
@@ -114,7 +114,7 @@ class Home extends Component<IProps, IState> {
                         <ListSubheader
                             style={ {
                                 backgroundColor: '#FAFAFA',
-                                padding: '0 24px'
+                                padding: '0 18px'
                             } }>
                             Last transactions
                         </ListSubheader>
@@ -151,7 +151,7 @@ class Home extends Component<IProps, IState> {
                     align='center'
                     variant='h5'
                     color='textSecondary'
-                    style={ { backgroundColor: '#FAFAFA', paddingTop: '24px' } }>
+                    style={ { backgroundColor: '#FAFAFA', paddingTop: '18px' } }>
                     Your pockets
                 </Typography>
                 <Tabs
@@ -184,7 +184,7 @@ class Home extends Component<IProps, IState> {
                 <Typography
                     variant='h5'
                     color='textSecondary'
-                    style={ { paddingBottom: '24px' } }>
+                    style={ { paddingBottom: '18px' } }>
                     Welcome back, William!
                 </Typography>
                 <Container>
