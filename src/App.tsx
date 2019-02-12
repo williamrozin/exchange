@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import ExchangeContainer from './containers/ExchangeContainer'
 import HomeContainer from './containers/HomeContainer'
+import NotFoundContainer from './containers/NotFoundContainer'
 import { store } from './store'
 
 const theme = {
@@ -23,6 +24,7 @@ const App: SFC = () =>
                 <Switch>
                     <Route exact path='/' component={ HomeContainer } />
                     <Route exact  path='/exchange' component={ ExchangeContainer } />
+                    <Route component={ NotFoundContainer } />
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>
