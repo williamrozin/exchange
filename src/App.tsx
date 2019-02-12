@@ -11,7 +11,7 @@ import { store } from './store'
 const theme = {
     palette: {
         primary: {
-            main: '#0074EA'
+            main: '#088BCD'
         }
     }
 }

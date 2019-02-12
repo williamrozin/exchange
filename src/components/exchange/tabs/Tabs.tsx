@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import Button from '@material-ui/core/Button'
 import MobileStepper from '@material-ui/core/MobileStepper'
 import {
     KeyboardArrowLeft as IconLeft,
@@ -11,7 +11,7 @@ import styled from 'styled-components'
 interface IProps<T> {
     options: T[]
     selected: T
-    secondary: boolean
+    secondary?: boolean
     renderTab(value: T): ReactNode
     onChangeTab(value: T): void
 }
@@ -24,7 +24,7 @@ const Container = styled.div<IContainer>`
     padding: 24px;
     max-width: 900px;
     background-color: ${(props) => props.secondary
-        ? '#EEEEEE'
+        ? '#F5F5f5'
         : '#FAFAFA'
     };
 `

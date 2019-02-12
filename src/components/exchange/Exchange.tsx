@@ -1,9 +1,11 @@
-import { Button, CircularProgress, Typography } from '@material-ui/core'
-import Paper from '@material-ui/core/Paper'
+import Button from '@material-ui/core/Button'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import Typography from '@material-ui/core/Typography'
 import React, { ChangeEvent, Component } from 'react'
 import styled from 'styled-components'
 import { TCurrency } from '../../actions/exchange'
 import { IProps } from '../../containers/ExchangeContainer'
+import { Action } from '../home/Home'
 import Tabs from './tabs/Tabs'
 
 interface IState {
@@ -19,7 +21,7 @@ const Content = styled.div`
     align-items: center;
     justify-content: center;
     flex: 1;
-    padding: 24px;
+    border: 1px solid silver;
 `
 
 const Input = styled.input<IOption>`
@@ -66,8 +68,9 @@ const Loading = styled.div`
     padding: 0 64px;
 `
 
-const CURRENCIES: TCurrency[] = ['GBP', 'EUR', 'USD', 'BRL']
-const CURRENCY_OPTIONS = {
+export const CURRENCIES: TCurrency[] = ['GBP', 'EUR', 'USD', 'BRL']
+
+export const CURRENCY_OPTIONS = {
    maximumFractionDigits: 2,
    minimumFractionDigits: 2,
    style: 'currency'
@@ -181,7 +184,7 @@ class Exchange extends Component<IProps, IState> {
                         You have
                         { ' ' }
                         {
-                           wallet[currency].toLocaleString('gb', {
+                           wallet[currency].toLocaleString('en', {
                                 currency,
                                 ...CURRENCY_OPTIONS
                             })
@@ -198,7 +201,7 @@ class Exchange extends Component<IProps, IState> {
             <Tabs
                 selected={ this.props[option] }
                 options={ CURRENCIES }
-                secondary={ option === 'target' }
+                secondary={ option === 'base' }
                 renderTab={ this.renderField(option) }
                 onChangeTab={ this.handleChangeTab(option) }
             />
@@ -207,33 +210,32 @@ class Exchange extends Component<IProps, IState> {
 
     public renderConfirm() {
         return (
-            <Button
-                fullWidth
-                color='primary'
-                variant='contained'
-                style={ {
-                    borderTopLeftRadius: 0,
-                    borderTopRightRadius: 0
-                } }
-                onClick={ this.handleExchange }>
-                Exchange
-            </Button>
+            <Action>
+                <Button
+                    fullWidth
+                    variant='outlined'
+                    onClick={ this.handleGoTo('/') }>
+                    Cancel
+                </Button>
+                <Button
+                    fullWidth
+                    color='primary'
+                    variant='outlined'
+                    onClick={ this.handleExchange }>
+                    Exchange
+                </Button>
+            </Action>
         )
     }
 
     public render() {
         return (
             <Content>
-                <Paper>
-                    <Form>
-                        { this.renderPocket('base') }
-                        { this.renderPocket('target') }
-                        { this.renderConfirm() }
-                    </Form>
-                </Paper>
-                <Button onClick={ this.handleGoTo('/') }>
-                    Back
-                </Button>
+                <Form>
+                    { this.renderPocket('base') }
+                    { this.renderPocket('target') }
+                    { this.renderConfirm() }
+                </Form>
             </Content>
         )
     }

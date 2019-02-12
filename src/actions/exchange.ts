@@ -1,4 +1,3 @@
-// import { Dispatch } from 'redux'
 import { Dispatch } from 'react'
 import {
     EXCHANGE_CURRENCY,
