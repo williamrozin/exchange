@@ -1,15 +1,10 @@
 import { Button, CircularProgress, Typography } from '@material-ui/core'
-import MobileStepper from '@material-ui/core/MobileStepper'
 import Paper from '@material-ui/core/Paper'
-import {
-    KeyboardArrowLeft as IconLeft,
-    KeyboardArrowRight as IconRight
-} from '@material-ui/icons'
 import React, { ChangeEvent, Component } from 'react'
-import SwipeableViews from 'react-swipeable-views'
 import styled from 'styled-components'
 import { TCurrency } from '../../actions/exchange'
 import { IProps } from '../../containers/ExchangeContainer'
+import Tabs from './tabs/Tabs'
 
 interface IState {
     value: string
@@ -54,15 +49,6 @@ const Form = styled.form`
     max-width: 900px;
 `
 
-const Field = styled.div<IOption>`
-    padding: 24px;
-    max-width: 900px;
-    background-color: ${(props) => props.option === 'target'
-        ? '#EEEEEE'
-        : '#FAFAFA'
-    };
-`
-
 const FieldContent = styled.div`
     display: flex;
     align-items: center;
@@ -93,31 +79,14 @@ class Exchange extends Component<IProps, IState> {
         this.state = { value: '' }
     }
 
-    public getIndexFor = (option: 'base' | 'target') => {
-        return CURRENCIES.findIndex((currency: string) => this.props[option] === currency)
-    }
-
-    public getPreviousIndex = (option: 'base' | 'target') => {
-        const currentIndex = this.getIndexFor(option)
-
-        return currentIndex === 0
-            ? CURRENCIES.length - 1
-            : currentIndex - 1
-    }
-
-    public getNextIndex = (option: 'base' | 'target') => {
-        const currentIndex = this.getIndexFor(option)
-
-        return currentIndex === CURRENCIES.length - 1
-            ? 0
-            : currentIndex + 1
-    }
-
     public handleGoTo = (url: string) => () => {
         this.props.history.push(url)
     }
 
-    public handleChangeFrom = (option: 'base' | 'target') => (event: ChangeEvent<HTMLInputElement>) => {
+    public handleChangeFrom =
+        (option: 'base' | 'target') =>
+        (event: ChangeEvent<HTMLInputElement>) => {
+
         const word = event.target.value.match(/^\d+(\.\d*)?(,\d{0,2})?$/g)
         const value = event.target.value === ''
             ? event.target.value
@@ -128,21 +97,24 @@ class Exchange extends Component<IProps, IState> {
         }
     }
 
-    public handleChangeTab = (option: 'target' | 'base', type: 'previous' | 'next') => () => {
-        const index = type === 'previous'
-            ? this.getPreviousIndex(option)
-            : this.getNextIndex(option)
+    public handleChangeTab =
+        (option: 'target' | 'base') =>
+        (currency: TCurrency) => {
 
         if (option === 'base') {
-            this.props.onSetBaseCurrency(CURRENCIES[index])
+            this.props.onSetBaseCurrency(currency)
         } else {
-            this.props.onSetTargetCurrency(CURRENCIES[index])
+            this.props.onSetTargetCurrency(currency)
         }
 
         this.props.onUpdateCurrency(true)
     }
 
     public handleExchange = () => {
+        if (!this.state.value) {
+            return
+        }
+
         const value =
             this.props.quotation * parseFloat(this.state.value || '0')
 
@@ -172,79 +144,80 @@ class Exchange extends Component<IProps, IState> {
         )
     }
 
-    public renderField(option: 'base' | 'target') {
-        const active = this.getIndexFor(option)
+    public renderInput(option: 'base' | 'target') {
         const value = option === 'base'
             ? this.state.value
             : (this.props.quotation * parseFloat(this.state.value || '0')).toFixed(2)
 
         return (
-            <Field option={ option }>
-                <SwipeableViews index={ active }>
-                    {
-                        CURRENCIES.map((currency: TCurrency) =>
-                            <FieldContent key={ currency }>
-                                <Details>
-                                    <Typography variant='h3'>
-                                        { currency }
-                                    </Typography>
-                                    <Typography variant='h6'>
-                                        You have
-                                        { ' ' }
-                                        {
-                                            this.props.wallet[currency].toLocaleString('gb', {
-                                                currency,
-                                                ...CURRENCY_OPTIONS
-                                            })
-                                        }
-                                    </Typography>
-                                </Details>
-                                {
-                                    this.props.refreshing && option === 'target' && this.state.value
-                                        ? this.renderLoading()
-                                        : (
-                                            <Input
-                                                option={ option }
-                                                placeholder={
-                                                    option === 'base'
-                                                        ? 'Enter some value'
-                                                        : ''
-                                                }
-                                                disabled={ option === 'target' }
-                                                value={ value }
-                                                onChange={ this.handleChangeFrom(option) }
-                                            />
-                                        )
-                                }
-                            </FieldContent>
-                        )
-                    }
-                </SwipeableViews>
-                <MobileStepper
-                    style={ {
-                        backgroundColor: 'transparent',
-                        position: 'relative'
-                    } }
-                    steps={ CURRENCIES.length }
-                    activeStep={ active }
-                    backButton={
-                        <Button
-                            color='primary'
-                            onClick={ this.handleChangeTab(option, 'previous') }>
-                            <IconLeft />
-                            { CURRENCIES[this.getPreviousIndex(option)] }
-                        </Button>
-                    }
-                    nextButton={
-                        <Button
-                            color='primary'
-                            onClick={ this.handleChangeTab(option, 'next') }>
-                            { CURRENCIES[this.getNextIndex(option)] }
-                            <IconRight />
-                        </Button>
-                    }
-                />
-            </Field>
+            <Input
+                option={ option }
+                placeholder={
+                    option === 'base'
+                        ? 'Enter some value'
+                        : ''
+                }
+                disabled={ option === 'target' }
+                value={ value }
+                onChange={ this.handleChangeFrom(option) }
+            />
+        )
+    }
+
+    public renderField =
+        (option: 'base' | 'target') =>
+        (currency: TCurrency) => {
+
+        const { refreshing, wallet } = this.props
+        const loading = refreshing && option === 'target' && this.state.value
+
+        return (
+            <FieldContent key={ currency }>
+                <Details>
+                    <Typography variant='h3'>
+                        { currency }
+                    </Typography>
+                    <Typography variant='h6'>
+                        You have
+                        { ' ' }
+                        {
+                           wallet[currency].toLocaleString('gb', {
+                                currency,
+                                ...CURRENCY_OPTIONS
+                            })
+                        }
+                    </Typography>
+                </Details>
+                { loading ? this.renderLoading() : this.renderInput(option) }
+            </FieldContent>
+        )
+    }
+
+    public renderPocket(option: 'base' | 'target') {
+        return (
+            <Tabs
+                selected={ this.props[option] }
+                options={ CURRENCIES }
+                secondary={ option === 'target' }
+                renderTab={ this.renderField(option) }
+                onChangeTab={ this.handleChangeTab(option) }
+            />
+        )
+    }
+
+    public renderConfirm() {
+        return (
+            <Button
+                fullWidth
+                color='primary'
+                variant='contained'
+                style={ {
+                    borderTopLeftRadius: 0,
+                    borderTopRightRadius: 0
+                } }
+                onClick={ this.handleExchange }>
+                Exchange
+            </Button>
         )
     }
 
@@ -253,19 +226,9 @@ class Exchange extends Component<IProps, IState> {
             <Content>
                 <Paper>
                     <Form>
-                        { this.renderField('base') }
-                        { this.renderField('target') }
-                        <Button
-                            fullWidth
-                            color='primary'
-                            variant='contained'
-                            style={ {
-                                borderTopLeftRadius: 0,
-                                borderTopRightRadius: 0
-                            } }
-                            onClick={ this.handleExchange }>
-                            Exchange
-                        </Button>
+                        { this.renderPocket('base') }
+                        { this.renderPocket('target') }
+                        { this.renderConfirm() }
                     </Form>
                 </Paper>
                 <Button onClick={ this.handleGoTo('/') }>
