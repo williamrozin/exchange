@@ -6,9 +6,7 @@ import { ThunkDispatch } from 'redux-thunk'
 import {
     exchange,
     setBaseCurrency,
-    setCurrencyQuotation,
     setTargetCurrency,
-    TCurrency,
     updateCurrency
 } from '../actions/exchange'
 import Exchange from '../components/exchange/Exchange'
@@ -16,16 +14,16 @@ import Main from '../components/layout/Main'
 import { IState, ITransaction } from '../store/state'
 
 export interface IProps extends RouteComponentProps<{}> {
-    base: TCurrency
-    transactions: ITransaction[]
-    target: TCurrency
+    base: IState['base']
+    transactions: IState['transactions']
+    target: IState['target']
     wallet: IState['wallet']
-    refreshing: boolean
-    quotation: number
+    refreshing: IState['refreshing']
+    quotation: IState['quotation']
+    rates: IState['rates']
     onExchange(transactions: ITransaction): void
     onSetBaseCurrency(value: string): void
     onSetTargetCurrency(value: string): void
-    onSetCurrencyQuotation(value: number): void
     onUpdateCurrency(refresh?: boolean): void
 }
 
@@ -37,7 +35,7 @@ class ExchangeContainer extends Component<IProps> {
     }
 
     public updateCurrency() {
-        this.props.onUpdateCurrency()
+        this.props.onUpdateCurrency(true)
         setInterval(this.props.onUpdateCurrency, REFRESH_RATE)
     }
 
@@ -53,6 +51,7 @@ class ExchangeContainer extends Component<IProps> {
 const mapStateToProps = (state: IState) => ({
     base: state.base,
     quotation: state.quotation,
+    rates: state.rates,
     refreshing: state.refreshing,
     target: state.target,
     transactions: state.transactions,
@@ -65,9 +64,6 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<IState, {}, AnyAction>) => (
     },
     onSetBaseCurrency: (value: string) => {
         dispatch(setBaseCurrency(value))
-    },
-    onSetCurrencyQuotation: (value: number) => {
-        dispatch(setCurrencyQuotation(value))
     },
     onSetTargetCurrency: (value: string) => {
         dispatch(setTargetCurrency(value))

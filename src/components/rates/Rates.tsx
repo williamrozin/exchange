@@ -1,6 +1,7 @@
 import { Button, Typography } from '@material-ui/core'
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { IProps } from '../../containers/RatesContainer'
 import { Content } from '../exchange/Exchange'
 import RateList from './RateList'
 
@@ -9,10 +10,16 @@ const Form = styled.div`
     flex: 1;
 `
 
-class Rates extends Component {
+class Rates extends Component<IProps> {
     public renderRates() {
         return (
-            <RateList />
+            <RateList
+                base={ this.props.base }
+                target={ this.props.target }
+                refreshing={ this.props.refreshing }
+                rates={ this.props.rates }
+                quotation={ this.props.quotation }
+            />
         )
     }
 

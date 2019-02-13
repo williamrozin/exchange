@@ -72,7 +72,7 @@ class Home extends Component<IProps, IState> {
             ...CURRENCY_OPTIONS
         })
 
-        const currencies: { [keys in TCurrency]: string } = {
+        const currencies: Partial<{ [keys in TCurrency]: string }> = {
             BRL: 'Brazilian real',
             EUR: 'Euro',
             GBP: 'British Pound',

@@ -13,10 +13,39 @@ interface IData {
     base: string
     date: string
     rates: {
-        GBP: number
-        EUR: number
-        USD: number
+        AUD: number
+        BGN: number
         BRL: number
+        CAD: number
+        CHF: number
+        CNY: number
+        CZK: number
+        DKK: number
+        EUR: number
+        GBP: number
+        HKD: number
+        HRK: number
+        HUF: number
+        IDR: number
+        ILS: number
+        INR: number
+        ISK: number
+        JPY: number
+        KRW: number
+        MXN: number
+        MYR: number
+        NOK: number
+        NZD: number
+        PHP: number
+        PLN: number
+        RON: number
+        RUB: number
+        SEK: number
+        SGD: number
+        THB: number
+        TRY: number
+        USD: number
+        ZAR: number
     }
 }
 
@@ -44,7 +73,7 @@ export const setTargetCurrency = (value: string) => {
     return { type: SET_TARGET_CURRENCY, value }
 }
 
-export const setCurrencyQuotation = (value: number) => {
+export const setCurrencyQuotation = (value: IState['quotation']) => {
     return { type: SET_CURRENCY_QUOTATION, value }
 }
 
@@ -58,7 +87,7 @@ export const unsetRefreshingCurrency = () => {
 
 export const updateCurrency = (refresh?: boolean) => {
     return (dispatch: Dispatch<IQuotation | IRefresh>, getState: () => IState) => {
-        const { base, target } = getState()
+        const { base } = getState()
 
         if (refresh) {
             dispatch(setRefreshingCurrency())
@@ -67,9 +96,11 @@ export const updateCurrency = (refresh?: boolean) => {
         fetch(`https://api.exchangeratesapi.io/latest?base=${base}`)
             .then((res) => res.json())
             .then((data: IData) => {
-                const quotation = base === target
-                    ? 1
-                    : data.rates[target]
+                const quotation = {
+                    ...data.rates,
+                    [base]: 1
+                }
+
                 dispatch(setCurrencyQuotation(quotation))
             })
             .then(() => {

@@ -4,10 +4,16 @@ import { TCurrency } from '../actions/exchange'
 export interface IState {
     base: TCurrency
     transactions: ITransaction[]
-    quotation: number
+    quotation: { [keys in TCurrency]: number }
     refreshing: boolean
     target: TCurrency
     wallet: { [keys in TCurrency]: number }
+    rates: IRate[]
+}
+
+export interface IRate {
+    base: TCurrency
+    target: TCurrency
 }
 
 export interface ITransaction {
@@ -27,7 +33,21 @@ export interface ITransaction {
 
 export const state: DeepPartial<IState> = {
     base: 'GBP',
-    quotation: 1,
+    quotation: {},
+    rates: [
+        {
+            base: 'GBP',
+            target: 'EUR'
+        },
+        {
+            base: 'EUR',
+            target: 'USD'
+        },
+        {
+            base: 'USD',
+            target: 'GBP'
+        }
+    ],
     refreshing: false,
     target: 'GBP',
     transactions: [
@@ -47,7 +67,6 @@ export const state: DeepPartial<IState> = {
         }
     ],
     wallet: {
-        BRL: 1200,
         EUR: 7000,
         GBP: 19500,
         USD: 5570.68

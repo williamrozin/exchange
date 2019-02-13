@@ -68,7 +68,7 @@ const Loading = styled.div`
     padding: 0 64px;
 `
 
-export const CURRENCIES: TCurrency[] = ['GBP', 'EUR', 'USD', 'BRL']
+export const CURRENCIES: TCurrency[] = ['GBP', 'EUR', 'USD']
 
 export const CURRENCY_OPTIONS = {
    maximumFractionDigits: 2,
@@ -118,8 +118,8 @@ class Exchange extends Component<IProps, IState> {
             return
         }
 
-        const value =
-            this.props.quotation * parseFloat(this.state.value || '0')
+        const quotation = this.props.quotation[this.props.target] || 1
+        const value = quotation * parseFloat(this.state.value || '0')
 
         this.props.onExchange({
             from: {
@@ -127,7 +127,7 @@ class Exchange extends Component<IProps, IState> {
                 currency: this.props.base,
                 wallet: this.props.wallet[this.props.base],
             },
-            quotation: this.props.quotation,
+            quotation,
             timestamp: new Date().getTime(),
             to: {
                 amount: value,
@@ -148,9 +148,10 @@ class Exchange extends Component<IProps, IState> {
     }
 
     public renderInput(option: 'base' | 'target') {
+        const quotation = this.props.quotation[this.props.target] || 1
         const value = option === 'base'
             ? this.state.value
-            : (this.props.quotation * parseFloat(this.state.value || '0')).toFixed(2)
+            : (quotation * parseFloat(this.state.value || '0')).toFixed(2)
 
         return (
             <Input
@@ -244,7 +245,15 @@ class Exchange extends Component<IProps, IState> {
                     { this.renderPocket('target') }
                     { this.renderConfirm() }
                 </Form>
-                <RateList title='Related rates' />
+                <RateList
+                    readonly
+                    title='Related rates'
+                    base={ this.props.base }
+                    target={ this.props.target }
+                    refreshing={ this.props.refreshing }
+                    rates={ this.props.rates }
+                    quotation={ this.props.quotation }
+                />
             </Content>
         )
     }
