@@ -25,10 +25,11 @@ interface IProps {
 
 const LoadingWrapper = styled.div`
     flex: 1;
-    padding: 45px 0;
+    padding: 12px 0 36px;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #FAFAFA;
 `
 
 class RateList extends Component<IProps> {
@@ -49,7 +50,7 @@ class RateList extends Component<IProps> {
         )
     }
 
-    public render() {
+    public renderList() {
         const {
             rates = [],
             base,
@@ -67,6 +68,32 @@ class RateList extends Component<IProps> {
             return this.renderLoading()
         }
 
+        return data.map((rate, index: number) =>
+            <ListItem
+                button
+                style={ {
+                    backgroundColor: index % 2 === 0
+                        ? '#EEEEEE'
+                        : '#F5F5F5'
+                } }
+                key={ index }>
+                <ListItemText
+                    primary={ `1 ${rate.base} - $ ${this.getQuotation(rate)} ${rate.target}` }
+                />
+                {
+                    !this.props.readonly && (
+                        <ListItemSecondaryAction>
+                            <IconButton>
+                                <Delete />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    )
+                }
+            </ListItem>
+        )
+    }
+
+    public render() {
         return (
             <Transactions>
                 <List
@@ -80,31 +107,7 @@ class RateList extends Component<IProps> {
                             { this.props.title || 'Your rates' }
                         </ListSubheader>
                     }>
-                    {
-                        data.map((rate, index: number) =>
-                            <ListItem
-                                button
-                                style={ {
-                                    backgroundColor: index % 2 === 0
-                                        ? '#EEEEEE'
-                                        : '#F5F5F5'
-                                } }
-                                key={ index }>
-                                <ListItemText
-                                    primary={ `1 ${rate.base} - $ ${this.getQuotation(rate)} ${rate.target}` }
-                                />
-                                {
-                                    !this.props.readonly && (
-                                        <ListItemSecondaryAction>
-                                            <IconButton>
-                                                <Delete />
-                                            </IconButton>
-                                        </ListItemSecondaryAction>
-                                    )
-                                }
-                            </ListItem>
-                        )
-                    }
+                    { this.renderList() }
                 </List>
             </Transactions>
         )
