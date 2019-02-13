@@ -17,7 +17,7 @@ const Container = styled.div``
 
 const Content = styled.div`
     margin: 0 auto;
-    width: calc(100% - 48px);
+    width: calc(100% - 36px);
     max-width: 900px;
     padding: 18px;
 `
@@ -44,7 +44,8 @@ class Main extends Component<IProps> {
                     } }>
                     <Toolbar>
                         <img
-                            src='https://upload.wikimedia.org/wikipedia/commons/d/d6/Revolut.svg'
+                            alt='Revolut logo'
+                            src={ require('../../../assets/images/Revolut.svg') }
                             height='36px'
                             draggable={ false }
                         />
@@ -82,7 +83,9 @@ class Main extends Component<IProps> {
                         </Menu>
                         <ListItem button style={ { width: 'auto', maxWidth: '320px' } }>
                             <ListItemAvatar>
-                                <Avatar src='https://picsum.photos/200/200/?random'>
+                                <Avatar
+                                    alt='Avatar photo'
+                                    src={ require('../../../assets/images/user.jpeg') }>
                                     W
                                 </Avatar>
                             </ListItemAvatar>

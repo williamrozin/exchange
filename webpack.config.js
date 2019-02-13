@@ -2,12 +2,23 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
+    cache: true,
     entry: './src/App.tsx',
     module: {
         rules: [
             { test: /\.ts(x)?$/, loader: 'ts-loader' },
             { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
-            { test: /\.html$/, loader: 'html-loader' }
+            { test: /\.html$/, loader: 'html-loader' },
+            {
+                test: /\.(gif|png|jpe?g|svg)$/i,
+                use: [
+                    'file-loader',
+                    {
+                        loader: 'image-webpack-loader',
+                        options: { disable: true }
+                    }
+                ]
+            }
         ]
     },
     resolve: {
@@ -29,5 +40,10 @@ module.exports = {
         disableHostCheck: true,
         historyApiFallback: true,
         port: 3000
+    },
+    optimization: {
+        splitChunks: {
+            chunks: 'all'
+        }
     }
 }

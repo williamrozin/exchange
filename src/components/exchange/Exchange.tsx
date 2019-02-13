@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { TCurrency } from '../../actions/exchange'
 import { IProps } from '../../containers/ExchangeContainer'
 import { Action } from '../home/Home'
+import RateList from '../rates/RateList'
 import Tabs from './tabs/Tabs'
 
 interface IState {
@@ -16,12 +17,17 @@ interface IOption {
     option: 'base' | 'target'
 }
 
-const Content = styled.div`
+export const Content = styled.div`
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex: 1;
+    flex-direction: column;
     border: 1px solid silver;
+    background-color: #FAFAFA;
+`
+
+export const Form = styled.form`
+    max-width: 900px;
+    width: 100%;
 `
 
 const Input = styled.input<IOption>`
@@ -43,12 +49,6 @@ const Input = styled.input<IOption>`
     ::disabled {
         background: transparent;
     }
-`
-
-const Form = styled.form`
-    background-color: #FAFAFA;
-    border-radius: 6px;
-    max-width: 900px;
 `
 
 const FieldContent = styled.div`
@@ -221,6 +221,7 @@ class Exchange extends Component<IProps, IState> {
                     fullWidth
                     color='primary'
                     variant='contained'
+                    disabled={ this.state.value.trim() === '' }
                     onClick={ this.handleExchange }>
                     Exchange
                 </Button>
@@ -243,6 +244,7 @@ class Exchange extends Component<IProps, IState> {
                     { this.renderPocket('target') }
                     { this.renderConfirm() }
                 </Form>
+                <RateList title='Related rates' />
             </Content>
         )
     }

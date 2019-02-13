@@ -12,7 +12,7 @@ import styled from 'styled-components'
 import { TCurrency } from '../../actions/exchange'
 import { IProps } from '../../containers/HomeContainer'
 import { ITransaction } from '../../store/state'
-import { CURRENCIES, CURRENCY_OPTIONS } from '../exchange/Exchange'
+import { Content, CURRENCIES, CURRENCY_OPTIONS } from '../exchange/Exchange'
 import Tabs from '../exchange/tabs/Tabs'
 
 interface IState {
@@ -27,17 +27,12 @@ const Abstract = styled.div`
     padding: 18px;
 `
 
-const Transactions = styled.div`
+export const Transactions = styled.div`
     background-color: #E0E0E0;
-`
-
-const Container = styled.div`
-    border: 1px solid silver;
 `
 
 export const Action = styled.div<IAction>`
     padding: 0 18px 18px;
-    background-color: #FAFAFA;
     display: grid;
     grid-template-columns: ${(props) => props.fullWidth
         ? 'auto'
@@ -151,7 +146,7 @@ class Home extends Component<IProps, IState> {
                     align='center'
                     variant='h5'
                     color='textSecondary'
-                    style={ { backgroundColor: '#FAFAFA', paddingTop: '18px' } }>
+                    style={ { paddingTop: '18px' } }>
                     Your pockets
                 </Typography>
                 <Tabs
@@ -187,11 +182,11 @@ class Home extends Component<IProps, IState> {
                     style={ { paddingBottom: '18px' } }>
                     Welcome back, William!
                 </Typography>
-                <Container>
+                <Content>
                     { this.renderPocket() }
                     { this.renderAction() }
                     { this.renderTransactions() }
-                </Container>
+                </Content>
             </>
         )
     }
