@@ -78,14 +78,14 @@ class RateList extends Component<IProps> {
         return data.map((rate, index: number) =>
             <ListItem
                 button
+                key={ rate.base + rate.target }
                 style={ {
                     backgroundColor: index % 2 === 0
                         ? '#EEEEEE'
                         : '#F5F5F5'
-                } }
-                key={ index }>
+                } }>
                 <ListItemText
-                    primary={ `1 ${rate.base} - $ ${this.getQuotation(rate)} ${rate.target}` }
+                    primary={ `1 ${rate.base} - ${this.getQuotation(rate)} ${rate.target}` }
                 />
                 {
                     !this.props.readonly && (
