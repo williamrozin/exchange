@@ -5,9 +5,7 @@ import { wallet } from '../store/state'
 
 interface IAction {
     type: string
-    value: string | number
-    transactions: ITransaction
-    timestamp: IState['quotation']['lastUpdate']
+    value: ITransaction
 }
 
 type TState = DeepPartial<IState['wallet']>
@@ -15,7 +13,7 @@ type TState = DeepPartial<IState['wallet']>
 export default function walletReducer(state: TState = wallet, action: IAction) {
     switch (action.type) {
         case UPDATE_WALLET:
-            const { from, to } = action.transactions
+            const { from, to } = action.value
 
             if (from.currency === to.currency) {
                 return state

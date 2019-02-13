@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography'
 import { format } from 'date-fns'
 import React, { ChangeEvent, Component } from 'react'
 import styled from 'styled-components'
-import { TCurrency } from '../../actions/exchange'
+import { TCurrency } from '../../actions/quotation-actions'
 import { IProps } from '../../containers/ExchangeContainer'
 import { Action } from '../home/Home'
 import RateList from '../rates/RateList'
@@ -111,7 +111,7 @@ class Exchange extends Component<IProps, IState> {
             this.props.onSetTargetCurrency(currency)
         }
 
-        this.props.onUpdateCurrency(true)
+        this.props.onUpdateQuotation(true)
     }
 
     public handleExchange = () => {

@@ -1,5 +1,5 @@
 import { DeepPartial } from 'redux'
-import { TCurrency } from '../actions/exchange'
+import { TCurrency } from '../actions/quotation-actions'
 
 export interface IState {
     exchange: {

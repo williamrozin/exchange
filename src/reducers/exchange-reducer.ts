@@ -3,14 +3,12 @@ import {
     SET_BASE_CURRENCY,
     SET_TARGET_CURRENCY,
 } from '../constants/action-types'
-import { IState, ITransaction } from '../store/state'
+import { IState } from '../store/state'
 import { exchange } from '../store/state'
 
 interface IAction {
     type: string
-    value: string | number
-    transactions: ITransaction
-    timestamp: IState['quotation']['lastUpdate']
+    value: IState['exchange']['base'] | IState['exchange']['target']
 }
 
 type TState = DeepPartial<IState['exchange']>

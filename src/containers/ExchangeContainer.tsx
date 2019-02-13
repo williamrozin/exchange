@@ -4,11 +4,12 @@ import { RouteComponentProps } from 'react-router'
 import { AnyAction } from 'redux'
 import { ThunkDispatch } from 'redux-thunk'
 import {
-    exchange,
     setBaseCurrency,
     setTargetCurrency,
-    updateCurrency
-} from '../actions/exchange'
+} from '../actions/exchange-actions'
+import { updateQuotation } from '../actions/quotation-actions'
+import { updateTransactions } from '../actions/transactions-actions'
+import { updateWallet } from '../actions/wallet-actions'
 import Exchange from '../components/exchange/Exchange'
 import Main from '../components/layout/Main'
 import { IState, ITransaction } from '../store/state'
@@ -25,19 +26,19 @@ export interface IProps extends RouteComponentProps<{}> {
     onExchange(transactions: ITransaction): void
     onSetBaseCurrency(value: string): void
     onSetTargetCurrency(value: string): void
-    onUpdateCurrency(refresh?: boolean): void
+    onUpdateQuotation(refresh?: boolean): void
 }
 
 export const REFRESH_RATE = 100 * 10 * 10 // 100ms * 10 * 10 = 10s
 
 class ExchangeContainer extends Component<IProps> {
     public componentDidMount() {
-        this.updateCurrency()
+        this.updateQuotation()
     }
 
-    public updateCurrency() {
-        this.props.onUpdateCurrency(true)
-        setInterval(this.props.onUpdateCurrency, REFRESH_RATE)
+    public updateQuotation() {
+        this.props.onUpdateQuotation(true)
+        setInterval(this.props.onUpdateQuotation, REFRESH_RATE)
     }
 
     public render() {
@@ -61,17 +62,18 @@ const mapStateToProps = (state: IState) => ({
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<IState, {}, AnyAction>) => ({
-    onExchange: (transactions: ITransaction) => {
-        dispatch(exchange(transactions))
+    onExchange: (transaction: ITransaction) => {
+        dispatch(updateTransactions(transaction))
+        dispatch(updateWallet(transaction))
     },
-    onSetBaseCurrency: (value: string) => {
+    onSetBaseCurrency: (value: IState['exchange']['base']) => {
         dispatch(setBaseCurrency(value))
     },
-    onSetTargetCurrency: (value: string) => {
+    onSetTargetCurrency: (value: IState['exchange']['target']) => {
         dispatch(setTargetCurrency(value))
     },
-    onUpdateCurrency: (refresh?: boolean) => {
-        dispatch(updateCurrency(refresh))
+    onUpdateQuotation: (refresh?: boolean) => {
+        dispatch(updateQuotation(refresh))
     }
 })
 

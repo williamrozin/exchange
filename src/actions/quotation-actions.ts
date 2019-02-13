@@ -1,13 +1,10 @@
 import { Dispatch } from 'react'
 import {
-    EXCHANGE_CURRENCY,
-    SET_BASE_CURRENCY,
     SET_CURRENCY_QUOTATION,
     SET_REFRESHING_CURRENCY,
-    SET_TARGET_CURRENCY,
     UNSET_REFRESHING_CURRENCY
 } from '../constants/action-types'
-import { IState, ITransaction } from '../store/state'
+import { IState } from '../store/state'
 
 interface IData {
     base: string
@@ -65,14 +62,6 @@ export interface ICurrency {
     value: string
 }
 
-export const setBaseCurrency = (value: string) => {
-    return { type: SET_BASE_CURRENCY, value }
-}
-
-export const setTargetCurrency = (value: string) => {
-    return { type: SET_TARGET_CURRENCY, value }
-}
-
 export const setCurrencyQuotation =
     (value: IState['quotation']['current'], timestamp: IState['quotation']['lastUpdate']) => {
     return { type: SET_CURRENCY_QUOTATION, value, timestamp }
@@ -86,7 +75,7 @@ export const unsetRefreshingCurrency = () => {
     return { type: UNSET_REFRESHING_CURRENCY }
 }
 
-export const updateCurrency = (refresh?: boolean) => {
+export const updateQuotation = (refresh?: boolean) => {
     return (dispatch: Dispatch<IQuotation | IRefresh>, getState: () => IState) => {
         const { base } = getState().exchange
 
@@ -109,8 +98,4 @@ export const updateCurrency = (refresh?: boolean) => {
                 dispatch(unsetRefreshingCurrency())
             })
     }
-}
-
-export const exchange = (transactions: ITransaction) => {
-    return { type: EXCHANGE_CURRENCY, transactions }
 }

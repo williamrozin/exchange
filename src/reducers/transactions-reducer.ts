@@ -1,21 +1,19 @@
 import { DeepPartial } from 'redux'
-import { EXCHANGE_CURRENCY } from '../constants/action-types'
+import { UPDATE_TRANSACTIONS } from '../constants/action-types'
 import { IState, ITransaction } from '../store/state'
 import { transactions } from '../store/state'
 
 interface IAction {
     type: string
-    value: string | number
-    transactions: ITransaction
-    timestamp: IState['quotation']['lastUpdate']
+    value: ITransaction
 }
 
 type TState = DeepPartial<IState['transactions']>
 
 export default function walletReducer(state: TState = transactions, action: IAction) {
     switch (action.type) {
-        case EXCHANGE_CURRENCY:
-            const { from, to } = action.transactions
+        case UPDATE_TRANSACTIONS:
+            const { from, to } = action.value
 
             if (from.currency === to.currency) {
                 return state
@@ -23,7 +21,7 @@ export default function walletReducer(state: TState = transactions, action: IAct
 
             return [
                 ...state,
-                action.transactions
+                action.value
             ]
         default:
             return state

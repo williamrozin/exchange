@@ -4,13 +4,12 @@ import {
     SET_REFRESHING_CURRENCY,
     UNSET_REFRESHING_CURRENCY
 } from '../constants/action-types'
-import { IState, ITransaction } from '../store/state'
+import { IState } from '../store/state'
 import { quotation } from '../store/state'
 
 interface IAction {
     type: string
-    value: string | number
-    transactions: ITransaction
+    value: IState['quotation']['current']
     timestamp: IState['quotation']['lastUpdate']
 }
 
