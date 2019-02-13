@@ -73,8 +73,9 @@ export const setTargetCurrency = (value: string) => {
     return { type: SET_TARGET_CURRENCY, value }
 }
 
-export const setCurrencyQuotation = (value: IState['quotation']) => {
-    return { type: SET_CURRENCY_QUOTATION, value }
+export const setCurrencyQuotation =
+    (value: IState['quotation'], timestamp: IState['lastUpdate']) => {
+    return { type: SET_CURRENCY_QUOTATION, value, timestamp }
 }
 
 export const setRefreshingCurrency = () => {
@@ -96,12 +97,13 @@ export const updateCurrency = (refresh?: boolean) => {
         fetch(`https://api.exchangeratesapi.io/latest?base=${base}`)
             .then((res) => res.json())
             .then((data: IData) => {
+                const timestamp = new Date().getTime()
                 const quotation = {
                     ...data.rates,
                     [base]: 1
                 }
 
-                dispatch(setCurrencyQuotation(quotation))
+                dispatch(setCurrencyQuotation(quotation, timestamp))
             })
             .then(() => {
                 dispatch(unsetRefreshingCurrency())

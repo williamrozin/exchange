@@ -9,6 +9,7 @@ export interface IState {
     target: TCurrency
     wallet: { [keys in TCurrency]: number }
     rates: IRate[]
+    lastUpdate: number
 }
 
 export interface IRate {
@@ -33,6 +34,7 @@ export interface ITransaction {
 
 export const state: DeepPartial<IState> = {
     base: 'GBP',
+    lastUpdate: new Date().getTime(),
     quotation: {},
     rates: [
         {

@@ -1,13 +1,15 @@
 import {
+    CircularProgress,
     IconButton,
     List,
     ListItem,
     ListItemSecondaryAction,
     ListItemText,
-    ListSubheader,
+    ListSubheader
 } from '@material-ui/core'
 import { Delete } from '@material-ui/icons'
 import React, { Component } from 'react'
+import styled from 'styled-components'
 import { IRate, IState } from '../../store/state'
 import { Transactions } from '../home/Home'
 
@@ -21,6 +23,14 @@ interface IProps {
     refreshing: IState['refreshing']
 }
 
+const LoadingWrapper = styled.div`
+    flex: 1;
+    padding: 45px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
 class RateList extends Component<IProps> {
     public getQuotation(rate: IRate) {
         const base = 1 / this.props.quotation[rate.base]
@@ -29,6 +39,14 @@ class RateList extends Component<IProps> {
             currency: rate.target,
             style: 'currency'
         })
+    }
+
+    public renderLoading() {
+        return (
+            <LoadingWrapper>
+                <CircularProgress size={ 48 } />
+            </LoadingWrapper>
+        )
     }
 
     public render() {
@@ -44,6 +62,10 @@ class RateList extends Component<IProps> {
                 || rate.target === base || rate.target === target
             )
             : rates
+
+        if (this.props.refreshing) {
+            return this.renderLoading()
+        }
 
         return (
             <Transactions>

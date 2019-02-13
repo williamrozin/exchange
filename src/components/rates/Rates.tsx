@@ -1,4 +1,5 @@
 import { Button, Typography } from '@material-ui/core'
+import format from 'date-fns/format'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { IProps } from '../../containers/RatesContainer'
@@ -11,7 +12,7 @@ const Form = styled.div`
 `
 
 class Rates extends Component<IProps> {
-    public renderRates() {
+    public renderList() {
         return (
             <RateList
                 base={ this.props.base }
@@ -23,7 +24,7 @@ class Rates extends Component<IProps> {
         )
     }
 
-    public render() {
+    public renderRates() {
         return (
             <Content>
                 <Typography
@@ -41,8 +42,24 @@ class Rates extends Component<IProps> {
                         Add new currency
                     </Button>
                 </Form>
-                { this.renderRates() }
+                { this.renderList() }
             </Content>
+        )
+    }
+
+    public render() {
+        return (
+            <>
+                { this.renderRates() }
+                <Typography
+                    align='center'
+                    variant='caption'
+                    style={ { paddingTop: '18px' } }>
+                    Last updated at
+                    { ' ' }
+                    { format(new Date(this.props.lastUpdate), 'HH:mm, DD MMM YYYY') }
+                </Typography>
+            </>
         )
     }
 }

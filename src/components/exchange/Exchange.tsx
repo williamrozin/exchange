@@ -1,6 +1,7 @@
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
+import { format } from 'date-fns'
 import React, { ChangeEvent, Component } from 'react'
 import styled from 'styled-components'
 import { TCurrency } from '../../actions/exchange'
@@ -230,7 +231,7 @@ class Exchange extends Component<IProps, IState> {
         )
     }
 
-    public render() {
+    public renderExchange() {
         return (
             <Content>
                 <Form>
@@ -255,6 +256,22 @@ class Exchange extends Component<IProps, IState> {
                     quotation={ this.props.quotation }
                 />
             </Content>
+        )
+    }
+
+    public render() {
+        return (
+            <>
+                { this.renderExchange() }
+                <Typography
+                    align='center'
+                    variant='caption'
+                    style={ { paddingTop: '18px' } }>
+                    Last updated at
+                    { ' ' }
+                    { format(new Date(this.props.lastUpdate), 'HH:mm, DD MMM YYYY') }
+                </Typography>
+            </>
         )
     }
 }

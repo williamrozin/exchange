@@ -21,13 +21,14 @@ export interface IProps extends RouteComponentProps<{}> {
     refreshing: IState['refreshing']
     quotation: IState['quotation']
     rates: IState['rates']
+    lastUpdate: IState['lastUpdate']
     onExchange(transactions: ITransaction): void
     onSetBaseCurrency(value: string): void
     onSetTargetCurrency(value: string): void
     onUpdateCurrency(refresh?: boolean): void
 }
 
-const REFRESH_RATE = 100 * 10 * 10 // 100ms * 10 * 10 = 10s
+export const REFRESH_RATE = 100 * 10 * 10 // 100ms * 10 * 10 = 10s
 
 class ExchangeContainer extends Component<IProps> {
     public componentDidMount() {
@@ -50,6 +51,7 @@ class ExchangeContainer extends Component<IProps> {
 
 const mapStateToProps = (state: IState) => ({
     base: state.base,
+    lastUpdate: state.lastUpdate,
     quotation: state.quotation,
     rates: state.rates,
     refreshing: state.refreshing,

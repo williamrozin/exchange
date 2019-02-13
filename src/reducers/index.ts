@@ -13,6 +13,7 @@ interface IAction {
     type: string
     value: string | number
     transactions: ITransaction
+    timestamp: IState['lastUpdate']
 }
 
 export default function walletReducer(state: DeepPartial<IState>, action: IAction) {
@@ -42,7 +43,11 @@ export default function walletReducer(state: DeepPartial<IState>, action: IActio
         case SET_TARGET_CURRENCY:
             return { ...state, target: action.value }
         case SET_CURRENCY_QUOTATION:
-            return { ...state, quotation: action.value }
+            return {
+                ...state,
+                lastUpdate: action.timestamp,
+                quotation: action.value
+            }
         default:
             return state
     }
