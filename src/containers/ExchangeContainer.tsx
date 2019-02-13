@@ -14,14 +14,14 @@ import Main from '../components/layout/Main'
 import { IState, ITransaction } from '../store/state'
 
 export interface IProps extends RouteComponentProps<{}> {
-    base: IState['base']
+    base: IState['exchange']['base']
     transactions: IState['transactions']
-    target: IState['target']
+    target: IState['exchange']['target']
     wallet: IState['wallet']
-    refreshing: IState['refreshing']
-    quotation: IState['quotation']
+    refreshing: IState['quotation']['refreshing']
+    quotation: IState['quotation']['current']
     rates: IState['rates']
-    lastUpdate: IState['lastUpdate']
+    lastUpdate: IState['quotation']['lastUpdate']
     onExchange(transactions: ITransaction): void
     onSetBaseCurrency(value: string): void
     onSetTargetCurrency(value: string): void
@@ -50,12 +50,12 @@ class ExchangeContainer extends Component<IProps> {
 }
 
 const mapStateToProps = (state: IState) => ({
-    base: state.base,
-    lastUpdate: state.lastUpdate,
-    quotation: state.quotation,
+    base: state.exchange.base,
+    lastUpdate: state.quotation.lastUpdate,
+    quotation: state.quotation.current,
     rates: state.rates,
-    refreshing: state.refreshing,
-    target: state.target,
+    refreshing: state.quotation.refreshing,
+    target: state.exchange.target,
     transactions: state.transactions,
     wallet: state.wallet
 })

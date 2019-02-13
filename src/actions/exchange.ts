@@ -74,7 +74,7 @@ export const setTargetCurrency = (value: string) => {
 }
 
 export const setCurrencyQuotation =
-    (value: IState['quotation'], timestamp: IState['lastUpdate']) => {
+    (value: IState['quotation']['current'], timestamp: IState['quotation']['lastUpdate']) => {
     return { type: SET_CURRENCY_QUOTATION, value, timestamp }
 }
 
@@ -88,7 +88,7 @@ export const unsetRefreshingCurrency = () => {
 
 export const updateCurrency = (refresh?: boolean) => {
     return (dispatch: Dispatch<IQuotation | IRefresh>, getState: () => IState) => {
-        const { base } = getState()
+        const { base } = getState().exchange
 
         if (refresh) {
             dispatch(setRefreshingCurrency())

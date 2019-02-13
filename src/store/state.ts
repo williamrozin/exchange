@@ -2,14 +2,18 @@ import { DeepPartial } from 'redux'
 import { TCurrency } from '../actions/exchange'
 
 export interface IState {
-    base: TCurrency
+    exchange: {
+        base: TCurrency
+        target: TCurrency
+    }
     transactions: ITransaction[]
-    quotation: { [keys in TCurrency]: number }
-    refreshing: boolean
-    target: TCurrency
+    quotation: {
+        current: { [keys in TCurrency]: number }
+        refreshing: boolean
+        lastUpdate: number
+    }
     wallet: { [keys in TCurrency]: number }
     rates: IRate[]
-    lastUpdate: number
 }
 
 export interface IRate {
@@ -32,45 +36,61 @@ export interface ITransaction {
     quotation: number
 }
 
-export const state: DeepPartial<IState> = {
+export const exchange: IState['exchange'] = {
     base: 'GBP',
-    lastUpdate: new Date().getTime(),
-    quotation: {},
-    rates: [
-        {
-            base: 'GBP',
-            target: 'EUR'
-        },
-        {
-            base: 'EUR',
-            target: 'USD'
-        },
-        {
-            base: 'USD',
-            target: 'GBP'
-        }
-    ],
-    refreshing: false,
-    target: 'GBP',
-    transactions: [
-        {
-            from: {
-                amount: 500,
-                currency: 'GBP',
-                wallet: 20000
-            },
-            quotation: 1.14,
-            timestamp: 1549919565976,
-            to: {
-                amount: 570.68,
-                currency: 'USD',
-                wallet: 5000
-            }
-        }
-    ],
-    wallet: {
-        EUR: 7000,
-        GBP: 19500,
-        USD: 5570.68
-    }
+    target: 'GBP'
 }
+
+export const quotation: IState['quotation'] = {
+    current: {} as IState['quotation']['current'],
+    lastUpdate: new Date().getTime(),
+    refreshing: false
+}
+
+export const transactions: IState['transactions'] = [
+    {
+        from: {
+            amount: 500,
+            currency: 'GBP',
+            wallet: 20000
+        },
+        quotation: 1.14,
+        timestamp: 1549919565976,
+        to: {
+            amount: 570.68,
+            currency: 'USD',
+            wallet: 5000
+        }
+    }
+]
+
+export const rates: IState['rates'] = [
+    {
+        base: 'GBP',
+        target: 'EUR'
+    },
+    {
+        base: 'EUR',
+        target: 'USD'
+    },
+    {
+        base: 'USD',
+        target: 'GBP'
+    }
+]
+
+export const wallet: Partial<IState['wallet']> = {
+    EUR: 7000,
+    GBP: 19500,
+    USD: 5570.68
+}
+
+export const state: DeepPartial<IState> = {
+    exchange,
+    quotation,
+    rates,
+    transactions,
+    wallet
+}
+
+export default state

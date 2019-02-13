@@ -10,12 +10,12 @@ import { IState } from '../store/state'
 import { REFRESH_RATE } from './ExchangeContainer'
 
 export interface IProps extends RouteComponentProps<{}> {
-    base: IState['base']
-    target: IState['target']
-    refreshing: IState['refreshing']
-    quotation: IState['quotation']
+    base: IState['exchange']['base']
+    target: IState['exchange']['target']
+    refreshing: IState['quotation']['refreshing']
+    quotation: IState['quotation']['current']
     rates: IState['rates']
-    lastUpdate: IState['lastUpdate']
+    lastUpdate: IState['quotation']['lastUpdate']
     onUpdateCurrency(refresh?: boolean): void
 }
 
@@ -39,12 +39,12 @@ class RatesContainer extends Component<IProps> {
 }
 
 const mapStateToProps = (state: IState) => ({
-    base: state.base,
-    lastUpdate: state.lastUpdate,
-    quotation: state.quotation,
+    base: state.exchange.base,
+    lastUpdate: state.quotation.lastUpdate,
+    quotation: state.quotation.current,
     rates: state.rates,
-    refreshing: state.refreshing,
-    target: state.target
+    refreshing: state.quotation.refreshing,
+    target: state.exchange.target
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<IState, {}, AnyAction>) => ({

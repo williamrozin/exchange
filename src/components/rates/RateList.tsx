@@ -17,10 +17,10 @@ interface IProps {
     readonly?: boolean
     title?: string
     rates: IState['rates']
-    base: IState['base']
-    target: IState['target']
-    quotation: IState['quotation']
-    refreshing: IState['refreshing']
+    base: IState['exchange']['base']
+    target: IState['exchange']['target']
+    quotation: IState['quotation']['current']
+    refreshing: IState['quotation']['refreshing']
 }
 
 const LoadingWrapper = styled.div`
