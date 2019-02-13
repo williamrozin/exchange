@@ -20,6 +20,7 @@ class Rates extends Component<IProps> {
                 refreshing={ this.props.refreshing }
                 rates={ this.props.rates }
                 quotation={ this.props.quotation }
+                onRemoveRate={ this.props.onRemoveRate }
             />
         )
     }

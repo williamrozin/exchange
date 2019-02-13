@@ -4,9 +4,10 @@ import { RouteComponentProps } from 'react-router'
 import { AnyAction } from 'redux'
 import { ThunkDispatch } from 'redux-thunk'
 import { updateQuotation } from '../actions/quotation-actions'
+import { removeRate } from '../actions/rates-actions'
 import Main from '../components/layout/Main'
 import Rates from '../components/rates/Rates'
-import { IState } from '../store/state'
+import { IRate, IState } from '../store/state'
 import { REFRESH_RATE } from './ExchangeContainer'
 
 export interface IProps extends RouteComponentProps<{}> {
@@ -17,6 +18,7 @@ export interface IProps extends RouteComponentProps<{}> {
     rates: IState['rates']
     lastUpdate: IState['quotation']['lastUpdate']
     onUpdateQuotation(refresh?: boolean): void
+    onRemoveRate(rate: IRate): void
 }
 
 class RatesContainer extends Component<IProps> {
@@ -48,6 +50,9 @@ const mapStateToProps = (state: IState) => ({
 })
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<IState, {}, AnyAction>) => ({
+    onRemoveRate: (rate: IRate) => {
+        dispatch(removeRate(rate))
+    },
     onUpdateQuotation: (refresh?: boolean) => {
         dispatch(updateQuotation(refresh))
     }

@@ -21,6 +21,7 @@ interface IProps {
     target: IState['exchange']['target']
     quotation: IState['quotation']['current']
     refreshing: IState['quotation']['refreshing']
+    onRemoveRate?(rate: IRate): void
 }
 
 const LoadingWrapper = styled.div`
@@ -40,6 +41,12 @@ class RateList extends Component<IProps> {
             currency: rate.target,
             style: 'currency'
         })
+    }
+
+    public handleRemove = (rate: IRate) => () => {
+        if (this.props.onRemoveRate) {
+            this.props.onRemoveRate(rate)
+        }
     }
 
     public renderLoading() {
@@ -83,7 +90,7 @@ class RateList extends Component<IProps> {
                 {
                     !this.props.readonly && (
                         <ListItemSecondaryAction>
-                            <IconButton>
+                            <IconButton onClick={ this.handleRemove(rate) }>
                                 <Delete />
                             </IconButton>
                         </ListItemSecondaryAction>
