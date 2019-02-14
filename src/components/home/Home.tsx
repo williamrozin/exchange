@@ -1,19 +1,20 @@
 import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import ListSubheader from '@material-ui/core/ListSubheader'
 import Typography from '@material-ui/core/Typography'
 import { Autorenew } from '@material-ui/icons'
 import { distanceInWordsToNow } from 'date-fns'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { TCurrency } from '../../actions/quotation-actions'
+import { ALL_CURRENCIES, CURRENCIES } from '../../constants/currencies'
 import { IProps } from '../../containers/HomeContainer'
 import { ITransaction } from '../../store/state'
-import { Content, CURRENCIES, CURRENCY_OPTIONS } from '../exchange/Exchange'
+import { Content, CURRENCY_OPTIONS } from '../exchange/Exchange'
 import Tabs from '../exchange/tabs/Tabs'
+import Item from '../rates/list/Item'
+import SubHeader from '../rates/list/SubHeader'
 
 interface IState {
     selected: TCurrency
@@ -72,12 +73,7 @@ class Home extends Component<IProps, IState> {
             ...CURRENCY_OPTIONS
         })
 
-        const currencies: Partial<{ [keys in TCurrency]: string }> = {
-            BRL: 'Brazilian real',
-            EUR: 'Euro',
-            GBP: 'British Pound',
-            USD: 'American Dollar'
-        }
+        const label = ALL_CURRENCIES.find((item) => item.value === currency)
 
         return (
             <Abstract key={ currency }>
@@ -91,7 +87,7 @@ class Home extends Component<IProps, IState> {
                 <Typography
                     align='center'
                     variant='h6'>
-                    { currency } - { currencies[currency] }
+                    { currency } - { label }
                 </Typography>
             </Abstract>
         )
@@ -105,24 +101,11 @@ class Home extends Component<IProps, IState> {
             <Transactions>
                 <List
                     style={ { padding: '0px' } }
-                    subheader={
-                        <ListSubheader
-                            style={ {
-                                backgroundColor: '#FAFAFA',
-                                padding: '0 18px'
-                            } }>
-                            Last transactions
-                        </ListSubheader>
-                    }>
+                    subheader={ <SubHeader title='Last transactions' /> }>
                     {
                         transactions.map((transaction: ITransaction, index: number) =>
-                            <ListItem
-                                button
-                                style={ {
-                                    backgroundColor: index % 2 === 0
-                                        ? '#EEEEEE'
-                                        : '#F5F5F5'
-                                } }
+                            <Item
+                                index={ index }
                                 key={ transaction.timestamp }>
                                 <ListItemIcon>
                                     <Autorenew />
@@ -131,7 +114,7 @@ class Home extends Component<IProps, IState> {
                                     primary={ this.formatTransaction(transaction) }
                                     secondary={ distanceInWordsToNow(transaction.timestamp) }
                                 />
-                            </ListItem>
+                            </Item>
                         )
                     }
                 </List>

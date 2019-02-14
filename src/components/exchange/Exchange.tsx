@@ -1,12 +1,13 @@
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
-import { format } from 'date-fns'
 import React, { ChangeEvent, Component } from 'react'
 import styled from 'styled-components'
 import { TCurrency } from '../../actions/quotation-actions'
+import { CURRENCIES } from '../../constants/currencies'
 import { IProps } from '../../containers/ExchangeContainer'
 import { Action } from '../home/Home'
+import LastUpdate from '../rates/LastUpdate'
 import RateList from '../rates/RateList'
 import Tabs from './tabs/Tabs'
 
@@ -68,8 +69,6 @@ const Loading = styled.div`
     justify-content: flex-end;
     padding: 0 64px;
 `
-
-export const CURRENCIES: TCurrency[] = ['GBP', 'EUR', 'USD']
 
 export const CURRENCY_OPTIONS = {
    maximumFractionDigits: 2,
@@ -156,14 +155,10 @@ class Exchange extends Component<IProps, IState> {
 
         return (
             <Input
-                option={ option }
-                placeholder={
-                    option === 'base'
-                        ? '0.00'
-                        : ''
-                }
-                disabled={ option === 'target' }
                 value={ value }
+                option={ option }
+                disabled={ option === 'target' }
+                placeholder={ option === 'base' ? '0.00' : '' }
                 onChange={ this.handleChangeFrom(option) }
             />
         )
@@ -239,7 +234,10 @@ class Exchange extends Component<IProps, IState> {
                         align='center'
                         variant='h5'
                         color='textSecondary'
-                        style={ { backgroundColor: '#F5F5f5', paddingTop: '18px' } }>
+                        style={ {
+                            backgroundColor: '#F5F5f5',
+                            paddingTop: '18px'
+                        } }>
                         Exchanging from { this.props.base } to { this.props.target }
                     </Typography>
                     { this.renderPocket('base') }
@@ -263,14 +261,7 @@ class Exchange extends Component<IProps, IState> {
         return (
             <>
                 { this.renderExchange() }
-                <Typography
-                    align='center'
-                    variant='caption'
-                    style={ { paddingTop: '18px' } }>
-                    Last updated at
-                    { ' ' }
-                    { format(new Date(this.props.lastUpdate), 'HH:mm, DD MMM YYYY') }
-                </Typography>
+                <LastUpdate lastUpdate={ this.props.lastUpdate } />
             </>
         )
     }

@@ -1,10 +1,15 @@
-import { Button, Collapse, MenuItem, TextField, Typography } from '@material-ui/core'
-import format from 'date-fns/format'
+import Button from '@material-ui/core/Button'
+import Collapse from '@material-ui/core/Collapse'
+import MenuItem from '@material-ui/core/MenuItem'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
 import React, { ChangeEvent, Component } from 'react'
 import styled from 'styled-components'
 import { TCurrency } from '../../actions/quotation-actions'
+import { ALL_CURRENCIES } from '../../constants/currencies'
 import { IProps } from '../../containers/RatesContainer'
 import { Content } from '../exchange/Exchange'
+import LastUpdate from './LastUpdate'
 import RateList from './RateList'
 
 interface IState {
@@ -12,11 +17,6 @@ interface IState {
     showAdd: boolean
     base: TCurrency | ''
     target: TCurrency | ''
-}
-
-interface ICurrency {
-    label: string
-    value: TCurrency
 }
 
 const Wrapper = styled.div`
@@ -36,141 +36,6 @@ const Actions = styled.div`
     grid-gap: 18px;
     margin-top: 18px;
 `
-
-const ALL_CURRENCIES: ICurrency[] = [
-    {
-        label: 'Australia Dollar',
-        value: 'AUD'
-    },
-    {
-        label: 'Bulgaria Lev',
-        value: 'BGN'
-    },
-    {
-        label: 'Brazil Real',
-        value: 'BRL'
-    },
-    {
-        label: 'Canada Dollar',
-        value: 'CAD'
-    },
-    {
-        label: 'Switzerland Franc',
-        value: 'CHF'
-    },
-    {
-        label: 'China Yuan Renminbi',
-        value: 'CNY'
-    },
-    {
-        label: 'Czech Republic Koruna',
-        value: 'CZK'
-    },
-    {
-        label: 'Denmark Krone',
-        value: 'DKK'
-    },
-    {
-        label: 'Euro Member Countries',
-        value: 'EUR'
-    },
-    {
-        label: 'United Kingdom Pound',
-        value: 'GBP'
-    },
-    {
-        label: 'Hong Kong Dollar',
-        value: 'HKD'
-    },
-    {
-        label: 'Croatia Kuna',
-        value: 'HRK'
-    },
-    {
-        label: 'Hungary Forint',
-        value: 'HUF'
-    },
-    {
-        label: 'Indonesia Rupiah',
-        value: 'IDR'
-    },
-    {
-        label: 'Israel Shekel',
-        value: 'ILS'
-    },
-    {
-        label: 'India Rupee',
-        value: 'INR'
-    },
-    {
-        label: 'Iceland Krona',
-        value: 'ISK'
-    },
-    {
-        label: 'Japan Yen',
-        value: 'JPY'
-    },
-    {
-        label: 'Korea (South) Won',
-        value: 'KRW'
-    },
-    {
-        label: 'Mexico Peso',
-        value: 'MXN'
-    },
-    {
-        label: 'Malaysia Ringgit',
-        value: 'MYR'
-    },
-    {
-        label: 'Norway Krone',
-        value: 'NOK'
-    },
-    {
-        label: 'New Zealand Dollar',
-        value: 'NZD'
-    },
-    {
-        label: 'Philippines Peso',
-        value: 'PHP'
-    },
-    {
-        label: 'Poland Zloty',
-        value: 'PLN'
-    },
-    {
-        label: 'Romania Leu',
-        value: 'RON'
-    },
-    {
-        label: 'Russia Ruble',
-        value: 'RUB'
-    },
-    {
-        label: 'Sweden Krona',
-        value: 'SEK'
-    },
-    {
-        label: 'Singapore Dollar',
-        value: 'SGD'
-    },
-    {
-        label: 'Thailand Baht',
-        value: 'THB'
-    },
-    {
-        label: 'Turkey Lira',
-        value: 'TRY'
-    },
-    {
-        label: 'United States Dollar',
-        value: 'USD'
-    },
-    {
-        label: 'South Africa Rand',
-        value: 'ZAR'
-    }
-]
 
 class Rates extends Component<IProps, IState> {
     constructor(props: IProps) {
@@ -200,11 +65,11 @@ class Rates extends Component<IProps, IState> {
     }
 
     public handleChange =
-        (type: 'from' | 'to') =>
+        (type: 'base' | 'target') =>
         (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value as TCurrency
 
-        if (type === 'from') {
+        if (type === 'base') {
             this.setState({ base: value })
         } else {
             this.setState({ target: value })
@@ -233,6 +98,28 @@ class Rates extends Component<IProps, IState> {
         )
     }
 
+    public renderField(type: 'base' | 'target') {
+        return (
+            <TextField
+                select
+                fullWidth
+                variant='outlined'
+                value={ this.state[type] }
+                label={ `Select currency ${type === 'base' ? '1' : '2'}` }
+                onChange={ this.handleChange(type) }>
+                {
+                    ALL_CURRENCIES.map((currency) =>
+                        <MenuItem
+                            key={ currency.value }
+                            value={ currency.value }>
+                            { currency.value } - { currency.label }
+                        </MenuItem>
+                    )
+                }
+            </TextField>
+        )
+    }
+
     public renderFields() {
         return (
             <Collapse
@@ -246,40 +133,8 @@ class Rates extends Component<IProps, IState> {
                     Add new currency
                 </Typography>
                 <Form>
-                    <TextField
-                        select
-                        fullWidth
-                        variant='outlined'
-                        value={ this.state.base }
-                        label='Select currency 1'
-                        onChange={ this.handleChange('from') }>
-                        {
-                            ALL_CURRENCIES.map((currency) =>
-                                <MenuItem
-                                    key={ currency.value }
-                                    value={ currency.value }>
-                                    { currency.value } - { currency.label }
-                                </MenuItem>
-                            )
-                        }
-                    </TextField>
-                    <TextField
-                        select
-                        fullWidth
-                        variant='outlined'
-                        value={ this.state.target }
-                        label='Select currency 2'
-                        onChange={ this.handleChange('to') }>
-                        {
-                            ALL_CURRENCIES.map((currency) =>
-                                <MenuItem
-                                    key={ currency.value }
-                                    value={ currency.value }>
-                                    { currency.value } - { currency.label }
-                                </MenuItem>
-                            )
-                        }
-                    </TextField>
+                    { this.renderField('base') }
+                    { this.renderField('target') }
                 </Form>
                 <Actions>
                     <Button
@@ -333,14 +188,7 @@ class Rates extends Component<IProps, IState> {
         return (
             <>
                 { this.renderRates() }
-                <Typography
-                    align='center'
-                    variant='caption'
-                    style={ { paddingTop: '18px' } }>
-                    Last updated at
-                    { ' ' }
-                    { format(new Date(this.props.lastUpdate), 'HH:mm, DD MMM YYYY') }
-                </Typography>
+                <LastUpdate lastUpdate={ this.props.lastUpdate } />
             </>
         )
     }

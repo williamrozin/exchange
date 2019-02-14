@@ -1,17 +1,15 @@
-import {
-    CircularProgress,
-    IconButton,
-    List,
-    ListItem,
-    ListItemSecondaryAction,
-    ListItemText,
-    ListSubheader
-} from '@material-ui/core'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import IconButton from '@material-ui/core/IconButton'
+import List from '@material-ui/core/List'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import ListItemText from '@material-ui/core/ListItemText'
 import { Delete } from '@material-ui/icons'
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { IRate, IState } from '../../store/state'
 import { Transactions } from '../home/Home'
+import Item from './list/Item'
+import SubHeader from './list/SubHeader'
 
 interface IProps {
     readonly?: boolean
@@ -61,32 +59,30 @@ class RateList extends Component<IProps> {
         const {
             rates = [],
             base,
-            target
+            target,
+            refreshing
         } = this.props
 
-        const data = this.props.readonly
-            ? rates.filter((rate) =>
-                rate.base === base || rate.base === target
-                || rate.target === base || rate.target === target
-            )
-            : rates
-
-        if (this.props.refreshing) {
+        if (refreshing) {
             return this.renderLoading()
         }
 
+        const equals = (rate: IRate) =>
+            rate.base === base || rate.base === target
+                || rate.target === base || rate.target === target
+
+        const data = this.props.readonly
+            ? rates.filter(equals)
+            : rates
+
+        const getLabelFor = (rate: IRate) =>
+            `1 ${rate.base} - ${this.getQuotation(rate)} ${rate.target}`
+
         return data.map((rate, index: number) =>
-            <ListItem
-                button
-                key={ rate.base + rate.target }
-                style={ {
-                    backgroundColor: index % 2 === 0
-                        ? '#EEEEEE'
-                        : '#F5F5F5'
-                } }>
-                <ListItemText
-                    primary={ `1 ${rate.base} - ${this.getQuotation(rate)} ${rate.target}` }
-                />
+            <Item
+                index={ index }
+                key={ rate.base + rate.target }>
+                <ListItemText primary={ getLabelFor(rate) } />
                 {
                     !this.props.readonly && (
                         <ListItemSecondaryAction>
@@ -96,24 +92,18 @@ class RateList extends Component<IProps> {
                         </ListItemSecondaryAction>
                     )
                 }
-            </ListItem>
+            </Item>
         )
     }
 
     public render() {
+        const { title = 'Your rates' } = this.props
+
         return (
             <Transactions>
                 <List
                     style={ { padding: '0px' } }
-                    subheader={
-                        <ListSubheader
-                            style={ {
-                                backgroundColor: '#FAFAFA',
-                                padding: '0 18px'
-                            } }>
-                            { this.props.title || 'Your rates' }
-                        </ListSubheader>
-                    }>
+                    subheader={ <SubHeader title={ title } /> }>
                     { this.renderList() }
                 </List>
             </Transactions>
