@@ -95,15 +95,20 @@ class Exchange extends Component<IProps, IState> {
     }
 
     public componentDidUpdate(prevProps: IProps) {
+        const { fromValue, toValue } = this.state
         const update = this.props.lastUpdate !== prevProps.lastUpdate
             || prevProps.base !== this.props.base
             || prevProps.target !== this.props.target
 
         if (update) {
             if (this.state.active === 'base') {
-                this.setState({ toValue: this.getCurrency(this.state.fromValue) })
+                this.setState({
+                    toValue: fromValue ? this.getCurrency(fromValue) : ''
+                })
             } else {
-                this.setState({ fromValue: this.getCurrency(this.state.toValue) })
+                this.setState({
+                    fromValue: toValue ? this.getCurrency(toValue) : ''
+                })
             }
         }
     }
@@ -157,11 +162,11 @@ class Exchange extends Component<IProps, IState> {
             if (option === 'base') {
                 this.setState({
                     fromValue: value,
-                    toValue: this.getCurrency(value)
+                    toValue: value ? this.getCurrency(value) : ''
                 })
             } else {
                 this.setState({
-                    fromValue: this.getCurrency(value),
+                    fromValue: value ? this.getCurrency(value) : '',
                     toValue: value
                 })
             }
@@ -216,9 +221,7 @@ class Exchange extends Component<IProps, IState> {
 
     public renderInput(option: IState['active']) {
         const { active, fromValue, toValue } = this.state
-        const value = !fromValue || !toValue
-            ? ''
-            : option === 'base'
+        const value = option === 'base'
                 ? fromValue
                 : toValue
 
