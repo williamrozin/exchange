@@ -101,26 +101,30 @@ class Exchange extends Component<IProps, IState> {
             || prevProps.target !== this.props.target
 
         if (update) {
+            const value = this.isOverWallet(fromValue)
+                ? this.props.wallet[this.props.base].toString()
+                : this.state.active === 'base'
+                    ? fromValue
+                    : toValue
+
             if (this.state.active === 'base') {
                 this.setState({
-                    toValue: fromValue ? this.getCurrency(fromValue) : ''
+                    fromValue: value,
+                    toValue: value ? this.getCurrency(value) : ''
                 })
             } else {
                 this.setState({
-                    fromValue: toValue ? this.getCurrency(toValue) : ''
+                    fromValue: value ? this.getCurrency(value) : '',
+                    toValue: value
                 })
             }
         }
     }
 
     public isOverWallet = (value: string = '0') => {
-        const { active } = this.state
-        const { wallet, base, target } = this.props
-        const option = active === 'base'
-            ? base
-            : target
+        const { wallet, base } = this.props
 
-        return parseFloat(value || this.state.fromValue) > wallet[option]
+        return parseFloat(value || this.state.fromValue) > wallet[base]
     }
 
     public isExchangeDisabled = () => {
@@ -154,22 +158,27 @@ class Exchange extends Component<IProps, IState> {
             ? event.target.value
             : word.join('')
 
-        const isValid = !this.isOverWallet(value)
-            && word !== null
-            || event.target.value === ''
+        if (word === null || event.target.value === '') {
+            this.setState({ fromValue: '', toValue: '' })
+            return
+        }
 
-        if (isValid) {
-            if (option === 'base') {
-                this.setState({
-                    fromValue: value,
-                    toValue: value ? this.getCurrency(value) : ''
-                })
-            } else {
-                this.setState({
-                    fromValue: value ? this.getCurrency(value) : '',
-                    toValue: value
-                })
-            }
+        const correction = value ? this.getCurrency(value) : ''
+
+        if (this.isOverWallet(option === 'base' ? value : correction)) {
+            return
+        }
+
+        if (option === 'base') {
+            this.setState({
+                fromValue: value,
+                toValue: correction
+            })
+        } else {
+            this.setState({
+                fromValue: correction,
+                toValue: value
+            })
         }
     }
 
