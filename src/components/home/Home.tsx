@@ -55,7 +55,20 @@ class Home extends Component<IProps, IState> {
 
     public formatTransaction = (transaction: ITransaction) => {
         const { from, to } = transaction
-        return `Exchanged from ${from.currency} (${to.amount})`
+        const fromAmount = from.amount.toLocaleString('en', {
+            currency: from.currency,
+            style: 'currency'
+        })
+
+        const toAmount = to.amount.toLocaleString('en', {
+            currency: to.currency,
+            style: 'currency'
+        })
+
+        const labelFrom = `${from.currency} (${fromAmount})`
+        const labelTo = `${to.currency} (${toAmount})`
+
+        return `Exchanged from ${labelFrom} to ${labelTo}`
     }
 
     public handleGoTo = (url: string) => () => {
@@ -73,7 +86,7 @@ class Home extends Component<IProps, IState> {
             ...CURRENCY_OPTIONS
         })
 
-        const label = ALL_CURRENCIES.find((item) => item.value === currency)
+        const { label } = ALL_CURRENCIES.find((item) => item.value === currency)
 
         return (
             <Abstract key={ currency }>
