@@ -16,10 +16,6 @@ import Tabs from '../exchange/tabs/Tabs'
 import Item from '../rates/list/Item'
 import SubHeader from '../rates/list/SubHeader'
 
-interface IState {
-    selected: TCurrency
-}
-
 interface IAction {
     fullWidth?: boolean
 }
@@ -47,12 +43,7 @@ const byTimestamp = (first: ITransaction, second: ITransaction) =>
         ? 1
         : -1
 
-class Home extends Component<IProps, IState> {
-    constructor(props: IProps) {
-        super(props)
-        this.state = { selected: 'GBP' }
-    }
-
+class Home extends Component<IProps> {
     public formatTransaction = (transaction: ITransaction) => {
         const { from, to } = transaction
         const fromAmount = from.amount.toLocaleString('en', {
@@ -76,7 +67,7 @@ class Home extends Component<IProps, IState> {
     }
 
     public handleChangeSelected = (selected: TCurrency) => {
-        this.setState({ selected })
+        this.props.onSetBaseCurrency(selected)
     }
 
     public renderTab = (currency: TCurrency) => {
@@ -147,7 +138,7 @@ class Home extends Component<IProps, IState> {
                 </Typography>
                 <Tabs
                     options={ CURRENCIES }
-                    selected={ this.state.selected }
+                    selected={ this.props.base }
                     renderTab={ this.renderTab }
                     onChangeTab={ this.handleChangeSelected }
                 />
