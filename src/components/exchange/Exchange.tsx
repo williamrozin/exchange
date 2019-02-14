@@ -82,6 +82,21 @@ class Exchange extends Component<IProps, IState> {
         this.state = { value: '' }
     }
 
+    public isOverWallet = (value: string = '0') => {
+        const { wallet, base } = this.props
+
+        return parseFloat(value || this.state.value) > wallet[base]
+    }
+
+    public isExchangeDisabled = () => {
+        const { base, target } = this.props
+        const { value } = this.state
+
+        return value.trim() === ''
+            || this.isOverWallet()
+            || base === target
+    }
+
     public handleGoTo = (url: string) => () => {
         this.props.history.push(url)
     }
@@ -95,7 +110,12 @@ class Exchange extends Component<IProps, IState> {
             ? event.target.value
             : word.join('')
 
-        if (option === 'base' && word !== null || event.target.value === '') {
+        const isValid = !this.isOverWallet(value)
+            && option === 'base'
+            && word !== null
+            || event.target.value === ''
+
+        if (isValid) {
             this.setState({ value })
         }
     }
@@ -114,7 +134,7 @@ class Exchange extends Component<IProps, IState> {
     }
 
     public handleExchange = () => {
-        if (!this.state.value) {
+        if (!this.state.value || this.isExchangeDisabled()) {
             return
         }
 
@@ -218,7 +238,7 @@ class Exchange extends Component<IProps, IState> {
                     fullWidth
                     color='primary'
                     variant='contained'
-                    disabled={ this.state.value.trim() === '' }
+                    disabled={ this.isExchangeDisabled() }
                     onClick={ this.handleExchange }>
                     Exchange
                 </Button>
