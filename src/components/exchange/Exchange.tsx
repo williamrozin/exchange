@@ -19,6 +19,8 @@ interface IOption {
     option: 'base' | 'target'
 }
 
+type TWalletCurrencies = 'EUR' | 'USD' | 'GBP'
+
 export const Content = styled.div`
     display: flex;
     flex: 1;
@@ -77,6 +79,10 @@ export const CURRENCY_OPTIONS = {
 }
 
 class Exchange extends Component<IProps, IState> {
+    public GBP: HTMLInputElement | null = null
+    public USD: HTMLInputElement | null = null
+    public EUR: HTMLInputElement | null = null
+
     constructor(props: IProps) {
         super(props)
         this.state = { value: '' }
@@ -95,6 +101,14 @@ class Exchange extends Component<IProps, IState> {
         return value.trim() === ''
             || this.isOverWallet()
             || base === target
+    }
+
+    public componentDidMount() {
+        const field = this[this.props.base as TWalletCurrencies]
+
+        if (field !== null) {
+            field.focus()
+        }
     }
 
     public handleGoTo = (url: string) => () => {
@@ -123,6 +137,8 @@ class Exchange extends Component<IProps, IState> {
     public handleChangeTab =
         (option: 'target' | 'base') =>
         (currency: TCurrency) => {
+
+        this.setState({ value: '' })
 
         if (option === 'base') {
             this.props.onSetBaseCurrency(currency)
@@ -173,12 +189,21 @@ class Exchange extends Component<IProps, IState> {
             ? this.state.value
             : (quotation * parseFloat(this.state.value || '0')).toFixed(2)
 
+        const ref = option === 'base'
+            ? {
+                ref: (self: HTMLInputElement) => {
+                    this[this.props.base as TWalletCurrencies] = self
+                }
+            }
+            : {}
+
         return (
             <Input
                 value={ value }
                 option={ option }
                 disabled={ option === 'target' }
                 placeholder={ option === 'base' ? '0.00' : '' }
+                { ...ref }
                 onChange={ this.handleChangeFrom(option) }
             />
         )
@@ -192,7 +217,7 @@ class Exchange extends Component<IProps, IState> {
         const loading = refreshing && option === 'target' && this.state.value
 
         return (
-            <FieldContent key={ currency }>
+            <FieldContent key={ currency + this.props.base }>
                 <Details>
                     <Typography variant='h3'>
                         { currency }
