@@ -139,7 +139,7 @@ class Exchange extends Component<IProps, IState> {
     }
 
     public handleFocus = (option: 'base' | 'target') => () => {
-        this.props.onUpdateQuotation(option, true)
+        this.props.onUpdateQuotation(option, !!this.state.value)
     }
 
     public handleExchange = () => {
