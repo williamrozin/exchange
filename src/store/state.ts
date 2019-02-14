@@ -40,7 +40,7 @@ export interface ITransaction {
 export const exchange: IState['exchange'] = {
     active: 'base',
     base: 'GBP',
-    target: 'GBP'
+    target: 'EUR'
 }
 
 export const quotation: IState['quotation'] = {

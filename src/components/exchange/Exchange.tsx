@@ -94,6 +94,12 @@ class Exchange extends Component<IProps, IState> {
         }
     }
 
+    public componentDidMount() {
+        if (this[this.props.base as 'USD' | 'GBP' | 'EUR']) {
+            this[this.props.base as 'USD' | 'GBP' | 'EUR'].focus()
+        }
+    }
+
     public componentDidUpdate(prevProps: IProps) {
         const { fromValue, toValue } = this.state
         const update = this.props.lastUpdate !== prevProps.lastUpdate
