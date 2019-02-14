@@ -89,9 +89,12 @@ class Exchange extends Component<IProps, IState> {
     }
 
     public isOverWallet = (value: string = '0') => {
-        const { wallet, base } = this.props
+        const { active, wallet, base, target } = this.props
+        const option = active === 'base'
+            ? base
+            : target
 
-        return parseFloat(value || this.state.value) > wallet[base]
+        return parseFloat(value || this.state.value) > wallet[option]
     }
 
     public isExchangeDisabled = () => {
@@ -103,29 +106,17 @@ class Exchange extends Component<IProps, IState> {
             || base === target
     }
 
-    public componentDidMount() {
-        const field = this[this.props.base as TWalletCurrencies]
-
-        if (field !== null) {
-            field.focus()
-        }
-    }
-
     public handleGoTo = (url: string) => () => {
         this.props.history.push(url)
     }
 
-    public handleChangeFrom =
-        (option: 'base' | 'target') =>
-        (event: ChangeEvent<HTMLInputElement>) => {
-
+    public handleChangeField = (event: ChangeEvent<HTMLInputElement>) => {
         const word = event.target.value.match(/^\d+(\.\d*)?(,\d{0,2})?$/g)
         const value = event.target.value === ''
             ? event.target.value
             : word.join('')
 
         const isValid = !this.isOverWallet(value)
-            && option === 'base'
             && word !== null
             || event.target.value === ''
 
@@ -138,15 +129,17 @@ class Exchange extends Component<IProps, IState> {
         (option: 'target' | 'base') =>
         (currency: TCurrency) => {
 
-        this.setState({ value: '' })
-
         if (option === 'base') {
             this.props.onSetBaseCurrency(currency)
         } else {
             this.props.onSetTargetCurrency(currency)
         }
 
-        this.props.onUpdateQuotation(true)
+        this.props.onUpdateQuotation(this.props.active, true)
+    }
+
+    public handleFocus = (option: 'base' | 'target') => () => {
+        this.props.onUpdateQuotation(option, true)
     }
 
     public handleExchange = () => {
@@ -184,12 +177,14 @@ class Exchange extends Component<IProps, IState> {
     }
 
     public renderInput(option: 'base' | 'target') {
-        const quotation = this.props.quotation[this.props.target] || 1
-        const value = option === 'base'
+        const { active, quotation } = this.props
+        const selected = active === 'base' ? 'target' : 'base'
+        const quotationValue = quotation[this.props[selected]] || 1
+        const value = active === option
             ? this.state.value
-            : (quotation * parseFloat(this.state.value || '0')).toFixed(2)
+            : (quotationValue * parseFloat(this.state.value || '0')).toFixed(2)
 
-        const ref = option === 'base'
+        const ref = option === active
             ? {
                 ref: (self: HTMLInputElement) => {
                     this[this.props.base as TWalletCurrencies] = self
@@ -201,10 +196,10 @@ class Exchange extends Component<IProps, IState> {
             <Input
                 value={ value }
                 option={ option }
-                disabled={ option === 'target' }
-                placeholder={ option === 'base' ? '0.00' : '' }
+                placeholder='0.00'
                 { ...ref }
-                onChange={ this.handleChangeFrom(option) }
+                onFocus={ this.handleFocus(option) }
+                onChange={ this.handleChangeField }
             />
         )
     }
@@ -213,8 +208,8 @@ class Exchange extends Component<IProps, IState> {
         (option: 'base' | 'target') =>
         (currency: TCurrency) => {
 
-        const { refreshing, wallet } = this.props
-        const loading = refreshing && option === 'target' && this.state.value
+        const { active, refreshing, wallet } = this.props
+        const loading = refreshing && option !== active && this.state.value
 
         return (
             <FieldContent key={ currency + this.props.base }>

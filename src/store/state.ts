@@ -3,6 +3,7 @@ import { TCurrency } from '../actions/quotation-actions'
 
 export interface IState {
     exchange: {
+        active: 'base' | 'target'
         base: TCurrency
         target: TCurrency
     }
@@ -37,6 +38,7 @@ export interface ITransaction {
 }
 
 export const exchange: IState['exchange'] = {
+    active: 'base',
     base: 'GBP',
     target: 'GBP'
 }
