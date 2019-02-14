@@ -1,6 +1,5 @@
 import { DeepPartial } from 'redux'
 import {
-    SET_ACTIVE_INPUT,
     SET_BASE_CURRENCY,
     SET_TARGET_CURRENCY,
 } from '../constants/action-types'
@@ -17,8 +16,6 @@ type TState = DeepPartial<IState['exchange']>
 
 export default function exchangeReducer(state: TState = exchange, action: IAction) {
     switch (action.type) {
-        case SET_ACTIVE_INPUT:
-            return { ...state, active: action.active }
         case SET_BASE_CURRENCY:
             return { ...state, base: action.value }
         case SET_TARGET_CURRENCY:

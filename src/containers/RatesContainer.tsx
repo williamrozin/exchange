@@ -17,10 +17,9 @@ export interface IProps extends RouteComponentProps<{}> {
     quotation: IState['quotation']['current']
     rates: IState['rates']
     lastUpdate: IState['quotation']['lastUpdate']
-    active: 'base' | 'target'
     onAddRate(rate: IRate): void
     onRemoveRate(rate: IRate): void
-    onUpdateQuotation(base: 'base' | 'target', refresh?: boolean): void
+    onUpdateQuotation(refresh?: boolean): void
 }
 
 class RatesContainer extends Component<IProps> {
@@ -29,11 +28,8 @@ class RatesContainer extends Component<IProps> {
     }
 
     public updateQuotation() {
-        this.props.onUpdateQuotation(this.props.active, true)
-        setInterval(
-            () => this.props.onUpdateQuotation(this.props.active),
-            REFRESH_RATE
-        )
+        this.props.onUpdateQuotation(true)
+        setInterval(this.props.onUpdateQuotation, REFRESH_RATE)
     }
 
     public render() {
@@ -46,7 +42,6 @@ class RatesContainer extends Component<IProps> {
 }
 
 const mapStateToProps = (state: IState) => ({
-    active: state.exchange.active,
     base: state.exchange.base,
     lastUpdate: state.quotation.lastUpdate,
     quotation: state.quotation.current,
@@ -62,8 +57,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<IState, {}, AnyAction>) => (
     onRemoveRate: (rate: IRate) => {
         dispatch(removeRate(rate))
     },
-    onUpdateQuotation: (base: 'base' | 'target', refresh?: boolean) => {
-        dispatch(updateQuotation(base, refresh))
+    onUpdateQuotation: (refresh?: boolean) => {
+        dispatch(updateQuotation(refresh))
     }
 })
 

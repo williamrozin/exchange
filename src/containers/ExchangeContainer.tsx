@@ -22,12 +22,11 @@ export interface IProps extends RouteComponentProps<{}> {
     refreshing: IState['quotation']['refreshing']
     quotation: IState['quotation']['current']
     rates: IState['rates']
-    active: 'target' | 'base'
     lastUpdate: IState['quotation']['lastUpdate']
     onExchange(transactions: ITransaction): void
     onSetBaseCurrency(value: string): void
     onSetTargetCurrency(value: string): void
-    onUpdateQuotation(base: 'target' | 'base', refresh?: boolean): void
+    onUpdateQuotation(refresh?: boolean): void
 }
 
 export const REFRESH_RATE = 100 * 10 * 10 // 100ms * 10 * 10 = 10s
@@ -38,11 +37,8 @@ class ExchangeContainer extends Component<IProps> {
     }
 
     public updateQuotation() {
-        this.props.onUpdateQuotation(this.props.active, true)
-        setInterval(
-            () => this.props.onUpdateQuotation(this.props.active),
-            REFRESH_RATE
-        )
+        this.props.onUpdateQuotation(true)
+        setInterval(this.props.onUpdateQuotation, REFRESH_RATE)
     }
 
     public render() {
@@ -55,7 +51,6 @@ class ExchangeContainer extends Component<IProps> {
 }
 
 const mapStateToProps = (state: IState) => ({
-    active: state.exchange.active,
     base: state.exchange.base,
     lastUpdate: state.quotation.lastUpdate,
     quotation: state.quotation.current,
@@ -77,8 +72,8 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<IState, {}, AnyAction>) => (
     onSetTargetCurrency: (value: IState['exchange']['target']) => {
         dispatch(setTargetCurrency(value))
     },
-    onUpdateQuotation: (base: 'target' | 'base', refresh?: boolean) => {
-        dispatch(updateQuotation(base, refresh))
+    onUpdateQuotation: (refresh?: boolean) => {
+        dispatch(updateQuotation(refresh))
     }
 })
 

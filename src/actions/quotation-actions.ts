@@ -1,6 +1,5 @@
 import { Dispatch } from 'react'
 import {
-    SET_ACTIVE_INPUT,
     SET_CURRENCY_QUOTATION,
     SET_REFRESHING_CURRENCY,
     UNSET_REFRESHING_CURRENCY
@@ -76,26 +75,21 @@ export const unsetRefreshingCurrency = () => {
     return { type: UNSET_REFRESHING_CURRENCY }
 }
 
-export const setActiveInput = (active: 'base' | 'target') => {
-    return { type: SET_ACTIVE_INPUT, active }
-}
-
-export const updateQuotation = (active: 'target' | 'base', refresh?: boolean) => {
-    return (dispatch: Dispatch<IQuotation | IRefresh>, getState: () => IState) => {
-        const exchange = getState().exchange
+export const updateQuotation = (refresh?: boolean) => {
+    return (dispatch: Dispatch<IQuotation | IRefresh>) => {
+        const currency: TCurrency = 'GBP'
 
         if (refresh) {
             dispatch(setRefreshingCurrency())
-            dispatch(setActiveInput(active))
         }
 
-        fetch(`https://api.exchangeratesapi.io/latest?base=${exchange[active]}`)
+        fetch(`https://api.exchangeratesapi.io/latest?base=${currency}`)
             .then((res) => res.json())
             .then((data: IData) => {
                 const timestamp = new Date().getTime()
                 const quotation = {
                     ...data.rates,
-                    [exchange[active]]: 1
+                    [currency]: 1
                 }
 
                 dispatch(setCurrencyQuotation(quotation, timestamp))
