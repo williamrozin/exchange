@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`hello should eita 1`] = `
+<WithStyles(ListItem)
+  style={
+    Object {
+      "backgroundColor": "#F5F5F5",
+    }
+  }
+>
+  EITA
+</WithStyles(ListItem)>
+`;

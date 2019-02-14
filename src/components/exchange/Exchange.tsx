@@ -208,7 +208,7 @@ class Exchange extends Component<IProps, IState> {
             }
         })
 
-        this.setState({ fromValue: '' })
+        this.setState({ fromValue: '', toValue: '' })
     }
 
     public renderLoading() {
