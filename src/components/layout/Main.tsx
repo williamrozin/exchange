@@ -27,6 +27,14 @@ const Menu = styled.div`
     display: flex;
 `
 
+const User = styled.div`
+    @media(max-width: 768px) {
+        .user-info {
+            display: none;
+        }
+    }
+`
+
 class Main extends Component<IProps> {
     public handleGoTo = (url: string) => () => {
         this.props.history.push(url)
@@ -81,19 +89,22 @@ class Main extends Component<IProps> {
                                 Rates
                             </Button>
                         </Menu>
-                        <ListItem button style={ { width: 'auto', maxWidth: '320px' } }>
-                            <ListItemAvatar>
-                                <Avatar
-                                    alt='Avatar photo'
-                                    src={ require('../../../assets/images/user.jpeg') }>
-                                    W
-                                </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary='William Rozin Gaspar'
-                                secondary='williamrozingaspar@gmail.com'
-                            />
-                        </ListItem>
+                        <User>
+                            <ListItem button style={ { width: 'auto', maxWidth: '320px' } }>
+                                <ListItemAvatar>
+                                    <Avatar
+                                        alt='Avatar photo'
+                                        src={ require('../../../assets/images/user.jpeg') }>
+                                        W
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText
+                                    className='user-info'
+                                    primary='William Rozin Gaspar'
+                                    secondary='williamrozingaspar@gmail.com'
+                                />
+                            </ListItem>
+                        </User>
                     </Toolbar>
                 </AppBar>
                 <Content>
