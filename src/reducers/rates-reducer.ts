@@ -29,10 +29,7 @@ export default function ratesReducer(state: TState = rates, action: IAction) {
                 return state
             }
 
-            return [
-                ...state,
-                action.value
-            ]
+            return [ ...state, action.value]
         default:
             return state
     }

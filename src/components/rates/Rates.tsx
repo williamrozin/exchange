@@ -88,6 +88,10 @@ class Rates extends Component<IProps, IState> {
     public handleConfirm = () => {
         const { base, target } = this.state
 
+        if (this.props.error) {
+            return
+        }
+
         if (base && target) {
             this.props.onAddRate({ base, target })
             this.handleHideFields()
@@ -192,6 +196,7 @@ class Rates extends Component<IProps, IState> {
                             fullWidth
                             color='primary'
                             variant='contained'
+                            disabled={ this.props.error }
                             onClick={ this.handleHideAdd }>
                             Add new currency
                         </Button>

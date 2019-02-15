@@ -1,7 +1,9 @@
 import { DeepPartial } from 'redux'
 import {
+    SET_API_ERROR,
     SET_CURRENCY_QUOTATION,
     SET_REFRESHING_CURRENCY,
+    UNSET_API_ERROR,
     UNSET_REFRESHING_CURRENCY
 } from '../constants/action-types'
 import { IState } from '../store/state'
@@ -27,6 +29,10 @@ export default function quotationReducer(state: TState = quotation, action: IAct
                 current: action.value,
                 lastUpdate: action.timestamp
             }
+        case SET_API_ERROR:
+            return { ...state, error: true }
+        case UNSET_API_ERROR:
+            return { ...state, error: false }
         default:
             return state
     }

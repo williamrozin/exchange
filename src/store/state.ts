@@ -11,6 +11,7 @@ export interface IState {
         current: { [keys in TCurrency]: number }
         refreshing: boolean
         lastUpdate: number
+        error: boolean
     }
     wallet: { [keys in TCurrency]: number }
     rates: IRate[]
@@ -44,6 +45,7 @@ export const exchange: IState['exchange'] = {
 
 export const quotation: IState['quotation'] = {
     current: {} as IState['quotation']['current'],
+    error: false,
     lastUpdate: new Date().getTime(),
     refreshing: false
 }

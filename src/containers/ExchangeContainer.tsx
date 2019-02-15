@@ -22,6 +22,7 @@ export interface IProps extends RouteComponentProps<{}> {
     refreshing: IState['quotation']['refreshing']
     quotation: IState['quotation']['current']
     rates: IState['rates']
+    error: IState['quotation']['error']
     lastUpdate: IState['quotation']['lastUpdate']
     onExchange(transactions: ITransaction): void
     onSetBaseCurrency(value: string): void
@@ -29,26 +30,12 @@ export interface IProps extends RouteComponentProps<{}> {
     onUpdateQuotation(refresh?: boolean): void
 }
 
-export const REFRESH_RATE = 100 * 10 * 10 // 100ms * 10 * 10 = 10s
-
 class ExchangeContainer extends Component<IProps> {
-    public updateJob: number
-
-    public componentDidMount() {
-        this.props.onUpdateQuotation(true)
-        this.updateJob = window.setInterval(
-            this.props.onUpdateQuotation,
-            REFRESH_RATE
-        )
-    }
-
-    public componentWillUnmount() {
-        window.clearInterval(this.updateJob)
-    }
-
     public render() {
         return (
-            <Main>
+            <Main
+                error={ this.props.error }
+                onUpdateQuotation={ this.props.onUpdateQuotation }>
                 <Exchange { ...this.props } />
             </Main>
         )
@@ -57,6 +44,7 @@ class ExchangeContainer extends Component<IProps> {
 
 const mapStateToProps = (state: IState) => ({
     base: state.exchange.base,
+    error: state.quotation.error,
     lastUpdate: state.quotation.lastUpdate,
     quotation: state.quotation.current,
     rates: state.rates,

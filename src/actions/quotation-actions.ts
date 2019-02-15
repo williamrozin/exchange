@@ -1,7 +1,9 @@
 import { Dispatch } from 'react'
 import {
+    SET_API_ERROR,
     SET_CURRENCY_QUOTATION,
     SET_REFRESHING_CURRENCY,
+    UNSET_API_ERROR,
     UNSET_REFRESHING_CURRENCY
 } from '../constants/action-types'
 import { IState } from '../store/state'
@@ -75,6 +77,14 @@ export const unsetRefreshingCurrency = () => {
     return { type: UNSET_REFRESHING_CURRENCY }
 }
 
+export const setAPIError = () => {
+    return { type: SET_API_ERROR }
+}
+
+export const unsetAPIError = () => {
+    return { type: UNSET_API_ERROR }
+}
+
 export const updateQuotation = (refresh?: boolean) => {
     return (dispatch: Dispatch<IQuotation | IRefresh>) => {
         const currency: TCurrency = 'GBP'
@@ -94,6 +104,8 @@ export const updateQuotation = (refresh?: boolean) => {
 
                 dispatch(setCurrencyQuotation(quotation, timestamp))
             })
+            .then(() => { dispatch(unsetAPIError()) })
             .then(() => { dispatch(unsetRefreshingCurrency()) })
+            .catch(() => { dispatch(setAPIError() )})
     }
 }

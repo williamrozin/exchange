@@ -8,13 +8,13 @@ import { addRate, removeRate } from '../actions/rates-actions'
 import Main from '../components/layout/Main'
 import Rates from '../components/rates/Rates'
 import { IRate, IState } from '../store/state'
-import { REFRESH_RATE } from './ExchangeContainer'
 
 export interface IProps extends RouteComponentProps<{}> {
     base: IState['exchange']['base']
     target: IState['exchange']['target']
     refreshing: IState['quotation']['refreshing']
     quotation: IState['quotation']['current']
+    error: IState['quotation']['error']
     rates: IState['rates']
     lastUpdate: IState['quotation']['lastUpdate']
     onAddRate(rate: IRate): void
@@ -23,23 +23,11 @@ export interface IProps extends RouteComponentProps<{}> {
 }
 
 class RatesContainer extends Component<IProps> {
-    public updateJob: number
-
-    public componentDidMount() {
-        this.props.onUpdateQuotation(true)
-        this.updateJob = window.setInterval(
-            this.props.onUpdateQuotation,
-            REFRESH_RATE
-        )
-    }
-
-    public componentWillUnmount() {
-        window.clearInterval(this.updateJob)
-    }
-
     public render() {
         return (
-            <Main>
+            <Main
+                error={ this.props.error }
+                onUpdateQuotation={ this.props.onUpdateQuotation }>
                 <Rates { ...this.props } />
             </Main>
         )
@@ -48,6 +36,7 @@ class RatesContainer extends Component<IProps> {
 
 const mapStateToProps = (state: IState) => ({
     base: state.exchange.base,
+    error: state.quotation.error,
     lastUpdate: state.quotation.lastUpdate,
     quotation: state.quotation.current,
     rates: state.rates,

@@ -143,6 +143,7 @@ class Exchange extends Component<IProps, IState> {
         return value.trim() === ''
             || this.isOverWallet()
             || base === target
+            || this.props.error
     }
 
     public getCurrency = (value: string) => {
