@@ -11,7 +11,9 @@ A React App to exchange between currencies according to the quotations. This app
 Clone this repo, install the dependencies and start the app.
 
 > git clone https://github.com/williamrozin/exchange.git
+
 > yarn
+
 > yarn start
 
 ## Features
