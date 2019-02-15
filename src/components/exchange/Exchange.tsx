@@ -160,14 +160,15 @@ class Exchange extends Component<IProps, IState> {
         (event: ChangeEvent<HTMLInputElement>) => {
 
         const word = event.target.value.match(/^\d+(\.\d{0,2})?$/g)
-        const value = event.target.value === ''
-            ? event.target.value
-            : word.join('')
 
         if (word === null || event.target.value === '') {
             this.setState({ fromValue: '', toValue: '' })
             return
         }
+
+        const value = event.target.value === ''
+            ? event.target.value
+            : word.join('')
 
         const correction = value ? this.getCurrency(value) : ''
 
@@ -248,11 +249,19 @@ class Exchange extends Component<IProps, IState> {
             }
             : {}
 
+        const type = option === 'base'
+            ? 'from'
+            : 'to'
+
         return (
             <Input
+                required
                 value={ value }
                 option={ option }
                 placeholder='0.00'
+                title={
+                    `Insert the amount of money that you want to exchange ${type}`
+                }
                 { ...ref }
                 onFocus={ this.handleFocus(option) }
                 onChange={ this.handleChangeField(option) }
@@ -299,6 +308,14 @@ class Exchange extends Component<IProps, IState> {
     }
 
     public renderConfirm() {
+        const title = !this.state.fromValue || !this.state.toValue
+            ? 'You need to insert the amount of money to exchange'
+            : this.isExchangeDisabled()
+                ? this.props.base === this.props.target
+                    ? 'You can\'t exchange between same currencies'
+                    : ''
+                : ''
+
         return (
             <Action>
                 <Button
@@ -307,14 +324,16 @@ class Exchange extends Component<IProps, IState> {
                     onClick={ this.handleGoTo('/') }>
                     Cancel
                 </Button>
-                <Button
-                    fullWidth
-                    color='primary'
-                    variant='contained'
-                    disabled={ this.isExchangeDisabled() }
-                    onClick={ this.handleExchange }>
-                    Exchange
-                </Button>
+                <div title={ title }>
+                    <Button
+                        fullWidth
+                        color='primary'
+                        variant='contained'
+                        disabled={ this.isExchangeDisabled() }
+                        onClick={ this.handleExchange }>
+                        Exchange
+                    </Button>
+                </div>
             </Action>
         )
     }
