@@ -4,7 +4,7 @@ import {
     KeyboardArrowLeft as IconLeft,
     KeyboardArrowRight as IconRight
 } from '@material-ui/icons'
-import React, { Component, ReactNode } from 'react'
+import React, { PureComponent, ReactNode } from 'react'
 import SwipeableViews from 'react-swipeable-views'
 import styled from 'styled-components'
 
@@ -29,7 +29,7 @@ const Container = styled.div<IContainer>`
     };
 `
 
-class Tabs<T> extends Component<IProps<T>> {
+class Tabs<T> extends PureComponent<IProps<T>> {
     public getIndex = () => {
         return this.props.options
             .findIndex((item: T) => this.props.selected === item)

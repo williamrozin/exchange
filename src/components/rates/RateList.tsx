@@ -4,7 +4,7 @@ import List from '@material-ui/core/List'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import ListItemText from '@material-ui/core/ListItemText'
 import { Delete } from '@material-ui/icons'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import styled from 'styled-components'
 import { IRate, IState } from '../../store/state'
 import { Transactions } from '../home/Home'
@@ -31,7 +31,7 @@ const LoadingWrapper = styled.div`
     background-color: #FAFAFA;
 `
 
-class RateList extends Component<IProps> {
+class RateList extends PureComponent<IProps> {
     public getQuotation(rate: IRate) {
         const base = 1 / this.props.quotation[rate.base] || 1
 

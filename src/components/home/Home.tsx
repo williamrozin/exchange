@@ -5,7 +5,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import { Autorenew } from '@material-ui/icons'
 import { distanceInWordsToNow } from 'date-fns'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import styled from 'styled-components'
 import { TCurrency } from '../../actions/quotation-actions'
 import { ALL_CURRENCIES, CURRENCIES } from '../../constants/currencies'
@@ -43,7 +43,7 @@ const byTimestamp = (first: ITransaction, second: ITransaction) =>
         ? 1
         : -1
 
-class Home extends Component<IProps> {
+class Home extends PureComponent<IProps> {
     public formatTransaction = (transaction: ITransaction) => {
         const { from, to } = transaction
         const fromAmount = from.amount.toLocaleString('en', {
