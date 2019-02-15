@@ -31,8 +31,10 @@ const NotFound: SFC<RouteComponentProps<{}>> = (props) =>
             align='center'
             variant='h6'
             style={ { padding: '0 0 36px' } }>
-            The content that you've requested does not exists
-            or isn't available right now.
+            {
+                'The content that you\'ve requested does not exists ' +
+                'or isn\'t available right now.'
+            }
         </Typography>
         <Button
             color='primary'

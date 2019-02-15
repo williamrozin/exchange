@@ -18,7 +18,7 @@ const theme = {
     }
 }
 
-const App: SFC = () =>
+export const App: SFC = () =>
     <Provider store={ store }>
         <ThemeProvider theme={ createMuiTheme(theme) }>
             <BrowserRouter>

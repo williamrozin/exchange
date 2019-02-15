@@ -1,4 +1,3 @@
-import { DeepPartial } from 'redux'
 import { TCurrency } from '../actions/quotation-actions'
 
 export interface IState {
@@ -87,7 +86,7 @@ export const wallet: Partial<IState['wallet']> = {
     USD: 5570.68
 }
 
-export const state: DeepPartial<IState> = {
+export const state = {
     exchange,
     quotation,
     rates,
