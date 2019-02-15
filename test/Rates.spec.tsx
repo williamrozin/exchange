@@ -24,7 +24,6 @@ describe('Rates component', () => {
 
     it('should render the Rates component', () => {
         expect(item.exists()).toBeTruthy()
-        expect(item).toMatchSnapshot()
     })
 
     it('should contains the page title', () => {
