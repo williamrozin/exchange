@@ -1,0 +1,640 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tabs component Should render the Tabs component 1`] = `
+<Tabs
+  onChangeTab={[MockFunction]}
+  options={
+    Array [
+      "USD",
+      "EUR",
+      "GBP",
+    ]
+  }
+  renderTab={[Function]}
+  secondary={false}
+  selected="EUR"
+>
+  <styled.div
+    secondary={false}
+  >
+    <StyledComponent
+      forwardedComponent={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "attrs": Array [],
+          "componentStyle": ComponentStyle {
+            "componentId": "sc-bdVaJa",
+            "isStatic": false,
+            "lastClassName": "dfZNOh",
+            "rules": Array [
+              "
+    padding: 18px;
+    max-width: 900px;
+    background-color: ",
+              [Function],
+              ";
+",
+            ],
+          },
+          "displayName": "styled.div",
+          "foldedComponentIds": Array [],
+          "render": [Function],
+          "styledComponentId": "sc-bdVaJa",
+          "target": "div",
+          "toString": [Function],
+          "warnTooManyClasses": [Function],
+          "withComponent": [Function],
+        }
+      }
+      forwardedRef={null}
+      secondary={false}
+    >
+      <div
+        className="sc-bdVaJa dfZNOh"
+      >
+        <ReactSwipableView
+          animateHeight={false}
+          animateTransitions={true}
+          axis="x"
+          disableLazyLoading={false}
+          disabled={false}
+          enableMouseEvents={false}
+          hysteresis={0.6}
+          ignoreNativeScroll={false}
+          index={1}
+          resistance={false}
+          springConfig={
+            Object {
+              "delay": "0s",
+              "duration": "0.35s",
+              "easeFunction": "cubic-bezier(0.15, 0.3, 0.25, 1)",
+            }
+          }
+          threshold={5}
+        >
+          <div
+            onScroll={[Function]}
+            onTouchEnd={[Function]}
+            onTouchStart={[Function]}
+            style={
+              Object {
+                "overflowX": "hidden",
+              }
+            }
+          >
+            <div
+              className="react-swipeable-view-container"
+              style={
+                Object {
+                  "WebkitFlexDirection": "row",
+                  "WebkitTransition": "all 0s ease 0s",
+                  "direction": "ltr",
+                  "display": "flex",
+                  "flexDirection": "row",
+                  "height": null,
+                  "transition": "all 0s ease 0s",
+                  "willChange": "transform",
+                }
+              }
+            >
+              <div
+                aria-hidden={false}
+                data-swipeable="true"
+                key=".$EUR"
+                style={
+                  Object {
+                    "WebkitFlexShrink": 0,
+                    "flexShrink": 0,
+                    "overflow": "auto",
+                    "width": "100%",
+                  }
+                }
+              >
+                <div
+                  key="EUR"
+                >
+                  EUR
+                </div>
+              </div>
+            </div>
+          </div>
+        </ReactSwipableView>
+        <WithStyles(MobileStepper)
+          activeStep={1}
+          backButton={
+            <WithStyles(Button)
+              color="primary"
+              onClick={[Function]}
+            >
+              <pure(KeyboardArrowLeftIcon) />
+              USD
+            </WithStyles(Button)>
+          }
+          nextButton={
+            <WithStyles(Button)
+              color="primary"
+              onClick={[Function]}
+            >
+              GBP
+              <pure(KeyboardArrowRightIcon) />
+            </WithStyles(Button)>
+          }
+          steps={3}
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "position": "relative",
+            }
+          }
+        >
+          <MobileStepper
+            activeStep={1}
+            backButton={
+              <WithStyles(Button)
+                color="primary"
+                onClick={[Function]}
+              >
+                <pure(KeyboardArrowLeftIcon) />
+                USD
+              </WithStyles(Button)>
+            }
+            classes={
+              Object {
+                "dot": "MuiMobileStepper-dot-6",
+                "dotActive": "MuiMobileStepper-dotActive-7",
+                "dots": "MuiMobileStepper-dots-5",
+                "positionBottom": "MuiMobileStepper-positionBottom-2",
+                "positionStatic": "MuiMobileStepper-positionStatic-4",
+                "positionTop": "MuiMobileStepper-positionTop-3",
+                "progress": "MuiMobileStepper-progress-8",
+                "root": "MuiMobileStepper-root-1",
+              }
+            }
+            nextButton={
+              <WithStyles(Button)
+                color="primary"
+                onClick={[Function]}
+              >
+                GBP
+                <pure(KeyboardArrowRightIcon) />
+              </WithStyles(Button)>
+            }
+            position="bottom"
+            steps={3}
+            style={
+              Object {
+                "backgroundColor": "transparent",
+                "position": "relative",
+              }
+            }
+            variant="dots"
+          >
+            <WithStyles(Paper)
+              className="MuiMobileStepper-root-1 MuiMobileStepper-positionBottom-2"
+              elevation={0}
+              square={true}
+              style={
+                Object {
+                  "backgroundColor": "transparent",
+                  "position": "relative",
+                }
+              }
+            >
+              <Paper
+                className="MuiMobileStepper-root-1 MuiMobileStepper-positionBottom-2"
+                classes={
+                  Object {
+                    "elevation0": "MuiPaper-elevation0-11",
+                    "elevation1": "MuiPaper-elevation1-12",
+                    "elevation10": "MuiPaper-elevation10-21",
+                    "elevation11": "MuiPaper-elevation11-22",
+                    "elevation12": "MuiPaper-elevation12-23",
+                    "elevation13": "MuiPaper-elevation13-24",
+                    "elevation14": "MuiPaper-elevation14-25",
+                    "elevation15": "MuiPaper-elevation15-26",
+                    "elevation16": "MuiPaper-elevation16-27",
+                    "elevation17": "MuiPaper-elevation17-28",
+                    "elevation18": "MuiPaper-elevation18-29",
+                    "elevation19": "MuiPaper-elevation19-30",
+                    "elevation2": "MuiPaper-elevation2-13",
+                    "elevation20": "MuiPaper-elevation20-31",
+                    "elevation21": "MuiPaper-elevation21-32",
+                    "elevation22": "MuiPaper-elevation22-33",
+                    "elevation23": "MuiPaper-elevation23-34",
+                    "elevation24": "MuiPaper-elevation24-35",
+                    "elevation3": "MuiPaper-elevation3-14",
+                    "elevation4": "MuiPaper-elevation4-15",
+                    "elevation5": "MuiPaper-elevation5-16",
+                    "elevation6": "MuiPaper-elevation6-17",
+                    "elevation7": "MuiPaper-elevation7-18",
+                    "elevation8": "MuiPaper-elevation8-19",
+                    "elevation9": "MuiPaper-elevation9-20",
+                    "root": "MuiPaper-root-9",
+                    "rounded": "MuiPaper-rounded-10",
+                  }
+                }
+                component="div"
+                elevation={0}
+                square={true}
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                    "position": "relative",
+                  }
+                }
+              >
+                <div
+                  className="MuiPaper-root-9 MuiPaper-elevation0-11 MuiMobileStepper-root-1 MuiMobileStepper-positionBottom-2"
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "position": "relative",
+                    }
+                  }
+                >
+                  <WithStyles(Button)
+                    color="primary"
+                    onClick={[Function]}
+                  >
+                    <Button
+                      classes={
+                        Object {
+                          "colorInherit": "MuiButton-colorInherit-57",
+                          "contained": "MuiButton-contained-47",
+                          "containedPrimary": "MuiButton-containedPrimary-48",
+                          "containedSecondary": "MuiButton-containedSecondary-49",
+                          "disabled": "MuiButton-disabled-56",
+                          "extendedFab": "MuiButton-extendedFab-54",
+                          "fab": "MuiButton-fab-53",
+                          "flat": "MuiButton-flat-41",
+                          "flatPrimary": "MuiButton-flatPrimary-42",
+                          "flatSecondary": "MuiButton-flatSecondary-43",
+                          "focusVisible": "MuiButton-focusVisible-55",
+                          "fullWidth": "MuiButton-fullWidth-61",
+                          "label": "MuiButton-label-37",
+                          "mini": "MuiButton-mini-58",
+                          "outlined": "MuiButton-outlined-44",
+                          "outlinedPrimary": "MuiButton-outlinedPrimary-45",
+                          "outlinedSecondary": "MuiButton-outlinedSecondary-46",
+                          "raised": "MuiButton-raised-50",
+                          "raisedPrimary": "MuiButton-raisedPrimary-51",
+                          "raisedSecondary": "MuiButton-raisedSecondary-52",
+                          "root": "MuiButton-root-36",
+                          "sizeLarge": "MuiButton-sizeLarge-60",
+                          "sizeSmall": "MuiButton-sizeSmall-59",
+                          "text": "MuiButton-text-38",
+                          "textPrimary": "MuiButton-textPrimary-39",
+                          "textSecondary": "MuiButton-textSecondary-40",
+                        }
+                      }
+                      color="primary"
+                      component="button"
+                      disableFocusRipple={false}
+                      disabled={false}
+                      fullWidth={false}
+                      mini={false}
+                      onClick={[Function]}
+                      size="medium"
+                      type="button"
+                      variant="text"
+                    >
+                      <WithStyles(ButtonBase)
+                        className="MuiButton-root-36 MuiButton-text-38 MuiButton-textPrimary-39 MuiButton-flat-41 MuiButton-flatPrimary-42"
+                        component="button"
+                        disabled={false}
+                        focusRipple={true}
+                        focusVisibleClassName="MuiButton-focusVisible-55"
+                        onClick={[Function]}
+                        type="button"
+                      >
+                        <ButtonBase
+                          centerRipple={false}
+                          className="MuiButton-root-36 MuiButton-text-38 MuiButton-textPrimary-39 MuiButton-flat-41 MuiButton-flatPrimary-42"
+                          classes={
+                            Object {
+                              "disabled": "MuiButtonBase-disabled-63",
+                              "focusVisible": "MuiButtonBase-focusVisible-64",
+                              "root": "MuiButtonBase-root-62",
+                            }
+                          }
+                          component="button"
+                          disableRipple={false}
+                          disableTouchRipple={false}
+                          disabled={false}
+                          focusRipple={true}
+                          focusVisibleClassName="MuiButton-focusVisible-55"
+                          onClick={[Function]}
+                          tabIndex="0"
+                          type="button"
+                        >
+                          <button
+                            className="MuiButtonBase-root-62 MuiButton-root-36 MuiButton-text-38 MuiButton-textPrimary-39 MuiButton-flat-41 MuiButton-flatPrimary-42"
+                            disabled={false}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onContextMenu={[Function]}
+                            onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyUp={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseLeave={[Function]}
+                            onMouseUp={[Function]}
+                            onTouchEnd={[Function]}
+                            onTouchMove={[Function]}
+                            onTouchStart={[Function]}
+                            tabIndex="0"
+                            type="button"
+                          >
+                            <span
+                              className="MuiButton-label-37"
+                            >
+                              <pure(KeyboardArrowLeftIcon)>
+                                <KeyboardArrowLeftIcon>
+                                  <WithStyles(SvgIcon)>
+                                    <SvgIcon
+                                      classes={
+                                        Object {
+                                          "colorAction": "MuiSvgIcon-colorAction-68",
+                                          "colorDisabled": "MuiSvgIcon-colorDisabled-70",
+                                          "colorError": "MuiSvgIcon-colorError-69",
+                                          "colorPrimary": "MuiSvgIcon-colorPrimary-66",
+                                          "colorSecondary": "MuiSvgIcon-colorSecondary-67",
+                                          "fontSizeInherit": "MuiSvgIcon-fontSizeInherit-71",
+                                          "fontSizeLarge": "MuiSvgIcon-fontSizeLarge-73",
+                                          "fontSizeSmall": "MuiSvgIcon-fontSizeSmall-72",
+                                          "root": "MuiSvgIcon-root-65",
+                                        }
+                                      }
+                                      color="inherit"
+                                      component="svg"
+                                      fontSize="default"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        className="MuiSvgIcon-root-65"
+                                        focusable="false"
+                                        role="presentation"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"
+                                        />
+                                        <path
+                                          d="M0 0h24v24H0V0z"
+                                          fill="none"
+                                        />
+                                      </svg>
+                                    </SvgIcon>
+                                  </WithStyles(SvgIcon)>
+                                </KeyboardArrowLeftIcon>
+                              </pure(KeyboardArrowLeftIcon)>
+                              USD
+                            </span>
+                            <NoSsr
+                              defer={false}
+                              fallback={null}
+                            >
+                              <WithStyles(TouchRipple)
+                                center={false}
+                                innerRef={[Function]}
+                              >
+                                <TouchRipple
+                                  center={false}
+                                  classes={
+                                    Object {
+                                      "child": "MuiTouchRipple-child-78",
+                                      "childLeaving": "MuiTouchRipple-childLeaving-79",
+                                      "childPulsate": "MuiTouchRipple-childPulsate-80",
+                                      "ripple": "MuiTouchRipple-ripple-75",
+                                      "ripplePulsate": "MuiTouchRipple-ripplePulsate-77",
+                                      "rippleVisible": "MuiTouchRipple-rippleVisible-76",
+                                      "root": "MuiTouchRipple-root-74",
+                                    }
+                                  }
+                                >
+                                  <TransitionGroup
+                                    childFactory={[Function]}
+                                    className="MuiTouchRipple-root-74"
+                                    component="span"
+                                    enter={true}
+                                    exit={true}
+                                  >
+                                    <span
+                                      className="MuiTouchRipple-root-74"
+                                    />
+                                  </TransitionGroup>
+                                </TouchRipple>
+                              </WithStyles(TouchRipple)>
+                            </NoSsr>
+                          </button>
+                        </ButtonBase>
+                      </WithStyles(ButtonBase)>
+                    </Button>
+                  </WithStyles(Button)>
+                  <div
+                    className="MuiMobileStepper-dots-5"
+                  >
+                    <div
+                      className="MuiMobileStepper-dot-6"
+                      key="0"
+                    />
+                    <div
+                      className="MuiMobileStepper-dot-6 MuiMobileStepper-dotActive-7"
+                      key="1"
+                    />
+                    <div
+                      className="MuiMobileStepper-dot-6"
+                      key="2"
+                    />
+                  </div>
+                  <WithStyles(Button)
+                    color="primary"
+                    onClick={[Function]}
+                  >
+                    <Button
+                      classes={
+                        Object {
+                          "colorInherit": "MuiButton-colorInherit-57",
+                          "contained": "MuiButton-contained-47",
+                          "containedPrimary": "MuiButton-containedPrimary-48",
+                          "containedSecondary": "MuiButton-containedSecondary-49",
+                          "disabled": "MuiButton-disabled-56",
+                          "extendedFab": "MuiButton-extendedFab-54",
+                          "fab": "MuiButton-fab-53",
+                          "flat": "MuiButton-flat-41",
+                          "flatPrimary": "MuiButton-flatPrimary-42",
+                          "flatSecondary": "MuiButton-flatSecondary-43",
+                          "focusVisible": "MuiButton-focusVisible-55",
+                          "fullWidth": "MuiButton-fullWidth-61",
+                          "label": "MuiButton-label-37",
+                          "mini": "MuiButton-mini-58",
+                          "outlined": "MuiButton-outlined-44",
+                          "outlinedPrimary": "MuiButton-outlinedPrimary-45",
+                          "outlinedSecondary": "MuiButton-outlinedSecondary-46",
+                          "raised": "MuiButton-raised-50",
+                          "raisedPrimary": "MuiButton-raisedPrimary-51",
+                          "raisedSecondary": "MuiButton-raisedSecondary-52",
+                          "root": "MuiButton-root-36",
+                          "sizeLarge": "MuiButton-sizeLarge-60",
+                          "sizeSmall": "MuiButton-sizeSmall-59",
+                          "text": "MuiButton-text-38",
+                          "textPrimary": "MuiButton-textPrimary-39",
+                          "textSecondary": "MuiButton-textSecondary-40",
+                        }
+                      }
+                      color="primary"
+                      component="button"
+                      disableFocusRipple={false}
+                      disabled={false}
+                      fullWidth={false}
+                      mini={false}
+                      onClick={[Function]}
+                      size="medium"
+                      type="button"
+                      variant="text"
+                    >
+                      <WithStyles(ButtonBase)
+                        className="MuiButton-root-36 MuiButton-text-38 MuiButton-textPrimary-39 MuiButton-flat-41 MuiButton-flatPrimary-42"
+                        component="button"
+                        disabled={false}
+                        focusRipple={true}
+                        focusVisibleClassName="MuiButton-focusVisible-55"
+                        onClick={[Function]}
+                        type="button"
+                      >
+                        <ButtonBase
+                          centerRipple={false}
+                          className="MuiButton-root-36 MuiButton-text-38 MuiButton-textPrimary-39 MuiButton-flat-41 MuiButton-flatPrimary-42"
+                          classes={
+                            Object {
+                              "disabled": "MuiButtonBase-disabled-63",
+                              "focusVisible": "MuiButtonBase-focusVisible-64",
+                              "root": "MuiButtonBase-root-62",
+                            }
+                          }
+                          component="button"
+                          disableRipple={false}
+                          disableTouchRipple={false}
+                          disabled={false}
+                          focusRipple={true}
+                          focusVisibleClassName="MuiButton-focusVisible-55"
+                          onClick={[Function]}
+                          tabIndex="0"
+                          type="button"
+                        >
+                          <button
+                            className="MuiButtonBase-root-62 MuiButton-root-36 MuiButton-text-38 MuiButton-textPrimary-39 MuiButton-flat-41 MuiButton-flatPrimary-42"
+                            disabled={false}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onContextMenu={[Function]}
+                            onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyUp={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseLeave={[Function]}
+                            onMouseUp={[Function]}
+                            onTouchEnd={[Function]}
+                            onTouchMove={[Function]}
+                            onTouchStart={[Function]}
+                            tabIndex="0"
+                            type="button"
+                          >
+                            <span
+                              className="MuiButton-label-37"
+                            >
+                              GBP
+                              <pure(KeyboardArrowRightIcon)>
+                                <KeyboardArrowRightIcon>
+                                  <WithStyles(SvgIcon)>
+                                    <SvgIcon
+                                      classes={
+                                        Object {
+                                          "colorAction": "MuiSvgIcon-colorAction-68",
+                                          "colorDisabled": "MuiSvgIcon-colorDisabled-70",
+                                          "colorError": "MuiSvgIcon-colorError-69",
+                                          "colorPrimary": "MuiSvgIcon-colorPrimary-66",
+                                          "colorSecondary": "MuiSvgIcon-colorSecondary-67",
+                                          "fontSizeInherit": "MuiSvgIcon-fontSizeInherit-71",
+                                          "fontSizeLarge": "MuiSvgIcon-fontSizeLarge-73",
+                                          "fontSizeSmall": "MuiSvgIcon-fontSizeSmall-72",
+                                          "root": "MuiSvgIcon-root-65",
+                                        }
+                                      }
+                                      color="inherit"
+                                      component="svg"
+                                      fontSize="default"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        className="MuiSvgIcon-root-65"
+                                        focusable="false"
+                                        role="presentation"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"
+                                        />
+                                        <path
+                                          d="M0 0h24v24H0V0z"
+                                          fill="none"
+                                        />
+                                      </svg>
+                                    </SvgIcon>
+                                  </WithStyles(SvgIcon)>
+                                </KeyboardArrowRightIcon>
+                              </pure(KeyboardArrowRightIcon)>
+                            </span>
+                            <NoSsr
+                              defer={false}
+                              fallback={null}
+                            >
+                              <WithStyles(TouchRipple)
+                                center={false}
+                                innerRef={[Function]}
+                              >
+                                <TouchRipple
+                                  center={false}
+                                  classes={
+                                    Object {
+                                      "child": "MuiTouchRipple-child-78",
+                                      "childLeaving": "MuiTouchRipple-childLeaving-79",
+                                      "childPulsate": "MuiTouchRipple-childPulsate-80",
+                                      "ripple": "MuiTouchRipple-ripple-75",
+                                      "ripplePulsate": "MuiTouchRipple-ripplePulsate-77",
+                                      "rippleVisible": "MuiTouchRipple-rippleVisible-76",
+                                      "root": "MuiTouchRipple-root-74",
+                                    }
+                                  }
+                                >
+                                  <TransitionGroup
+                                    childFactory={[Function]}
+                                    className="MuiTouchRipple-root-74"
+                                    component="span"
+                                    enter={true}
+                                    exit={true}
+                                  >
+                                    <span
+                                      className="MuiTouchRipple-root-74"
+                                    />
+                                  </TransitionGroup>
+                                </TouchRipple>
+                              </WithStyles(TouchRipple)>
+                            </NoSsr>
+                          </button>
+                        </ButtonBase>
+                      </WithStyles(ButtonBase)>
+                    </Button>
+                  </WithStyles(Button)>
+                </div>
+              </Paper>
+            </WithStyles(Paper)>
+          </MobileStepper>
+        </WithStyles(MobileStepper)>
+      </div>
+    </StyledComponent>
+  </styled.div>
+</Tabs>
+`;

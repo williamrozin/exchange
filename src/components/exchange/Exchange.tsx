@@ -266,6 +266,10 @@ class Exchange extends Component<IProps, IState> {
         const { active } = this.state
         const { refreshing, wallet } = this.props
         const loading = refreshing && option !== active && this.state.fromValue
+        const formattedValue = wallet[currency].toLocaleString('en', {
+            currency,
+            ...CURRENCY_OPTIONS
+        })
 
         return (
             <FieldContent key={ currency + this.props.base }>
@@ -274,14 +278,7 @@ class Exchange extends Component<IProps, IState> {
                         { currency }
                     </Typography>
                     <Typography variant='h6'>
-                        You have
-                        { ' ' }
-                        {
-                           wallet[currency].toLocaleString('en', {
-                                currency,
-                                ...CURRENCY_OPTIONS
-                            })
-                        }
+                        { `You have ${formattedValue}` }
                     </Typography>
                 </Details>
                 { loading ? this.renderLoading() : this.renderInput(option) }
@@ -323,6 +320,14 @@ class Exchange extends Component<IProps, IState> {
     }
 
     public renderExchange() {
+        const {
+            base,
+            target,
+            refreshing,
+            rates,
+            quotation
+        } = this.props
+
         return (
             <Content>
                 <Form>
@@ -334,7 +339,7 @@ class Exchange extends Component<IProps, IState> {
                             backgroundColor: '#F5F5f5',
                             paddingTop: '18px'
                         } }>
-                        Exchanging from { this.props.base } to { this.props.target }
+                        { `Exchanging from ${base} to ${target}` }
                     </Typography>
                     { this.renderPocket('base') }
                     { this.renderPocket('target') }
@@ -343,11 +348,11 @@ class Exchange extends Component<IProps, IState> {
                 <RateList
                     readonly
                     title='Related rates'
-                    base={ this.props.base }
-                    target={ this.props.target }
-                    refreshing={ this.props.refreshing }
-                    rates={ this.props.rates }
-                    quotation={ this.props.quotation }
+                    base={ base }
+                    target={ target }
+                    refreshing={ refreshing }
+                    rates={ rates }
+                    quotation={ quotation }
                 />
             </Content>
         )

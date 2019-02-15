@@ -33,7 +33,7 @@ const LoadingWrapper = styled.div`
 
 class RateList extends Component<IProps> {
     public getQuotation(rate: IRate) {
-        const base = 1 / this.props.quotation[rate.base]
+        const base = 1 / this.props.quotation[rate.base] || 1
 
         return (base * this.props.quotation[rate.target]).toLocaleString('en', {
             currency: rate.target,
