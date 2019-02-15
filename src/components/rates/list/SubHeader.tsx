@@ -9,7 +9,8 @@ const SubHeader: SFC<IProps> = (props) =>
     <ListSubheader
         style={ {
             backgroundColor: '#FAFAFA',
-            padding: '0 18px'
+            flex: 1,
+            padding: 0
         } }>
         { props.title }
     </ListSubheader>

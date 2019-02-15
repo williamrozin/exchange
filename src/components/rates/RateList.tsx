@@ -5,7 +5,7 @@ import List from '@material-ui/core/List'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import ListItemText from '@material-ui/core/ListItemText'
 import { Delete } from '@material-ui/icons'
-import React, { PureComponent } from 'react'
+import React, { PureComponent, ReactNode } from 'react'
 import styled from 'styled-components'
 import { IRate, IState } from '../../store/state'
 import { Transactions } from '../home/Home'
@@ -15,6 +15,7 @@ import SubHeader from './list/SubHeader'
 interface IProps {
     readonly?: boolean
     title?: string
+    action?: ReactNode
     rates: IState['rates']
     base: IState['exchange']['base']
     target: IState['exchange']['target']
@@ -30,6 +31,13 @@ const LoadingWrapper = styled.div`
     align-items: center;
     justify-content: center;
     background-color: #FAFAFA;
+`
+
+export const ListHeader = styled.div`
+    display: flex;
+    background-color: #FAFAFA;
+    flex-direction: row;
+    padding: 0 18px;
 `
 
 class RateList extends PureComponent<IProps> {
@@ -118,7 +126,12 @@ class RateList extends PureComponent<IProps> {
             <Transactions>
                 <List
                     style={ { padding: '0px' } }
-                    subheader={ <SubHeader title={ title } /> }>
+                    subheader={
+                        <ListHeader>
+                            <SubHeader title={ title } />
+                            { this.props.action }
+                        </ListHeader>
+                    }>
                     {
                         this.props.rates.length === 0
                             ? this.renderEmpty()

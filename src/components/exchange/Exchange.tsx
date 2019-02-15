@@ -381,6 +381,14 @@ class Exchange extends Component<IProps, IState> {
                     refreshing={ refreshing }
                     rates={ rates }
                     quotation={ quotation }
+                    action={
+                        <Button
+                            size='small'
+                            color='primary'
+                            onClick={ this.handleGoTo('/rates') }>
+                            See all rates
+                        </Button>
+                    }
                 />
             </Content>
         )

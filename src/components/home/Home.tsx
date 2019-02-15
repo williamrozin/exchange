@@ -15,6 +15,7 @@ import { Content, CURRENCY_OPTIONS } from '../exchange/Exchange'
 import Tabs from '../exchange/tabs/Tabs'
 import Item from '../rates/list/Item'
 import SubHeader from '../rates/list/SubHeader'
+import { ListHeader } from '../rates/RateList'
 
 interface IAction {
     fullWidth?: boolean
@@ -105,7 +106,11 @@ class Home extends PureComponent<IProps> {
             <Transactions>
                 <List
                     style={ { padding: '0px' } }
-                    subheader={ <SubHeader title='Last transactions' /> }>
+                    subheader={
+                        <ListHeader>
+                            <SubHeader title='Last transactions' />
+                        </ListHeader>
+                    }>
                     {
                         transactions.map((transaction: ITransaction, index: number) =>
                             <Item
