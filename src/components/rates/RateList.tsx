@@ -78,25 +78,12 @@ class RateList extends PureComponent<IProps> {
         )
     }
 
-    public renderList() {
-        const {
-            rates = [],
-            base,
-            target,
-            refreshing
-        } = this.props
+    public renderList(data: IRate[]) {
+        const { refreshing } = this.props
 
         if (refreshing) {
             return this.renderLoading()
         }
-
-        const equals = (rate: IRate) =>
-            rate.base === base || rate.base === target
-                || rate.target === base || rate.target === target
-
-        const data = this.props.readonly
-            ? rates.filter(equals)
-            : rates
 
         const getLabelFor = (rate: IRate) =>
             `1 ${rate.base} - ${this.getQuotation(rate)} ${rate.target}`
@@ -120,7 +107,20 @@ class RateList extends PureComponent<IProps> {
     }
 
     public render() {
-        const { title = 'Your rates' } = this.props
+        const {
+            rates = [],
+            base,
+            target,
+            title = 'Your rates'
+        } = this.props
+
+        const equals = (rate: IRate) =>
+            rate.base === base || rate.base === target
+                || rate.target === base || rate.target === target
+
+        const data = this.props.readonly
+            ? rates.filter(equals)
+            : rates
 
         return (
             <Transactions>
@@ -133,9 +133,9 @@ class RateList extends PureComponent<IProps> {
                         </ListHeader>
                     }>
                     {
-                        this.props.rates.length === 0
+                        data.length === 0
                             ? this.renderEmpty()
-                            : this.renderList()
+                            : this.renderList(data)
                     }
                 </List>
             </Transactions>
