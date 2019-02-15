@@ -1,3 +1,4 @@
+import { Snackbar } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
@@ -15,6 +16,7 @@ interface IState {
     fromValue: string
     toValue: string
     active: 'base' | 'target'
+    error: boolean
 }
 
 interface IOption {
@@ -89,6 +91,7 @@ class Exchange extends Component<IProps, IState> {
         super(props)
         this.state = {
             active: 'base',
+            error: false,
             fromValue: '',
             toValue: ''
         }
@@ -173,6 +176,7 @@ class Exchange extends Component<IProps, IState> {
         const correction = value ? this.getCurrency(value) : ''
 
         if (this.isOverWallet(option === 'base' ? value : correction)) {
+            this.setState({ error: true })
             return
         }
 
@@ -225,6 +229,10 @@ class Exchange extends Component<IProps, IState> {
         })
 
         this.setState({ fromValue: '', toValue: '' })
+    }
+
+    public handleCloseError = () => {
+        this.setState({ error: false })
     }
 
     public renderLoading() {
@@ -382,6 +390,19 @@ class Exchange extends Component<IProps, IState> {
             <>
                 { this.renderExchange() }
                 <LastUpdate lastUpdate={ this.props.lastUpdate } />
+                <Snackbar
+                    autoHideDuration={ 3000 }
+                    open={ this.state.error }
+                    message='You can not enter a value greater than available'
+                    action={
+                        <Button
+                            color='secondary'
+                            onClick={ this.handleCloseError }>
+                            Ok
+                        </Button>
+                    }
+                    onClose={ this.handleCloseError }
+                />
             </>
         )
     }
