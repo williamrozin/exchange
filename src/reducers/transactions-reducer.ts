@@ -1,3 +1,4 @@
+import append from 'ramda/es/append'
 import { DeepPartial } from 'redux'
 import { UPDATE_TRANSACTIONS } from '../constants/action-types'
 import { IState, ITransaction } from '../store/state'
@@ -19,10 +20,7 @@ export default function walletReducer(state: TState = transactions, action: IAct
                 return state
             }
 
-            return [
-                ...state,
-                action.value
-            ]
+            return append(action.value, state)
         default:
             return state
     }

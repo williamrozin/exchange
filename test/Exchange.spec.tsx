@@ -8,6 +8,7 @@ describe('Exchange component', () => {
     const routerProps = getMockRouterProps<Exchange>(null)
     const props = {
         base: state.exchange.base,
+        error: false,
         lastUpdate: state.quotation.lastUpdate,
         onExchange: jest.fn(),
         onSetBaseCurrency: jest.fn(),

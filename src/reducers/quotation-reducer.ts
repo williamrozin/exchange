@@ -1,3 +1,5 @@
+import assoc from 'ramda/es/assoc'
+import merge from 'ramda/es/merge'
 import { DeepPartial } from 'redux'
 import {
     SET_API_ERROR,
@@ -20,19 +22,18 @@ type TState = DeepPartial<IState['quotation']>
 export default function quotationReducer(state: TState = quotation, action: IAction) {
     switch (action.type) {
         case SET_REFRESHING_CURRENCY:
-            return { ...state, refreshing: true }
+            return assoc('refreshing', true, state)
         case UNSET_REFRESHING_CURRENCY:
-            return { ...state, refreshing: false }
+            return assoc('refreshing', false, state)
         case SET_CURRENCY_QUOTATION:
-            return {
-                ...state,
+            return merge(state, {
                 current: action.value,
                 lastUpdate: action.timestamp
-            }
+            })
         case SET_API_ERROR:
-            return { ...state, error: true }
+            return assoc('error', true, state)
         case UNSET_API_ERROR:
-            return { ...state, error: false }
+            return assoc('error', false, state)
         default:
             return state
     }

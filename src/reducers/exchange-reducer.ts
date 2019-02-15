@@ -1,3 +1,4 @@
+import assoc from 'ramda/es/assoc'
 import { DeepPartial } from 'redux'
 import {
     SET_BASE_CURRENCY,
@@ -17,9 +18,9 @@ type TState = DeepPartial<IState['exchange']>
 export default function exchangeReducer(state: TState = exchange, action: IAction) {
     switch (action.type) {
         case SET_BASE_CURRENCY:
-            return { ...state, base: action.value }
+            return assoc('base', action.value, state)
         case SET_TARGET_CURRENCY:
-            return { ...state, target: action.value }
+            return assoc('target', action.value, state)
         default:
             return state
     }

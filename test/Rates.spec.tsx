@@ -8,6 +8,7 @@ describe('Rates component', () => {
     const routerProps = getMockRouterProps<Rates>(null)
     const props = {
         base: state.exchange.base,
+        error: false,
         lastUpdate: state.quotation.lastUpdate,
         onAddRate: jest.fn(),
         onRemoveRate: jest.fn(),

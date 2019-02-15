@@ -1,25 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Item component should render an Item with an odd index 1`] = `
-<WithStyles(ListItem)
-  style={
-    Object {
-      "backgroundColor": "#F5F5F5",
-    }
-  }
+<styled.div
+  index={1}
 >
-  Odd item
-</WithStyles(ListItem)>
+  <WithStyles(ListItem)
+    className="list-item"
+  >
+    Odd item
+  </WithStyles(ListItem)>
+</styled.div>
 `;
 
 exports[`Item component should render an item with an even index 1`] = `
-<WithStyles(ListItem)
-  style={
-    Object {
-      "backgroundColor": "#EEEEEE",
-    }
-  }
+<styled.div
+  index={0}
 >
-  Even item
-</WithStyles(ListItem)>
+  <WithStyles(ListItem)
+    className="list-item"
+  >
+    Even item
+  </WithStyles(ListItem)>
+</styled.div>
 `;

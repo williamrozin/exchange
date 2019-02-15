@@ -301,6 +301,11 @@
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.1.tgz#48fd98c1561fe718b61733daed46ff115b496e18"
   integrity sha512-eqz8c/0kwNi/OEHQfvIuJVLTst3in0e7uTKeuY+WL/zfKn0xVujOTp42bS/vUUokhK5P2BppLd9JXMOMHcgbjA==
 
+"@types/ramda@0.25.50":
+  version "0.25.50"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.25.50.tgz#7f21d47c650f85b8a61c2b608adf8aa0f1a8fccf"
+  integrity sha512-hkGWVWyPEXkXSh7rxJIGg6ELG1/WlR2BB8JemZW8v2l50bfMUw6CjrETJpgd9i3jUxaxOE/X57DvclWd9wkZhg==
+
 "@types/react-dom@16.8.0":
   version "16.8.0"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.8.0.tgz#c565f43f9d2ec911f9e0b8f3b74e25e67879aa3f"
@@ -6209,6 +6214,11 @@ railroad-diagrams@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/railroad-diagrams/-/railroad-diagrams-1.0.0.tgz#eb7e6267548ddedfb899c1b90e57374559cddb7e"
   integrity sha1-635iZ1SN3t+4mcG5Dlc3RVnN234=
+
+ramda@0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
+  integrity sha512-GXpfrYVPwx3K7RQ6aYT8KPS8XViSXUVJT1ONhoKPE9VAleW42YE+U+8VEyGWt41EnEQW7gwecYJriTI0pKoecQ==
 
 randexp@0.4.6:
   version "0.4.6"

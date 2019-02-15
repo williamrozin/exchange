@@ -1,3 +1,4 @@
+import merge from 'ramda/es/merge'
 import { DeepPartial } from 'redux'
 import { UPDATE_WALLET } from '../constants/action-types'
 import { IState, ITransaction } from '../store/state'
@@ -19,11 +20,10 @@ export default function walletReducer(state: TState = wallet, action: IAction) {
                 return state
             }
 
-            return {
-                ...state,
+            return merge(state, {
                 [from.currency]: from.wallet - from.amount,
                 [to.currency]: to.wallet + to.amount
-            }
+            })
         default:
             return state
     }
