@@ -23,13 +23,18 @@ export interface IProps extends RouteComponentProps<{}> {
 }
 
 class RatesContainer extends Component<IProps> {
+    public updateJob: number
+
     public componentDidMount() {
-        this.updateQuotation()
+        this.props.onUpdateQuotation(true)
+        this.updateJob = window.setInterval(
+            this.props.onUpdateQuotation,
+            REFRESH_RATE
+        )
     }
 
-    public updateQuotation() {
-        this.props.onUpdateQuotation(true)
-        setInterval(this.props.onUpdateQuotation, REFRESH_RATE)
+    public componentWillUnmount() {
+        window.clearInterval(this.updateJob)
     }
 
     public render() {

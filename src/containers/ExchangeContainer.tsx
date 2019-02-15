@@ -32,13 +32,18 @@ export interface IProps extends RouteComponentProps<{}> {
 export const REFRESH_RATE = 100 * 10 * 10 // 100ms * 10 * 10 = 10s
 
 class ExchangeContainer extends Component<IProps> {
+    public updateJob: number
+
     public componentDidMount() {
-        this.updateQuotation()
+        this.props.onUpdateQuotation(true)
+        this.updateJob = window.setInterval(
+            this.props.onUpdateQuotation,
+            REFRESH_RATE
+        )
     }
 
-    public updateQuotation() {
-        this.props.onUpdateQuotation(true)
-        setInterval(this.props.onUpdateQuotation, REFRESH_RATE)
+    public componentWillUnmount() {
+        window.clearInterval(this.updateJob)
     }
 
     public render() {
