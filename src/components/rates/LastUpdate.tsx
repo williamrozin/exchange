@@ -12,9 +12,7 @@ const LastUpdate: SFC<IProps> = ({ lastUpdate }) =>
         align='center'
         variant='caption'
         style={ { paddingTop: '18px' } }>
-        Last updated at
-        { ' ' }
-        { format(new Date(lastUpdate), 'HH:mm, DD MMM YYYY') }
+        { `Last updated at ${format(new Date(lastUpdate), 'HH:mm, DD MMM YYYY')}` }
     </Typography>
 
 export default LastUpdate

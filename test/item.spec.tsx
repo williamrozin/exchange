@@ -1,6 +1,5 @@
 import { shallow } from 'enzyme'
 import React from 'react'
-
 import Item from '../src/components/rates/list/Item'
 
 describe('Item component', () => {
