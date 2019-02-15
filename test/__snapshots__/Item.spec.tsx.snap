@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Item component Should render an Item with an odd index 1`] = `
+exports[`Item component should render an Item with an odd index 1`] = `
 <WithStyles(ListItem)
   style={
     Object {

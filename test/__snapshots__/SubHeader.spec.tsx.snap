@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SubHeader component Should render a SubHeader with a title 1`] = `
+exports[`SubHeader component should render a SubHeader with a title 1`] = `
 <WithStyles(ListSubheader)
   style={
     Object {

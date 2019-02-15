@@ -24,19 +24,19 @@ describe('Exchange component', () => {
 
     const item = mount(<Exchange { ...props } />)
 
-    it('Should render the Exchange component', () => {
+    it('should render the Exchange component', () => {
         expect(item.exists()).toBeTruthy()
     })
 
-    it('should render the pockets title', () => {
+    it('should contains the pockets title', () => {
         expect(item.contains('Exchanging from GBP to EUR')).toBeTruthy()
     })
 
-    it('should render the pockets value', () => {
+    it('should contains the pockets value', () => {
         expect(item.contains('You have £19,500.00')).toBeTruthy()
     })
 
-    it('should render the related rates', () => {
+    it('should contains the related rates', () => {
         expect(item.contains('Related rates')).toBeTruthy()
     })
 })

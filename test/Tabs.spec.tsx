@@ -13,7 +13,7 @@ describe('Tabs component', () => {
 
     const item = mount(<Tabs { ...props } />)
 
-    it('Should render the Tabs component', () => {
+    it('should render the Tabs component', () => {
         expect(item.exists()).toBeTruthy()
         expect(item).toMatchSnapshot()
     })

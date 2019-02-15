@@ -9,7 +9,7 @@ describe('Item component', () => {
         expect(item.contains('"backgroundColor": "#EEEEEE"'))
         expect(item).toMatchSnapshot()
     })
-    it('Should render an Item with an odd index', () => {
+    it('should render an Item with an odd index', () => {
         const item = shallow(<Item index={ 1 }>Odd item</Item>)
         expect(item.contains('Odd item')).toBeTruthy()
         expect(item.contains('"backgroundColor": "#F5F5F5"'))
