@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`hello should eita 1`] = `
+exports[`Item component Should render an Item with an odd index 1`] = `
 <WithStyles(ListItem)
   style={
     Object {
@@ -8,6 +8,18 @@ exports[`hello should eita 1`] = `
     }
   }
 >
-  EITA
+  Odd item
+</WithStyles(ListItem)>
+`;
+
+exports[`Item component should render an item with an even index 1`] = `
+<WithStyles(ListItem)
+  style={
+    Object {
+      "backgroundColor": "#EEEEEE",
+    }
+  }
+>
+  Even item
 </WithStyles(ListItem)>
 `;
