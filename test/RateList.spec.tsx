@@ -1,7 +1,7 @@
 import { mount } from 'enzyme'
 import React from 'react'
 import RateList from '../src/components/rates/RateList'
-import state from '../src/store/state'
+import state, { IRate } from '../src/store/state'
 
 describe('RateList component', () => {
     const exchangeScreen = {
@@ -40,5 +40,15 @@ describe('RateList component', () => {
     it('should contains the page title', () => {
         const item = mount(<RateList { ...ratesScreen } />)
         expect(item.contains('Your rates')).toBeTruthy()
+    })
+
+    it('should show a message when there is no data to display', () => {
+        const emptyData = {
+            ...ratesScreen,
+            rates: [] as IRate[]
+        }
+
+        const item = mount(<RateList { ...emptyData } />)
+        expect(item.contains('There is no rate do display')).toBeTruthy()
     })
 })

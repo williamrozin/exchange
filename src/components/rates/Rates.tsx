@@ -17,6 +17,7 @@ interface IState {
     showAdd: boolean
     base: TCurrency | ''
     target: TCurrency | ''
+    errors: Array<'base' | 'target'>
 }
 
 const Wrapper = styled.div`
@@ -42,6 +43,7 @@ class Rates extends Component<IProps, IState> {
         super(props)
         this.state = {
             base: '',
+            errors: [],
             showAdd: true,
             showFields: false,
             target: ''
@@ -57,7 +59,12 @@ class Rates extends Component<IProps, IState> {
     }
 
     public handleShowAdd = () => {
-        this.setState({ showAdd: true, base: '', target: '' })
+        this.setState({
+            base: '',
+            errors: [],
+            showAdd: true,
+            target: '',
+        })
     }
 
     public handleHideFields = () => {
@@ -68,11 +75,13 @@ class Rates extends Component<IProps, IState> {
         (type: 'base' | 'target') =>
         (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value as TCurrency
+        const errors = this.state.errors
+            .filter((error) => error !== type)
 
         if (type === 'base') {
-            this.setState({ base: value })
+            this.setState({ base: value, errors })
         } else {
-            this.setState({ target: value })
+            this.setState({ target: value, errors })
         }
     }
 
@@ -82,6 +91,13 @@ class Rates extends Component<IProps, IState> {
         if (base && target) {
             this.props.onAddRate({ base, target })
             this.handleHideFields()
+        } else {
+            const errors = [
+                base ? undefined : 'base' as 'base',
+                target ? undefined : 'target' as 'target'
+            ].filter(Boolean)
+
+            this.setState({ errors })
         }
     }
 
@@ -103,6 +119,8 @@ class Rates extends Component<IProps, IState> {
             <TextField
                 select
                 fullWidth
+                required
+                error={ this.state.errors.includes(type) }
                 variant='outlined'
                 value={ this.state[type] }
                 label={ `Select currency ${type === 'base' ? '1' : '2'}` }

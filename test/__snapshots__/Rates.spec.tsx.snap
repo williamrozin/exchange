@@ -24,7 +24,7 @@ exports[`Rates component should render the Rates component 1`] = `
       "replace": [Function],
     }
   }
-  lastUpdate={1550207885032}
+  lastUpdate={1550210700059}
   location={
     Object {
       "hash": "",
@@ -1496,17 +1496,19 @@ exports[`Rates component should render the Rates component 1`] = `
                                 className="sc-gqjmRU eWlQby"
                               >
                                 <TextField
+                                  error={false}
                                   fullWidth={true}
                                   label="Select currency 1"
                                   onChange={[Function]}
-                                  required={false}
+                                  required={true}
                                   select={true}
                                   value=""
                                   variant="outlined"
                                 >
                                   <WithStyles(FormControl)
+                                    error={false}
                                     fullWidth={true}
-                                    required={false}
+                                    required={true}
                                     variant="outlined"
                                   >
                                     <FormControl
@@ -1523,7 +1525,7 @@ exports[`Rates component should render the Rates component 1`] = `
                                       error={false}
                                       fullWidth={true}
                                       margin="none"
-                                      required={false}
+                                      required={true}
                                       variant="outlined"
                                     >
                                       <div
@@ -1576,7 +1578,7 @@ exports[`Rates component should render the Rates component 1`] = `
                                                   "onEmpty": [Function],
                                                   "onFilled": [Function],
                                                   "onFocus": [Function],
-                                                  "required": false,
+                                                  "required": true,
                                                   "variant": "outlined",
                                                 }
                                               }
@@ -1635,16 +1637,21 @@ exports[`Rates component should render the Rates component 1`] = `
                                                         "onEmpty": [Function],
                                                         "onFilled": [Function],
                                                         "onFocus": [Function],
-                                                        "required": false,
+                                                        "required": true,
                                                         "variant": "outlined",
                                                       }
                                                     }
                                                   >
                                                     <label
-                                                      className="MuiFormLabel-root-56 MuiInputLabel-root-45 MuiInputLabel-formControl-50 MuiInputLabel-animated-53 MuiInputLabel-outlined-55"
+                                                      className="MuiFormLabel-root-56 MuiFormLabel-required-61 MuiInputLabel-required-49 MuiInputLabel-root-45 MuiInputLabel-formControl-50 MuiInputLabel-animated-53 MuiInputLabel-outlined-55"
                                                       data-shrink={false}
                                                     >
                                                       Select currency 1
+                                                      <span
+                                                        className="MuiFormLabel-asterisk-62"
+                                                      >
+                                                         *
+                                                      </span>
                                                     </label>
                                                   </FormLabel>
                                                 </WithFormControlContext(FormLabel)>
@@ -1720,7 +1727,7 @@ exports[`Rates component should render the Rates component 1`] = `
                                                   "onEmpty": [Function],
                                                   "onFilled": [Function],
                                                   "onFocus": [Function],
-                                                  "required": false,
+                                                  "required": true,
                                                   "variant": "outlined",
                                                 }
                                               }
@@ -3141,7 +3148,7 @@ exports[`Rates component should render the Rates component 1`] = `
                                                             "onEmpty": [Function],
                                                             "onFilled": [Function],
                                                             "onFocus": [Function],
-                                                            "required": false,
+                                                            "required": true,
                                                             "variant": "outlined",
                                                           }
                                                         }
@@ -3584,7 +3591,7 @@ exports[`Rates component should render the Rates component 1`] = `
                                                             onBlur={[Function]}
                                                             onChange={[Function]}
                                                             onFocus={[Function]}
-                                                            required={false}
+                                                            required={true}
                                                             value=""
                                                             variant="outlined"
                                                           >
@@ -4251,17 +4258,19 @@ exports[`Rates component should render the Rates component 1`] = `
                                   </WithStyles(FormControl)>
                                 </TextField>
                                 <TextField
+                                  error={false}
                                   fullWidth={true}
                                   label="Select currency 2"
                                   onChange={[Function]}
-                                  required={false}
+                                  required={true}
                                   select={true}
                                   value=""
                                   variant="outlined"
                                 >
                                   <WithStyles(FormControl)
+                                    error={false}
                                     fullWidth={true}
-                                    required={false}
+                                    required={true}
                                     variant="outlined"
                                   >
                                     <FormControl
@@ -4278,7 +4287,7 @@ exports[`Rates component should render the Rates component 1`] = `
                                       error={false}
                                       fullWidth={true}
                                       margin="none"
-                                      required={false}
+                                      required={true}
                                       variant="outlined"
                                     >
                                       <div
@@ -4331,7 +4340,7 @@ exports[`Rates component should render the Rates component 1`] = `
                                                   "onEmpty": [Function],
                                                   "onFilled": [Function],
                                                   "onFocus": [Function],
-                                                  "required": false,
+                                                  "required": true,
                                                   "variant": "outlined",
                                                 }
                                               }
@@ -4390,16 +4399,21 @@ exports[`Rates component should render the Rates component 1`] = `
                                                         "onEmpty": [Function],
                                                         "onFilled": [Function],
                                                         "onFocus": [Function],
-                                                        "required": false,
+                                                        "required": true,
                                                         "variant": "outlined",
                                                       }
                                                     }
                                                   >
                                                     <label
-                                                      className="MuiFormLabel-root-56 MuiInputLabel-root-45 MuiInputLabel-formControl-50 MuiInputLabel-animated-53 MuiInputLabel-outlined-55"
+                                                      className="MuiFormLabel-root-56 MuiFormLabel-required-61 MuiInputLabel-required-49 MuiInputLabel-root-45 MuiInputLabel-formControl-50 MuiInputLabel-animated-53 MuiInputLabel-outlined-55"
                                                       data-shrink={false}
                                                     >
                                                       Select currency 2
+                                                      <span
+                                                        className="MuiFormLabel-asterisk-62"
+                                                      >
+                                                         *
+                                                      </span>
                                                     </label>
                                                   </FormLabel>
                                                 </WithFormControlContext(FormLabel)>
@@ -4475,7 +4489,7 @@ exports[`Rates component should render the Rates component 1`] = `
                                                   "onEmpty": [Function],
                                                   "onFilled": [Function],
                                                   "onFocus": [Function],
-                                                  "required": false,
+                                                  "required": true,
                                                   "variant": "outlined",
                                                 }
                                               }
@@ -5896,7 +5910,7 @@ exports[`Rates component should render the Rates component 1`] = `
                                                             "onEmpty": [Function],
                                                             "onFilled": [Function],
                                                             "onFocus": [Function],
-                                                            "required": false,
+                                                            "required": true,
                                                             "variant": "outlined",
                                                           }
                                                         }
@@ -6339,7 +6353,7 @@ exports[`Rates component should render the Rates component 1`] = `
                                                             onBlur={[Function]}
                                                             onChange={[Function]}
                                                             onFocus={[Function]}
-                                                            required={false}
+                                                            required={true}
                                                             value=""
                                                             variant="outlined"
                                                           >
@@ -11232,7 +11246,7 @@ exports[`Rates component should render the Rates component 1`] = `
     </StyledComponent>
   </styled.div>
   <LastUpdate
-    lastUpdate={1550207885032}
+    lastUpdate={1550210700059}
   >
     <WithStyles(Typography)
       align="center"
@@ -11688,7 +11702,7 @@ exports[`Rates component should render the Rates component 1`] = `
             }
           }
         >
-          Last updated at 00:18, 15 Feb 2019
+          Last updated at 01:05, 15 Feb 2019
         </span>
       </Typography>
     </WithStyles(Typography)>

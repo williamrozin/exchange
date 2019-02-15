@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import IconButton from '@material-ui/core/IconButton'
 import List from '@material-ui/core/List'
@@ -55,6 +56,20 @@ class RateList extends PureComponent<IProps> {
         )
     }
 
+    public renderEmpty() {
+        return (
+            <Typography
+                align='center'
+                variant='h6'
+                style={ {
+                    backgroundColor: '#FAFAFA',
+                    padding: '18px 0'
+                } }>
+                There is no rate do display
+            </Typography>
+        )
+    }
+
     public renderList() {
         const {
             rates = [],
@@ -104,7 +119,11 @@ class RateList extends PureComponent<IProps> {
                 <List
                     style={ { padding: '0px' } }
                     subheader={ <SubHeader title={ title } /> }>
-                    { this.renderList() }
+                    {
+                        this.props.rates.length === 0
+                            ? this.renderEmpty()
+                            : this.renderList()
+                    }
                 </List>
             </Transactions>
         )
